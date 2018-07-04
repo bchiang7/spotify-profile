@@ -27,6 +27,9 @@ const base = injectGlobal`
     font-family: ${theme.fonts.primary};
     font-size: ${theme.fontSizes.base};
   }
+  #root {
+    height: 100%;
+  }
 `;
 
 export default base;

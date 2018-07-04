@@ -1,5 +1,5 @@
 {
-  "name": "create-react-app",
+  "name": "react-boilerplate",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,14 +24,14 @@
   "devDependencies": {
     "@nuscout/eslint-config": "^0.2.1",
     "@nuscout/prettier-config": "^0.1.2",
-    "eslint": "^5.0.1",
+    "babel-plugin-styled-components": "^1.5.1",
+    "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.6.1",
+    "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.10.0",
     "husky": "^0.14.3",
-    "prettier": "^1.13.7",
+    "prettier": "^1.13.5",
     "pretty-quick": "^1.6.0",
-    "spotify-web-api-js": "^0.24.0",
     "styled-components": "^3.3.3"
   }
 }

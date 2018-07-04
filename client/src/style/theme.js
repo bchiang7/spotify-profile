@@ -1,24 +1,29 @@
 const theme = {
   colors: {
+    green: '#1DB954',
+    offGreen: '#1ed760',
+    black: '#191414',
+    white: '#FFFFFF',
+
     // material ui color palette
-    red: '#F44336',
-    pink: '#E91E63',
-    purple: '#9C27B0',
-    deepPurple: '#673AB7',
-    indigo: '#3F51B5',
-    blue: '#2196F3',
-    lightBlue: '#03A9F4',
-    cyan: '#00BCD4',
-    teal: '#009688',
-    green: '#4CAF50',
-    lightGreen: '#8BC34A',
-    lime: '#CDDC39',
-    yellow: '#FFEB3B',
-    amber: '#FFC107',
-    orange: '#FF9800',
-    deepOrange: '#FF5722',
-    brown: '#795548',
-    blueGrey: '#607D8B',
+    // red: '#F44336',
+    // pink: '#E91E63',
+    // purple: '#9C27B0',
+    // deepPurple: '#673AB7',
+    // indigo: '#3F51B5',
+    // blue: '#2196F3',
+    // lightBlue: '#03A9F4',
+    // cyan: '#00BCD4',
+    // teal: '#009688',
+    // green: '#4CAF50',
+    // lightGreen: '#8BC34A',
+    // lime: '#CDDC39',
+    // yellow: '#FFEB3B',
+    // amber: '#FFC107',
+    // orange: '#FF9800',
+    // deepOrange: '#FF5722',
+    // brown: '#795548',
+    // blueGrey: '#607D8B',
 
     // material ui grayscale
     chrome000: '#FFFFFF',
@@ -34,7 +39,8 @@ const theme = {
   },
 
   fonts: {
-    primary: 'system, -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arial, sans-serif',
+    primary:
+      'system, -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arial, sans-serif',
   },
 
   fontSizes: {
