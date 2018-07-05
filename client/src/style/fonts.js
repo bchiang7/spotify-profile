@@ -10,7 +10,7 @@ const fonts = injectGlobal`
 
   @font-face {
     font-family: 'Circular Std Book Italic';
-    font-style: normal;
+    font-style: italic;
     font-weight: 400;
     src: local('Circular Std Book Italic'), url('../fonts/CircularStd-BookItalic.woff') format('woff');
   }
@@ -25,7 +25,7 @@ const fonts = injectGlobal`
 
   @font-face {
     font-family: 'Circular Std Medium Italic';
-    font-style: normal;
+    font-style: italic;
     font-weight: 500;
     src: local('Circular Std Medium Italic'), url('../fonts/CircularStd-MediumItalic.woff') format('woff');
   }
@@ -39,7 +39,7 @@ const fonts = injectGlobal`
 
   @font-face {
     font-family: 'Circular Std Bold Italic';
-    font-style: normal;
+    font-style: italic;
     font-weight: 700;
     src: local('Circular Std Bold Italic'), url('../fonts/CircularStd-BoldItalic.woff') format('woff');
   }
@@ -53,7 +53,7 @@ const fonts = injectGlobal`
 
   @font-face {
     font-family: 'Circular Std Black Italic';
-    font-style: normal;
+    font-style: italic;
     font-weight: 900;
     src: local('Circular Std Black Italic'), url('../fonts/CircularStd-BlackItalic.woff') format('woff');
   }

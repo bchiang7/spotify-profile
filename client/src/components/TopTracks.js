@@ -70,7 +70,7 @@ class TopTracks extends Component {
                   <TrackName>{track.name}</TrackName>
                   <ArtistAlbum>
                     <TrackArtist>{track.artists[0].name}</TrackArtist>
-                    <Separator>&bull;</Separator>
+                    <Separator>&middot;</Separator>
                     <TrackAlbum>{track.album.name}</TrackAlbum>
                   </ArtistAlbum>
                 </TrackMeta>

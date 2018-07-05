@@ -5,7 +5,7 @@ import TopArtists from './TopArtists';
 import TopTracks from './TopTracks';
 
 import styled from 'styled-components';
-import { theme, A } from '../style';
+import { theme, mixins, A } from '../style';
 
 const StyledApp = styled.div`
   background-color: ${theme.colors.black};
@@ -14,6 +14,11 @@ const StyledApp = styled.div`
   padding: ${theme.spacing.xl};
   min-height: 100vh;
   border-top: 1rem solid ${theme.colors.green};
+`;
+const Login = styled.div`
+  ${mixins.flexCenter};
+  flex-direction: column;
+  min-height: 75vh;
 `;
 const LoginButton = A.extend`
   display: inline-block;
@@ -30,6 +35,7 @@ const LoginButton = A.extend`
     background-color: ${theme.colors.offGreen};
   }
 `;
+const Profile = styled.div``;
 const TopItems = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -116,17 +122,20 @@ class App extends Component {
       <StyledApp>
         <Head />
         {user ? (
-          <div>
+          <Profile>
             <User user={user} />
             <TopItems>
               {topArtists && <TopArtists topArtists={topArtists} />}
               {topTracks && <TopTracks topTracks={topTracks} />}
             </TopItems>
-          </div>
+          </Profile>
         ) : (
-          <LoginButton href="http://localhost:8888/login">
-            Sign in to Spotify
-          </LoginButton>
+          <Login>
+            <h1>Your Spotify Profile</h1>
+            <LoginButton href="http://localhost:8888/login">
+              Log in to Spotify
+            </LoginButton>
+          </Login>
         )}
       </StyledApp>
     );
