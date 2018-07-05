@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import styled from 'styled-components';
-import { theme, Img, Header, A } from '../style';
+import { theme, Img, Header } from '../style';
 
 const Container = Header.extend`
   display: flex;
@@ -14,13 +14,14 @@ const Avatar = Img.extend`
 `;
 const MetaData = styled.div``;
 const Label = styled.div`
-  font-size: ${theme.fontSizes.sm};
+  font-size: ${theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin-bottom: ${theme.spacing.base};
+  margin-bottom: 5px;
 `;
 const Name = styled.h1`
-  font-size: 36px;
+  font-size: 50px;
+  font-weight: 700;
   margin: 0;
 `;
 const Username = styled.h2`

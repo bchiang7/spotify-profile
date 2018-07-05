@@ -4,6 +4,7 @@ const theme = {
     offGreen: '#1ed760',
     black: '#191414',
     white: '#FFFFFF',
+    grey: '#9B9B9B',
 
     // material ui color palette
     // red: '#F44336',
@@ -40,7 +41,7 @@ const theme = {
 
   fonts: {
     primary:
-      'system, -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arial, sans-serif',
+      'Circular Std Book, system, -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arial, sans-serif',
   },
 
   fontSizes: {

@@ -28,7 +28,7 @@ const base = injectGlobal`
     font-size: ${theme.fontSizes.base};
   }
   #root {
-    height: 100%;
+    min-height: 100%;
   }
 `;
 

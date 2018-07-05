@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
 import Head from './Head';
 import User from './User';
+import TopArtists from './TopArtists';
+import TopTracks from './TopTracks';
 
 import styled from 'styled-components';
-import { theme, Header, A } from '../style';
+import { theme, A } from '../style';
 
 const StyledApp = styled.div`
   background-color: ${theme.colors.black};
   color: ${theme.colors.white};
   height: 100%;
   padding: ${theme.spacing.xl};
+  min-height: 100vh;
+  border-top: 1rem solid ${theme.colors.green};
 `;
-const StyledHeader = Header.extend`
-  height: 150px;
-  padding: 20px;
-`;
-const StyledTitle = styled.h1`
-  font-size: 1.5em;
-`;
-
 const LoginButton = A.extend`
   display: inline-block;
   background-color: ${theme.colors.green};
@@ -33,6 +29,11 @@ const LoginButton = A.extend`
   &:hover {
     background-color: ${theme.colors.offGreen};
   }
+`;
+const TopItems = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: ${theme.spacing.xl};
 `;
 
 class App extends Component {
@@ -69,6 +70,7 @@ class App extends Component {
 
     setTimeout(() => {
       this.getTopArtists();
+      this.getTopTracks();
     }, 500);
   }
 
@@ -79,9 +81,19 @@ class App extends Component {
       .then(response => response.json())
       .then(data => {
         // console.log(data);
-        this.setState({
-          topArtists: data,
-        });
+        this.setState({ topArtists: data });
+      })
+      .catch(error => console.error(`Fetch Error =\n`, error));
+  }
+
+  getTopTracks() {
+    fetch('https://api.spotify.com/v1/me/top/tracks', {
+      headers: { Authorization: `Bearer ${this.state.token}` },
+    })
+      .then(response => response.json())
+      .then(data => {
+        // console.log(data);
+        this.setState({ topTracks: data });
       })
       .catch(error => console.error(`Fetch Error =\n`, error));
   }
@@ -98,14 +110,19 @@ class App extends Component {
   }
 
   render() {
-    const { user, topArtists } = this.state;
-    console.log(topArtists);
+    const { user, topArtists, topTracks } = this.state;
 
     return (
       <StyledApp>
         <Head />
         {user ? (
-          <User user={user} />
+          <div>
+            <User user={user} />
+            <TopItems>
+              {topArtists && <TopArtists topArtists={topArtists} />}
+              {topTracks && <TopTracks topTracks={topTracks} />}
+            </TopItems>
+          </div>
         ) : (
           <LoginButton href="http://localhost:8888/login">
             Sign in to Spotify
