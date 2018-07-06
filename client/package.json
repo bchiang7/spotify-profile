@@ -32,6 +32,7 @@
     "husky": "^0.14.3",
     "prettier": "^1.13.5",
     "pretty-quick": "^1.6.0",
+    "prop-types": "^15.6.2",
     "styled-components": "^3.3.3"
   }
 }

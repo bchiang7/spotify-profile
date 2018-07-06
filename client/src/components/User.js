@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { theme, Img, Header, A } from '../style';
 
@@ -17,7 +17,7 @@ const MetaData = styled.div``;
 const Label = styled.div`
   font-size: ${theme.fontSizes.xs};
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   margin-bottom: 5px;
 `;
 const Name = styled.h1`
@@ -35,10 +35,10 @@ const LogoutButton = A.extend`
   background-color: ${theme.colors.green};
   color: ${theme.colors.white};
   border-radius: 30px;
-  padding: 14px 30px 12px;
-  font-size: ${theme.fontSizes.sm};
+  padding: 12px 22px;
+  font-size: ${theme.fontSizes.xs};
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   text-align: center;
   &:hover {
@@ -64,5 +64,9 @@ class User extends Component {
     );
   }
 }
+
+User.propTypes = {
+  user: PropTypes.object,
+};
 
 export default User;

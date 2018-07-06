@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { theme, mixins, Img, Span } from '../style';
 
@@ -54,7 +54,7 @@ class TopTracks extends Component {
 
   render() {
     const { topTracks } = this.props;
-    console.log(topTracks.items);
+    // console.log(topTracks.items);
 
     return (
       <Container>
@@ -87,5 +87,9 @@ class TopTracks extends Component {
     );
   }
 }
+
+TopTracks.propTypes = {
+  topTracks: PropTypes.object,
+};
 
 export default TopTracks;
