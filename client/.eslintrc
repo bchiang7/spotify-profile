@@ -1,23 +1,9 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended",
-    "@nuscout"
-  ],
+  "extends": ["plugin:react/recommended", "@upstatement"],
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true
+      "modules": true
     }
-  },
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
-  },
-  "rules": {
-    "no-var": "error",
-    "no-console": ["error", { "allow": ["warn", "error"] }]
   }
 }

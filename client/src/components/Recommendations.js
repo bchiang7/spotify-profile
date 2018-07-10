@@ -43,7 +43,7 @@ const TrackDuration = Span.extend`
   font-size: ${theme.fontSizes.sm};
 `;
 
-class TopTracks extends Component {
+class Recommendations extends Component {
   formatDuration(millis) {
     const minutes = Math.floor(millis / 60000);
     const seconds = ((millis % 60000) / 1000).toFixed(0);
@@ -51,14 +51,14 @@ class TopTracks extends Component {
   }
 
   render() {
-    const { topTracks } = this.props;
-    // console.log(topTracks.items);
+    const { recommendations } = this.props;
+    // console.log(recommendations.tracks);
 
     return (
       <Container>
-        <Title>Top Tracks</Title>
+        <Title>Recommended Tracks</Title>
         <TracksContainer>
-          {topTracks.items.map((track, i) => (
+          {recommendations.tracks.map((track, i) => (
             <Track key={i}>
               <TrackLeft>
                 <TrackArtwork>
@@ -84,8 +84,8 @@ class TopTracks extends Component {
   }
 }
 
-TopTracks.propTypes = {
-  topTracks: PropTypes.object,
+Recommendations.propTypes = {
+  recommendations: PropTypes.object,
 };
 
-export default TopTracks;
+export default Recommendations;

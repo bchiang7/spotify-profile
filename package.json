@@ -8,12 +8,12 @@
     "concurrently": "^3.6.0"
   },
   "scripts": {
-    "client-build": "cd client && yarn",
-    "server-build": "cd server && yarn",
-    "build": "concurrent \"npm run client-build\" \"npm run server-build\" ",
+    "client-build": "cd client && npm install",
+    "server-build": "cd server && npm install",
+    "build": "concurrently \"npm run client-build\" \"npm run server-build\" ",
     "client": "cd client && npm start",
     "server": "cd server && npm start",
-    "start": "concurrent \"npm run client\" \"npm run server\" "
+    "start": "concurrently \"npm run client\" \"npm run server\" "
   },
   "repository": {
     "type": "git",
