@@ -14,6 +14,7 @@ import Ol from './Ol';
 import Header from './Header';
 import Nav from './Nav';
 import Main from './Main';
+import Section from './Section';
 import Footer from './Footer';
 
 export {
@@ -33,5 +34,6 @@ export {
   Header,
   Nav,
   Main,
+  Section,
   Footer,
 };

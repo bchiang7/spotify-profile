@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { test } from '../spotify';
+import { getAccessToken } from '../spotify';
 
 import Head from './Head';
+import LoginScreen from './LoginScreen';
 import User from './User';
 import TopArtists from './TopArtists';
 import TopTracks from './TopTracks';
@@ -10,7 +11,7 @@ import Recommendations from './Recommendations';
 import Playlists from './Playlists';
 
 import styled from 'styled-components';
-import { theme, mixins, A } from '../style';
+import { theme, mixins } from '../style';
 
 const StyledApp = styled.div`
   background-color: ${theme.colors.black};
@@ -20,31 +21,9 @@ const StyledApp = styled.div`
   min-height: 100vh;
   border-top: 1rem solid ${theme.colors.green};
 `;
-const Login = styled.div`
-  ${mixins.flexCenter};
-  flex-direction: column;
-  min-height: 75vh;
-`;
-const LoginButton = A.extend`
-  display: inline-block;
-  background-color: ${theme.colors.green};
-  color: ${theme.colors.white};
-  border-radius: 30px;
-  padding: 18px 48px 16px;
-  min-width: 160px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-align: center;
-  &:hover {
-    background-color: ${theme.colors.offGreen};
-  }
-`;
 const Profile = styled.div``;
 const TopItems = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: ${theme.spacing.xl};
+  ${mixins.flexBetween};
 `;
 
 class App extends Component {
@@ -58,42 +37,26 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const params = this.getHashParams();
-
-    if (params.error) {
-      alert('There was an error during the authentication');
-    }
-
-    if (!params.access_token) {
-      return;
-    }
-
-    this.setState({ token: params.access_token });
-
-    // test();
+    this.setState({ token: getAccessToken() });
   }
 
   componentDidUpdate() {
     const { user, topArtists, topTracks, playlists, recommendations } = this.state;
-
     if (!user) {
       this.getUser();
-    }
-
-    if (!topArtists) {
-      this.getTopArtists();
-    }
-
-    if (!topTracks) {
-      this.getTopTracks();
-    }
-
-    if (!playlists) {
-      this.getPlaylists();
-    }
-
-    if (!recommendations) {
-      this.getRecommendations();
+    } else {
+      if (!topArtists) {
+        this.getTopArtists();
+      }
+      if (!topTracks) {
+        this.getTopTracks();
+      }
+      if (!playlists) {
+        this.getPlaylists();
+      }
+      if (!recommendations) {
+        this.getRecommendations();
+      }
     }
   }
 
@@ -106,6 +69,20 @@ class App extends Component {
       hashParams[e[1]] = decodeURIComponent(e[2]);
     }
     return hashParams;
+  }
+
+  getAccessToken() {
+    const params = this.getHashParams();
+
+    if (params.error) {
+      alert('There was an error during authentication');
+    }
+
+    if (!params.access_token) {
+      return;
+    }
+
+    return params.access_token;
   }
 
   getUser() {
@@ -143,7 +120,6 @@ class App extends Component {
   }
 
   getRecommendations() {
-    // console.log(this.state.topTracks);
     const { topTracks } = this.state;
 
     if (!topTracks) {
@@ -183,7 +159,6 @@ class App extends Component {
       .then(response => {
         // console.log(response);
         this.setState({ playlists: response.data });
-        // this.getTracks();
       })
       .catch(error => console.error(error));
   }
@@ -207,10 +182,7 @@ class App extends Component {
             {playlists && <Playlists playlists={playlists} />}
           </Profile>
         ) : (
-          <Login>
-            <h1>Your Spotify Profile</h1>
-            <LoginButton href="http://localhost:8888/login">Log in to Spotify</LoginButton>
-          </Login>
+          <LoginScreen />
         )}
       </StyledApp>
     );

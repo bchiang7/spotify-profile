@@ -6,6 +6,7 @@ import { theme, Img, Header, A } from '../style';
 const Container = Header.extend`
   display: flex;
   position: relative;
+  margin-bottom: ${theme.spacing.xl};
 `;
 const Avatar = Img.extend`
   width: 150px;

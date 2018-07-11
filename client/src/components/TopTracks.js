@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { theme, mixins, A, Img, Span } from '../style';
+import { theme, mixins, A, Img, Span, Section } from '../style';
 
-const Container = styled.div``;
+const Container = Section.extend`
+  width: 50%;
+  margin-bottom: ${theme.spacing.xl};
+`;
 const Title = styled.h3`
-  font-size: ${theme.fontSizes.md};
-  margin-bottom: ${theme.spacing.md};
+  font-size: ${theme.fontSizes.lg};
+  font-weight: 600;
+  margin-bottom: ${theme.spacing.lg};
 `;
 const TracksContainer = styled.div``;
 const Track = styled.div`

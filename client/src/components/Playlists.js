@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { theme, Img, A } from '../style';
+import { theme, Img, A, Section } from '../style';
 
-const Container = styled.div``;
+const Container = Section.extend``;
 const Title = styled.h3`
-  font-size: ${theme.fontSizes.md};
-  margin-bottom: ${theme.spacing.md};
+  font-size: ${theme.fontSizes.lg};
+  font-weight: 600;
+  margin-bottom: ${theme.spacing.lg};
 `;
 const PlaylistsContainer = styled.div`
   display: grid;
@@ -15,10 +16,6 @@ const PlaylistsContainer = styled.div`
 `;
 const Playlist = styled.div`
   text-align: center;
-`;
-const PlaylistLink = A.extend`
-  position: relative;
-  width: 100%;
 `;
 const PlaylistImage = Img.extend`
   object-fit: cover;
@@ -49,16 +46,8 @@ class Playlists extends Component {
         <PlaylistsContainer>
           {playlists.items.map((playlist, i) => (
             <Playlist key={i}>
-              <PlaylistLink
-                href={playlist.external_urls.spotify}
-                target="_blank"
-              >
-                <PlaylistImage src={playlist.images[1].url} alt="" />
-              </PlaylistLink>
-              <PlaylistName
-                href={playlist.external_urls.spotify}
-                target="_blank"
-              >
+              <PlaylistImage src={playlist.images[1].url} alt="" />
+              <PlaylistName href={playlist.external_urls.spotify} target="_blank">
                 {playlist.name}
               </PlaylistName>
               <PlaylistDetails>{playlist.tracks.total} Tracks</PlaylistDetails>

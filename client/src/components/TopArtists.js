@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { theme, Img, A } from '../style';
+import { theme, Img, A, Section } from '../style';
 
-const Container = styled.div``;
+const Container = Section.extend`
+  flex-grow: 1;
+  width: 50%;
+  margin-right: ${theme.spacing.xl};
+`;
 const Title = styled.h3`
-  font-size: ${theme.fontSizes.md};
-  margin-bottom: ${theme.spacing.md};
+  font-size: ${theme.fontSizes.lg};
+  font-weight: 600;
+  margin-bottom: ${theme.spacing.lg};
 `;
 const ArtistsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-gap: ${theme.spacing.lg};
 `;
 const Artist = styled.div`
@@ -22,7 +27,6 @@ const ArtistLink = A.extend`
 `;
 const ArtistImage = Img.extend`
   border-radius: 100%;
-  /* min-height: 150px; */
   object-fit: cover;
 `;
 const ArtistName = A.extend`
