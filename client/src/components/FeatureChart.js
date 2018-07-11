@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Chart from 'chart.js';
-
+import { token } from '../spotify';
 import { theme, Section } from '../style';
 
 const Container = Section.extend`
@@ -12,7 +12,6 @@ const Container = Section.extend`
 
 class FeatureChart extends Component {
   state = {
-    token: null,
     chartPlaylist: this.props.chartPlaylist,
   };
 
@@ -33,7 +32,6 @@ class FeatureChart extends Component {
   }
 
   getTracks() {
-    const { token } = this.props;
     const { chartPlaylist } = this.state;
     const url = `${chartPlaylist.tracks.href}`;
 
@@ -50,7 +48,6 @@ class FeatureChart extends Component {
   }
 
   getAudioFeatures(ids) {
-    const { token } = this.props;
     const url = `https://api.spotify.com/v1/audio-features?ids=${ids}`;
 
     axios
@@ -173,7 +170,6 @@ class FeatureChart extends Component {
 
 FeatureChart.propTypes = {
   chartPlaylist: PropTypes.object,
-  token: PropTypes.string,
 };
 
 export default FeatureChart;

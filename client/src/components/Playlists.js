@@ -55,7 +55,7 @@ class Playlists extends Component {
   }
 
   render() {
-    const { playlists, token } = this.props;
+    const { playlists } = this.props;
     const { chartPlaylist } = this.state;
     // console.log(chartPlaylist);
 
@@ -75,7 +75,7 @@ class Playlists extends Component {
             ))}
           </PlaylistsContainer>
 
-          <FeatureChart chartPlaylist={chartPlaylist} token={token} />
+          <FeatureChart chartPlaylist={chartPlaylist} />
         </Wrapper>
       </Container>
     );
@@ -84,7 +84,6 @@ class Playlists extends Component {
 
 Playlists.propTypes = {
   playlists: PropTypes.object,
-  token: PropTypes.string,
 };
 
 export default Playlists;
