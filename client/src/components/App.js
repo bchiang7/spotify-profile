@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { getAccessToken } from '../spotify';
 
 import Head from './Head';
 import LoginScreen from './LoginScreen';
@@ -37,7 +36,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.setState({ token: getAccessToken() });
+    this.setState({ token: this.getAccessToken() });
   }
 
   componentDidUpdate() {
@@ -166,7 +165,7 @@ class App extends Component {
   // TODO: get audio features for playlists
 
   render() {
-    const { user, topArtists, topTracks, recommendations, playlists } = this.state;
+    const { token, user, topArtists, topTracks, recommendations, playlists } = this.state;
 
     return (
       <StyledApp>
@@ -179,7 +178,7 @@ class App extends Component {
               {topTracks && <TopTracks topTracks={topTracks} />}
             </TopItems>
             {recommendations && <Recommendations recommendations={recommendations} />}
-            {playlists && <Playlists playlists={playlists} />}
+            {playlists && <Playlists playlists={playlists} token={token} />}
           </Profile>
         ) : (
           <LoginScreen />

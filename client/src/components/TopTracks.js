@@ -27,7 +27,9 @@ const TrackArtwork = Span.extend`
   margin-right: ${theme.spacing.base};
 `;
 const TrackImage = Img.extend``;
-const TrackMeta = Span.extend``;
+const TrackMeta = Span.extend`
+  max-width: 80%;
+`;
 const TrackName = A.extend`
   margin-bottom: 5px;
   border-bottom: 1px solid transparent;
