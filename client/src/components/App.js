@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { token, getUser } from '../spotify';
+import { getUser, getTopArtists, getTopTracks, getPlaylists, getRecommendations } from '../spotify';
 
 import Head from './Head';
 import LoginScreen from './LoginScreen';
@@ -36,58 +35,16 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const { user, topArtists, topTracks, playlists, recommendations } = this.state;
+    getUser(response => this.setState({ user: response }));
+    getTopArtists(response => this.setState({ topArtists: response }));
+    getTopTracks(response => this.setState({ topTracks: response }));
+    getPlaylists(response => this.setState({ playlists: response }));
+  }
 
-    if (!user) {
-      this.getUser();
-    }
-    if (!topArtists) {
-      this.getTopArtists();
-    }
-    if (!topTracks) {
-      this.getTopTracks();
-    }
-    if (!playlists) {
-      this.getPlaylists();
-    }
-    if (!recommendations) {
+  componentDidUpdate() {
+    if (!this.state.recommendations) {
       this.getRecommendations();
     }
-  }
-
-  getUser() {
-    axios
-      .get('https://api.spotify.com/v1/me', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => {
-        // console.log(response);
-        this.setState({ user: response.data });
-      })
-      .catch(error => console.error(error));
-  }
-
-  getTopArtists() {
-    // console.log(this.state);
-    axios
-      .get('https://api.spotify.com/v1/me/top/artists', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => {
-        this.setState({ topArtists: response.data });
-      })
-      .catch(error => console.error(error));
-  }
-
-  getTopTracks() {
-    axios
-      .get('https://api.spotify.com/v1/me/top/tracks', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => {
-        this.setState({ topTracks: response.data });
-      })
-      .catch(error => console.error(error));
   }
 
   getRecommendations() {
@@ -97,44 +54,10 @@ class App extends Component {
       return;
     }
 
-    // get IDs of first 3 artists in topTracks
-    const seed_artists = topTracks.items
-      .slice(0, 3)
-      .map(track => track.artists[0].id)
-      .join(',');
-
-    // get IDS of 4th and 5th topTracks
-    const seed_tracks = topTracks.items
-      .slice(3, 5)
-      .map(track => track.id)
-      .join(',');
-
-    const url = `https://api.spotify.com/v1/recommendations?seed_artists=${seed_artists}&seed_tracks=${seed_tracks}`;
-
-    axios
-      .get(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => {
-        // console.log(response);
-        this.setState({ recommendations: response.data });
-      })
-      .catch(error => console.error(error));
+    getRecommendations(topTracks, response => {
+      this.setState({ recommendations: response });
+    });
   }
-
-  getPlaylists() {
-    axios
-      .get('https://api.spotify.com/v1/me/playlists', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => {
-        // console.log(response);
-        this.setState({ playlists: response.data });
-      })
-      .catch(error => console.error(error));
-  }
-
-  // TODO: get audio features for playlists
 
   render() {
     const { user, topArtists, topTracks, recommendations, playlists } = this.state;

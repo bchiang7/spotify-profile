@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-function getHashParams() {
+const getHashParams = () => {
   const hashParams = {};
   let e;
   const r = /([^&;=]+)=?([^&;]*)/g;
@@ -9,9 +9,9 @@ function getHashParams() {
     hashParams[e[1]] = decodeURIComponent(e[2]);
   }
   return hashParams;
-}
+};
 
-function getAccessToken() {
+const getAccessToken = () => {
   const params = getHashParams();
 
   if (params.error) {
@@ -23,20 +23,104 @@ function getAccessToken() {
   }
 
   return params.access_token;
-}
+};
 
 export const token = getAccessToken();
 
-export function getUser() {
+export const getUser = callback => {
   axios
     .get('https://api.spotify.com/v1/me', {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then(response => {
-      if (response.data) {
-        // console.log(response.data);
-        return response.data;
-      }
+      // console.log(response.data);
+      callback(response.data);
     })
     .catch(error => console.error(error));
-}
+};
+
+export const getTopArtists = callback => {
+  axios
+    .get('https://api.spotify.com/v1/me/top/artists', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then(response => {
+      // console.log(response.data);
+      callback(response.data);
+    })
+    .catch(error => console.error(error));
+};
+
+export const getTopTracks = callback => {
+  axios
+    .get('https://api.spotify.com/v1/me/top/tracks', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then(response => {
+      // console.log(response.data);
+      callback(response.data);
+    })
+    .catch(error => console.error(error));
+};
+
+export const getPlaylists = callback => {
+  axios
+    .get('https://api.spotify.com/v1/me/playlists', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then(response => {
+      // console.log(response.data);
+      callback(response.data);
+    })
+    .catch(error => console.error(error));
+};
+
+export const getRecommendations = (topTracks, callback) => {
+  // get IDs of first 3 artists in topTracks
+  const seed_artists = topTracks.items
+    .slice(0, 3)
+    .map(track => track.artists[0].id)
+    .join(',');
+
+  // get IDS of 4th and 5th topTracks
+  const seed_tracks = topTracks.items
+    .slice(3, 5)
+    .map(track => track.id)
+    .join(',');
+
+  const url = `https://api.spotify.com/v1/recommendations?seed_artists=${seed_artists}&seed_tracks=${seed_tracks}`;
+
+  axios
+    .get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then(response => {
+      // console.log(response.data);
+      callback(response.data);
+    })
+    .catch(error => console.error(error));
+};
+
+export const getPlaylistTracks = (url, callback) => {
+  axios
+    .get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then(response => {
+      // console.log(response.data);
+      callback(response.data);
+    })
+    .catch(error => console.error(error));
+};
+
+export const getAudioFeaturesForTracks = (url, callback) => {
+  axios
+    .get(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then(response => {
+      // console.log(response.data);
+      callback(response.data);
+    })
+    .catch(error => console.error(error));
+};

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import Chart from 'chart.js';
-import { token } from '../spotify';
+import { getPlaylistTracks, getAudioFeaturesForTracks } from '../spotify';
+
 import { theme, Section } from '../style';
 
 const Container = Section.extend`
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: ${theme.spacing.md};
+  padding: ${theme.spacing.sm} ${theme.spacing.md};
 `;
 
 class FeatureChart extends Component {
@@ -20,6 +20,16 @@ class FeatureChart extends Component {
 
     // TODO: scroll event listener
     // When scrolled to component, make sticky to top
+    this.chart = document.querySelector('.chart');
+    // this.topPos = this.chart.offsetTop;
+
+    // console.log(this.chart);
+
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   componentDidUpdate() {
@@ -31,35 +41,27 @@ class FeatureChart extends Component {
     }
   }
 
+  handleScroll(e) {
+    console.log(e);
+  }
+
   getTracks() {
     const { chartPlaylist } = this.state;
     const url = `${chartPlaylist.tracks.href}`;
 
-    axios
-      .get(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => {
-        const ids = response.data.items.map(track => track.track.id).join(',');
-
-        this.getAudioFeatures(ids);
-      })
-      .catch(error => console.error(error));
+    getPlaylistTracks(url, response => {
+      const ids = response.items.map(track => track.track.id).join(',');
+      this.getAudioFeatures(ids);
+    });
   }
 
   getAudioFeatures(ids) {
     const url = `https://api.spotify.com/v1/audio-features?ids=${ids}`;
 
-    axios
-      .get(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(response => {
-        // console.log(response.data);
-        const features = response.data.audio_features;
-        this.averageData(features);
-      })
-      .catch(error => console.error(error));
+    getAudioFeaturesForTracks(url, response => {
+      const features = response.audio_features;
+      this.averageData(features);
+    });
   }
 
   avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
@@ -161,7 +163,7 @@ class FeatureChart extends Component {
 
   render() {
     return (
-      <Container>
+      <Container class="chart">
         <canvas id="chart" width="400" height="400" />
       </Container>
     );
