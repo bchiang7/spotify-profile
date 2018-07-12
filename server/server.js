@@ -104,7 +104,7 @@ app.get('/callback', function(req, res) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
-          console.log(body);
+          // console.log(body);
         });
 
         // we can also pass the token to the browser to make requests from there
@@ -150,6 +150,6 @@ app.get('/refresh_token', function(req, res) {
 });
 
 console.log(
-  'Listening on http://localhost:8888.  Go /login to initiate authentication flow.'
+  'Listening on http://localhost:8888.  Go http://localhost:8888/login to initiate authentication flow.'
 );
 app.listen(8888);
