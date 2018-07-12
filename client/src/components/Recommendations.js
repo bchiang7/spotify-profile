@@ -64,7 +64,7 @@ class Recommendations extends Component {
             <Track key={i}>
               <TrackLeft>
                 <TrackArtwork>
-                  <TrackImage src={track.album.images[2].url} alt="" />
+                  {track.album.images[2] && <TrackImage src={track.album.images[2].url} alt="" />}
                 </TrackArtwork>
                 <TrackMeta>
                   <TrackName href={track.external_urls.spotify} target="_blank">

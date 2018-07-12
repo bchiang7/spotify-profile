@@ -33,9 +33,10 @@ export function getUser() {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then(response => {
-      console.log(response);
-      // return response.data;
-      // this.setState({ user: response.data });
+      if (response.data) {
+        // console.log(response.data);
+        return response.data;
+      }
     })
     .catch(error => console.error(error));
 }

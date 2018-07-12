@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 import { token, getUser } from '../spotify';
 
 import Head from './Head';
@@ -29,7 +28,6 @@ const TopItems = styled.div`
 
 class App extends Component {
   state = {
-    token: null,
     user: null,
     topArtists: null,
     topTracks: null,
@@ -38,59 +36,29 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.setState({ token: token });
-  }
-
-  componentDidUpdate() {
     const { user, topArtists, topTracks, playlists, recommendations } = this.state;
 
     if (!user) {
       this.getUser();
-    } else {
-      if (!topArtists) {
-        this.getTopArtists();
-      }
-      if (!topTracks) {
-        this.getTopTracks();
-      }
-      if (!playlists) {
-        this.getPlaylists();
-      }
-      if (!recommendations) {
-        this.getRecommendations();
-      }
     }
-  }
-
-  getHashParams() {
-    const hashParams = {};
-    let e;
-    const r = /([^&;=]+)=?([^&;]*)/g;
-    const q = window.location.hash.substring(1);
-    while ((e = r.exec(q))) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
+    if (!topArtists) {
+      this.getTopArtists();
     }
-    return hashParams;
-  }
-
-  getAccessToken() {
-    const params = this.getHashParams();
-
-    if (params.error) {
-      alert('There was an error during authentication');
+    if (!topTracks) {
+      this.getTopTracks();
     }
-
-    if (!params.access_token) {
-      return;
+    if (!playlists) {
+      this.getPlaylists();
     }
-
-    return params.access_token;
+    if (!recommendations) {
+      this.getRecommendations();
+    }
   }
 
   getUser() {
     axios
       .get('https://api.spotify.com/v1/me', {
-        headers: { Authorization: `Bearer ${this.state.token}` },
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
         // console.log(response);
@@ -100,9 +68,10 @@ class App extends Component {
   }
 
   getTopArtists() {
+    // console.log(this.state);
     axios
       .get('https://api.spotify.com/v1/me/top/artists', {
-        headers: { Authorization: `Bearer ${this.state.token}` },
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
         this.setState({ topArtists: response.data });
@@ -113,7 +82,7 @@ class App extends Component {
   getTopTracks() {
     axios
       .get('https://api.spotify.com/v1/me/top/tracks', {
-        headers: { Authorization: `Bearer ${this.state.token}` },
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
         this.setState({ topTracks: response.data });
@@ -144,7 +113,7 @@ class App extends Component {
 
     axios
       .get(url, {
-        headers: { Authorization: `Bearer ${this.state.token}` },
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
         // console.log(response);
@@ -156,7 +125,7 @@ class App extends Component {
   getPlaylists() {
     axios
       .get('https://api.spotify.com/v1/me/playlists', {
-        headers: { Authorization: `Bearer ${this.state.token}` },
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then(response => {
         // console.log(response);
