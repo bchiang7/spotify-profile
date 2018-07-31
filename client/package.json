@@ -21,14 +21,21 @@
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "precommit": "pretty-quick --staged"
+    "precommit": "pretty-quick --staged && lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@upstatement/eslint-config": "^0.1.1",
     "@upstatement/prettier-config": "^0.1.1",
     "eslint-plugin-react": "^7.10.0",
     "husky": "^0.14.3",
-    "prettier": "^1.13.5",
+    "lint-staged": "^7.2.0",
+    "prettier": "^1.13.7",
     "pretty-quick": "^1.6.0",
     "prop-types": "^15.6.2",
     "styled-components": "^3.3.3"

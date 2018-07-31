@@ -16,12 +16,13 @@ const Wrapper = styled.div`
   ${mixins.flexBetween};
   align-items: flex-start;
 `;
-const PlaylistsContainer = styled.div`
+const PlaylistsContainer = Section.extend`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-gap: ${theme.spacing.lg};
   flex-grow: 1;
   margin-right: ${theme.spacing.lg};
+  max-width: 60%;
 `;
 const Playlist = styled.div`
   text-align: center;
@@ -57,7 +58,7 @@ class Playlists extends Component {
   render() {
     const { playlists } = this.props;
     const { chartPlaylist } = this.state;
-    // console.log(chartPlaylist);
+    // console.log(playlists);
 
     return (
       <Container>
@@ -66,7 +67,7 @@ class Playlists extends Component {
           <PlaylistsContainer>
             {playlists.items.map((playlist, i) => (
               <Playlist key={i} onClick={() => this.showFeatureChart(playlist)}>
-                <PlaylistImage src={playlist.images[1].url} alt="" />
+                {playlist.images.length && <PlaylistImage src={playlist.images[0].url} alt="" />}
                 <PlaylistName href={playlist.external_urls.spotify} target="_blank">
                   {playlist.name}
                 </PlaylistName>

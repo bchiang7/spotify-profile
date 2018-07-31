@@ -7,10 +7,22 @@ import { theme, Section } from '../style';
 
 const Container = Section.extend`
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: ${theme.spacing.sm} ${theme.spacing.md};
+  padding-right: ${theme.spacing.sm};
+  width: 33%;
+  min-width: 400px;
+  &.sticky {
+    position: fixed;
+    top: 30px;
+    right: ${theme.spacing.xl};
+  }
 `;
 
 class FeatureChart extends Component {
+  constructor(props) {
+    super(props);
+    this.chart = React.createRef();
+  }
+
   state = {
     chartPlaylist: this.props.chartPlaylist,
   };
@@ -18,18 +30,15 @@ class FeatureChart extends Component {
   componentDidMount() {
     this.getTracks();
 
-    // TODO: scroll event listener
-    // When scrolled to component, make sticky to top
-    this.chart = document.querySelector('.chart');
-    // this.topPos = this.chart.offsetTop;
-
-    // console.log(this.chart);
+    this.chartEl = this.chart.current;
+    // this.chartPos = this.getPosition(this.chartEl);
+    // console.log(`Element is ${offset} vertical pixels from <body>`);
 
     window.addEventListener('scroll', this.handleScroll, { passive: true });
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    // window.removeEventListener('scroll', this.handleScroll);
   }
 
   componentDidUpdate() {
@@ -41,8 +50,29 @@ class FeatureChart extends Component {
     }
   }
 
-  handleScroll(e) {
-    console.log(e);
+  handleScroll = () => {
+    // const distanceToTop = this.chartEl.getBoundingClientRect().top;
+    // const yPos = this.getPosition(this.chartEl).y;
+    // console.log(window.scrollY, yPos, distanceToTop);
+    // adding sticky class screws up yPos and everything calculating distance from top
+    // if (window.scrollY > yPos) {
+    //   this.chartEl.classList.add('sticky');
+    // } else {
+    //   this.chartEl.classList.remove('sticky');
+    // }
+  };
+
+  getPosition(element) {
+    let xPosition = 0;
+    let yPosition = 0;
+
+    while (element) {
+      xPosition += element.offsetLeft - element.scrollLeft + element.clientLeft;
+      yPosition += element.offsetTop - element.scrollTop + element.clientTop;
+      element = element.offsetParent;
+    }
+
+    return { x: xPosition, y: yPosition };
   }
 
   getTracks() {
@@ -163,7 +193,7 @@ class FeatureChart extends Component {
 
   render() {
     return (
-      <Container class="chart">
+      <Container innerRef={this.chart}>
         <canvas id="chart" width="400" height="400" />
       </Container>
     );

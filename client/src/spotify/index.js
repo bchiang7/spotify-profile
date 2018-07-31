@@ -27,53 +27,7 @@ const getAccessToken = () => {
 
 export const token = getAccessToken();
 
-export const getUser = callback => {
-  axios
-    .get('https://api.spotify.com/v1/me', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then(response => {
-      // console.log(response.data);
-      callback(response.data);
-    })
-    .catch(error => console.error(error));
-};
-
-export const getTopArtists = callback => {
-  axios
-    .get('https://api.spotify.com/v1/me/top/artists', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then(response => {
-      // console.log(response.data);
-      callback(response.data);
-    })
-    .catch(error => console.error(error));
-};
-
-export const getTopTracks = callback => {
-  axios
-    .get('https://api.spotify.com/v1/me/top/tracks', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then(response => {
-      // console.log(response.data);
-      callback(response.data);
-    })
-    .catch(error => console.error(error));
-};
-
-export const getPlaylists = callback => {
-  axios
-    .get('https://api.spotify.com/v1/me/playlists', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then(response => {
-      // console.log(response.data);
-      callback(response.data);
-    })
-    .catch(error => console.error(error));
-};
+const headers = { Authorization: `Bearer ${token}` };
 
 export const getRecommendations = (topTracks, callback) => {
   // get IDs of first 3 artists in topTracks
@@ -91,9 +45,7 @@ export const getRecommendations = (topTracks, callback) => {
   const url = `https://api.spotify.com/v1/recommendations?seed_artists=${seed_artists}&seed_tracks=${seed_tracks}`;
 
   axios
-    .get(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    .get(url, { headers })
     .then(response => {
       // console.log(response.data);
       callback(response.data);
@@ -103,9 +55,7 @@ export const getRecommendations = (topTracks, callback) => {
 
 export const getPlaylistTracks = (url, callback) => {
   axios
-    .get(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    .get(url, { headers })
     .then(response => {
       // console.log(response.data);
       callback(response.data);
@@ -115,12 +65,59 @@ export const getPlaylistTracks = (url, callback) => {
 
 export const getAudioFeaturesForTracks = (url, callback) => {
   axios
-    .get(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    .get(url, { headers })
     .then(response => {
       // console.log(response.data);
       callback(response.data);
     })
     .catch(error => console.error(error));
+};
+
+const getUser = () => {
+  return axios.get('https://api.spotify.com/v1/me', { headers });
+};
+
+const getFollowing = () => {
+  return axios.get('https://api.spotify.com/v1/me/following?type=artist', { headers });
+};
+
+const getRecentlyPlayed = () => {
+  return axios.get('https://api.spotify.com/v1/me/player/recently-played', { headers });
+};
+
+const getTopArtists = () => {
+  return axios.get('https://api.spotify.com/v1/me/top/artists', { headers });
+};
+
+const getTopTracks = () => {
+  return axios.get('https://api.spotify.com/v1/me/top/tracks', { headers });
+};
+
+const getPlaylists = () => {
+  return axios.get('https://api.spotify.com/v1/me/playlists', { headers });
+};
+
+const everything = [
+  getUser(),
+  getFollowing(),
+  getRecentlyPlayed(),
+  getTopArtists(),
+  getTopTracks(),
+  getPlaylists(),
+];
+
+export const getEverything = () => {
+  return axios.all(everything).then(
+    axios.spread((user, followedArtists, recentlyPlayed, topArtists, topTracks, playlists) => {
+      // console.log(recentlyPlayed);
+      return {
+        user: user.data,
+        followedArtists: followedArtists.data,
+        recentlyPlayed: recentlyPlayed.data,
+        topArtists: topArtists.data,
+        topTracks: topTracks.data,
+        playlists: playlists.data,
+      };
+    }),
+  );
 };

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { getUser, getTopArtists, getTopTracks, getPlaylists, getRecommendations } from '../spotify';
+import { getEverything, getRecommendations } from '../spotify';
 
 import Head from './Head';
 import LoginScreen from './LoginScreen';
 import User from './User';
+import RecentlyPlayed from './RecentlyPlayed';
 import TopArtists from './TopArtists';
 import TopTracks from './TopTracks';
 import Recommendations from './Recommendations';
@@ -28,6 +29,8 @@ const TopItems = styled.div`
 class App extends Component {
   state = {
     user: null,
+    followedArtists: null,
+    recentlyPlayed: null,
     topArtists: null,
     topTracks: null,
     playlists: null,
@@ -35,10 +38,16 @@ class App extends Component {
   };
 
   componentDidMount() {
-    getUser(response => this.setState({ user: response }));
-    getTopArtists(response => this.setState({ topArtists: response }));
-    getTopTracks(response => this.setState({ topTracks: response }));
-    getPlaylists(response => this.setState({ playlists: response }));
+    getEverything().then(response => {
+      this.setState({
+        user: response.user,
+        followedArtists: response.followedArtists,
+        recentlyPlayed: response.recentlyPlayed,
+        topArtists: response.topArtists,
+        topTracks: response.topTracks,
+        playlists: response.playlists,
+      });
+    });
   }
 
   componentDidUpdate() {
@@ -60,14 +69,25 @@ class App extends Component {
   }
 
   render() {
-    const { user, topArtists, topTracks, recommendations, playlists } = this.state;
+    const {
+      user,
+      followedArtists,
+      recentlyPlayed,
+      topArtists,
+      topTracks,
+      recommendations,
+      playlists,
+    } = this.state;
+
+    const totalPlaylists = playlists ? playlists.total : 0;
 
     return (
       <StyledApp>
         <Head />
-        {user ? (
+        {user && followedArtists ? (
           <Profile>
-            <User user={user} />
+            <User user={user} followedArtists={followedArtists} totalPlaylists={totalPlaylists} />
+            {recentlyPlayed && <RecentlyPlayed recentlyPlayed={recentlyPlayed} />}
             <TopItems>
               {topArtists && <TopArtists topArtists={topArtists} />}
               {topTracks && <TopTracks topTracks={topTracks} />}

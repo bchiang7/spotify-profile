@@ -15,7 +15,7 @@ const Title = styled.h3`
 `;
 const ArtistsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, 150px);
   grid-gap: ${theme.spacing.lg};
 `;
 const Artist = styled.div`
@@ -28,6 +28,8 @@ const ArtistLink = A.extend`
 const ArtistImage = Img.extend`
   border-radius: 100%;
   object-fit: cover;
+  width: 150px;
+  height: 150px;
 `;
 const ArtistName = A.extend`
   margin: ${theme.spacing.base} 0;
