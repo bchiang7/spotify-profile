@@ -3,18 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {
-    "concurrently": "^3.6.0"
-  },
-  "scripts": {
-    "client-build": "cd client && yarn",
-    "server-build": "cd server && yarn",
-    "build": "concurrently \"npm run client-build\" \"npm run server-build\" ",
-    "client": "cd client && npm start",
-    "server": "cd server && npm start",
-    "start": "concurrently \"npm run client\" \"npm run server\" "
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bchiang7/spotify-profile.git"
@@ -25,5 +13,17 @@
   "bugs": {
     "url": "https://github.com/bchiang7/spotify-profile/issues"
   },
-  "homepage": "https://github.com/bchiang7/spotify-profile#readme"
+  "homepage": "https://github.com/bchiang7/spotify-profile#readme",
+  "scripts": {
+    "client-build": "cd client && yarn",
+    "server-build": "cd server && yarn",
+    "build": "concurrently \"npm run client-build\" \"npm run server-build\" ",
+    "client": "cd client && npm start",
+    "server": "cd server && npm start",
+    "start": "concurrently \"npm run client\" \"npm run server\" "
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^3.6.0"
+  }
 }

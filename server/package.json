@@ -7,8 +7,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@nuscout/eslint-config": "^0.2.1",
-    "@nuscout/prettier-config": "^0.1.2",
     "cookie-parser": "1.4.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
