@@ -1,6 +1,7 @@
-import { injectGlobal } from 'styled-components';
+import { createGlobalStyle } from 'styled-components/macro';
+import theme from './theme';
 
-const fonts = injectGlobal`
+const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: 'Circular Std';
     src: local('Circular Std Medium'), local('CircularStd-Medium'),
@@ -72,6 +73,91 @@ const fonts = injectGlobal`
     font-weight: 900;
     font-style: italic;
   }
+
+  html {
+    box-sizing: border-box;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  body {
+    min-height: 100%;
+    overflow-x: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: ${theme.fonts.primary};
+    font-size: ${theme.fontSizes.base};
+    background-color: ${theme.colors.black};
+    color: ${theme.colors.white};
+    border-top: 10px solid ${theme.colors.green};
+  }
+
+  #root {
+    min-height: 100%;
+  }
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    transition: ${theme.transition};
+  }
+
+  button {
+    font-size: ${theme.fontSizes.base};
+    cursor: pointer;
+    border: 0;
+    border-radius: 0;
+    transition: ${theme.transition};
+  }
+
+  img {
+    width: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+  }
+
+  svg {
+    fill: currentColor;
+  }
+
+  input {
+    border-radius: 0;
+    outline: 0;
+    &::placeholder {
+    }
+    &:focus,
+    &:active {
+      &::placeholder {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  ol, ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  p {
+    margin: 0 0 10px;
+  }
+
+  span {
+    display: inline-block;
+  }
 `;
 
-export default fonts;
+export default GlobalStyle;

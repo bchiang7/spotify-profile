@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import FeatureChart from './FeatureChart';
 
-import styled from 'styled-components';
-import { theme, Img, A, Section, mixins } from '../style';
+import styled from 'styled-components/macro';
+import { theme, mixins, Section } from '../style';
 
-const Container = Section.extend``;
+const Container = styled(Section)``;
 const Title = styled.h3`
   font-size: ${theme.fontSizes.lg};
   font-weight: 600;
@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   ${mixins.flexBetween};
   align-items: flex-start;
 `;
-const PlaylistsContainer = Section.extend`
+const PlaylistsContainer = styled(Section)`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-gap: ${theme.spacing.lg};
@@ -27,11 +27,11 @@ const PlaylistsContainer = Section.extend`
 const Playlist = styled.div`
   text-align: center;
 `;
-const PlaylistImage = Img.extend`
+const PlaylistImage = styled.img`
   object-fit: cover;
   cursor: pointer;
 `;
-const PlaylistName = A.extend`
+const PlaylistName = styled.a`
   margin: ${theme.spacing.base} 0 5px;
   border-bottom: 1px solid transparent;
   &:hover {

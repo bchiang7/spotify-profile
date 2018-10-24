@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const Section = styled.section`
-  margin-bottom: 100px;
+  margin: 0;
+  padding: 25px;
 `;
 
 export default Section;

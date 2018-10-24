@@ -10,16 +10,12 @@ import TopTracks from './TopTracks';
 import Recommendations from './Recommendations';
 import Playlists from './Playlists';
 
-import styled from 'styled-components';
-import { theme, mixins } from '../style';
+import styled from 'styled-components/macro';
+import { mixins, GlobalStyle } from '../style';
 
 const StyledApp = styled.div`
-  background-color: ${theme.colors.black};
-  color: ${theme.colors.white};
   height: 100%;
-  padding: ${theme.spacing.xl};
   min-height: 100vh;
-  border-top: 1rem solid ${theme.colors.green};
 `;
 const Profile = styled.div``;
 const TopItems = styled.div`
@@ -84,6 +80,9 @@ class App extends Component {
     return (
       <StyledApp>
         <Head />
+
+        <GlobalStyle />
+
         {user && followedArtists ? (
           <Profile>
             <User user={user} followedArtists={followedArtists} totalPlaylists={totalPlaylists} />

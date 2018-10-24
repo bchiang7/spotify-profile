@@ -73,29 +73,19 @@ export const getAudioFeaturesForTracks = (url, callback) => {
     .catch(error => console.error(error));
 };
 
-const getUser = () => {
-  return axios.get('https://api.spotify.com/v1/me', { headers });
-};
+const getUser = () => axios.get('https://api.spotify.com/v1/me', { headers });
 
-const getFollowing = () => {
-  return axios.get('https://api.spotify.com/v1/me/following?type=artist', { headers });
-};
+const getFollowing = () =>
+  axios.get('https://api.spotify.com/v1/me/following?type=artist', { headers });
 
-const getRecentlyPlayed = () => {
-  return axios.get('https://api.spotify.com/v1/me/player/recently-played', { headers });
-};
+const getRecentlyPlayed = () =>
+  axios.get('https://api.spotify.com/v1/me/player/recently-played', { headers });
 
-const getTopArtists = () => {
-  return axios.get('https://api.spotify.com/v1/me/top/artists', { headers });
-};
+const getTopArtists = () => axios.get('https://api.spotify.com/v1/me/top/artists', { headers });
 
-const getTopTracks = () => {
-  return axios.get('https://api.spotify.com/v1/me/top/tracks', { headers });
-};
+const getTopTracks = () => axios.get('https://api.spotify.com/v1/me/top/tracks', { headers });
 
-const getPlaylists = () => {
-  return axios.get('https://api.spotify.com/v1/me/playlists', { headers });
-};
+const getPlaylists = () => axios.get('https://api.spotify.com/v1/me/playlists', { headers });
 
 const everything = [
   getUser(),

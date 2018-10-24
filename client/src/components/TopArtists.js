@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { theme, Img, A, Section } from '../style';
+import styled from 'styled-components/macro';
+import { theme, Section } from '../style';
 
-const Container = Section.extend`
+const Container = styled(Section)`
   flex-grow: 1;
   width: 50%;
   margin-right: ${theme.spacing.xl};
@@ -15,23 +15,23 @@ const Title = styled.h3`
 `;
 const ArtistsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 150px);
-  grid-gap: ${theme.spacing.lg};
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: ${theme.spacing.base};
 `;
 const Artist = styled.div`
   text-align: center;
 `;
-const ArtistLink = A.extend`
+const ArtistLink = styled.a`
   position: relative;
   width: 100%;
 `;
-const ArtistImage = Img.extend`
+const ArtistImage = styled.img`
   border-radius: 100%;
   object-fit: cover;
   width: 150px;
   height: 150px;
 `;
-const ArtistName = A.extend`
+const ArtistName = styled.a`
   margin: ${theme.spacing.base} 0;
   border-bottom: 1px solid transparent;
   &:hover {

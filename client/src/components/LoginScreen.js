@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { theme, mixins, A, Section } from '../style';
+import styled from 'styled-components/macro';
+import { theme, mixins, Section } from '../style';
 
-const Login = Section.extend`
+const Login = styled(Section)`
   ${mixins.flexCenter};
   flex-direction: column;
-  min-height: 75vh;
+  min-height: 100vh;
 `;
-const LoginButton = A.extend`
+const LoginButton = styled.a`
   display: inline-block;
   background-color: ${theme.colors.green};
   color: ${theme.colors.white};
   border-radius: 30px;
-  padding: 18px 48px 16px;
+  padding: 17px 35px;
   min-width: 160px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -26,7 +27,6 @@ class LoginScreen extends Component {
   render() {
     return (
       <Login>
-        <h1>Your Spotify Profile</h1>
         <LoginButton href="http://localhost:8888/login">Log in to Spotify</LoginButton>
       </Login>
     );

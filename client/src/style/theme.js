@@ -12,22 +12,22 @@ const theme = {
   },
 
   fontSizes: {
-    base: `1rem`,
-    xs: `0.75rem`,
-    sm: `0.9rem`,
-    md: `1.25rem`,
-    lg: `1.5rem`,
-    xl: `1.75rem`,
-    xxl: `2rem`,
+    base: `16px`,
+    xs: `12px`,
+    sm: `14px`,
+    md: `20px`,
+    lg: `24px`,
+    xl: `28px`,
+    xxl: `32px`,
   },
 
   spacing: {
-    base: `1rem`,
-    xs: `0.5rem`,
-    sm: `0.75rem`,
-    md: `1.5rem`,
-    lg: `2rem`,
-    xl: `3rem`,
+    base: `20px`,
+    xs: `5px`,
+    sm: `10px`,
+    md: `30px`,
+    lg: `50px`,
+    xl: `100px`,
   },
 
   easing: {

@@ -3,17 +3,24 @@ import PropTypes from 'prop-types';
 import Chart from 'chart.js';
 import { getPlaylistTracks, getAudioFeaturesForTracks } from '../spotify';
 
+import styled from 'styled-components/macro';
 import { theme, Section } from '../style';
 
-const Container = Section.extend`
+const Container = styled(Section)`
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding-right: ${theme.spacing.sm};
   width: 33%;
   min-width: 400px;
+  padding: 10px;
+  position: relative;
+
   &.sticky {
     position: fixed;
     top: 30px;
     right: ${theme.spacing.xl};
+  }
+
+  #chart {
+    margin: 0 auto;
   }
 `;
 
@@ -193,7 +200,7 @@ class FeatureChart extends Component {
 
   render() {
     return (
-      <Container innerRef={this.chart}>
+      <Container ref={this.chart}>
         <canvas id="chart" width="400" height="400" />
       </Container>
     );

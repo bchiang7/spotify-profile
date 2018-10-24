@@ -8,8 +8,8 @@
     "concurrently": "^3.6.0"
   },
   "scripts": {
-    "client-build": "cd client && npm install",
-    "server-build": "cd server && npm install",
+    "client-build": "cd client && yarn",
+    "server-build": "cd server && yarn",
     "build": "concurrently \"npm run client-build\" \"npm run server-build\" ",
     "client": "cd client && npm start",
     "server": "cd server && npm start",

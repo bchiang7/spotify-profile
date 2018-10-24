@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { theme, mixins, Img, Header, A, P } from '../style';
+import styled from 'styled-components/macro';
+import { theme, mixins, Header } from '../style';
 
-const Container = Header.extend`
+const Container = styled(Header)`
   display: flex;
   position: relative;
-  margin-bottom: ${theme.spacing.xl};
+  padding: ${theme.spacing.xl} 50px;
 `;
-const Avatar = Img.extend`
+const Avatar = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 100%;
@@ -22,7 +22,7 @@ const Label = styled.div`
   margin-bottom: 5px;
 `;
 const Name = styled.h1`
-  font-size: 3rem;
+  font-size: 42px;
   font-weight: 700;
   margin: 0;
 `;
@@ -36,17 +36,17 @@ const Number = styled.div`
   font-weight: 700;
   font-size: ${theme.fontSizes.md};
 `;
-const NumLabel = P.extend`
+const NumLabel = styled.p`
   color: ${theme.colors.grey};
   font-size: ${theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-top: ${theme.spacing.xs};
 `;
-const LogoutButton = A.extend`
+const LogoutButton = styled.a`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 50px;
+  right: 50px;
   background-color: ${theme.colors.green};
   color: ${theme.colors.white};
   border-radius: 30px;
@@ -67,7 +67,7 @@ class User extends Component {
 
     return (
       <Container>
-        <Avatar src={user.images[0].url} />
+        {user.images.length && <Avatar src={user.images[0].url} />}
         <MetaData>
           <Label>{user.type}</Label>
           <Name>{user.display_name}</Name>
