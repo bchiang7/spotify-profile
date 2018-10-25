@@ -4,9 +4,9 @@ import Chart from 'chart.js';
 import { getPlaylistTracks, getAudioFeaturesForTracks } from '../spotify';
 
 import styled from 'styled-components/macro';
-import { theme, Section } from '../style';
+import { theme, Section } from '../styles';
 
-const Container = styled(Section)`
+const ChartContainer = styled(Section)`
   border: 1px solid rgba(255, 255, 255, 0.3);
   width: 33%;
   min-width: 400px;
@@ -25,10 +25,9 @@ const Container = styled(Section)`
 `;
 
 class FeatureChart extends Component {
-  constructor(props) {
-    super(props);
-    this.chart = React.createRef();
-  }
+  static propTypes = {
+    chartPlaylist: PropTypes.object,
+  };
 
   state = {
     chartPlaylist: this.props.chartPlaylist,
@@ -200,15 +199,11 @@ class FeatureChart extends Component {
 
   render() {
     return (
-      <Container ref={this.chart}>
+      <ChartContainer ref={el => (this.chart = el)}>
         <canvas id="chart" width="400" height="400" />
-      </Container>
+      </ChartContainer>
     );
   }
 }
-
-FeatureChart.propTypes = {
-  chartPlaylist: PropTypes.object,
-};
 
 export default FeatureChart;

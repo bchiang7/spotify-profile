@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-
+import { formatDuration } from '../utils';
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../style';
+import { theme, mixins, Section } from '../styles';
 
 const Container = styled(Section)``;
 const Title = styled.h3`
@@ -45,48 +45,35 @@ const TrackDuration = styled.span`
   font-size: ${theme.fontSizes.sm};
 `;
 
-class Recommendations extends Component {
-  formatDuration(millis) {
-    const minutes = Math.floor(millis / 60000);
-    const seconds = ((millis % 60000) / 1000).toFixed(0);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
-
-  render() {
-    const { recommendations } = this.props;
-    // console.log(recommendations.tracks);
-
-    return (
-      <Container>
-        <Title>Recommended Tracks</Title>
-        <TracksContainer>
-          {recommendations.tracks.map((track, i) => (
-            <Track key={i}>
-              <TrackLeft>
-                <TrackArtwork>
-                  {track.album.images[2] && <TrackImage src={track.album.images[2].url} alt="" />}
-                </TrackArtwork>
-                <TrackMeta>
-                  <TrackName href={track.external_urls.spotify} target="_blank">
-                    {track.name}
-                  </TrackName>
-                  <ArtistAlbum>
-                    {track.artists[0].name}
-                    &nbsp;&middot;&nbsp;
-                    {track.album.name}
-                  </ArtistAlbum>
-                </TrackMeta>
-              </TrackLeft>
-              <TrackRight>
-                <TrackDuration>{this.formatDuration(track.duration_ms)}</TrackDuration>
-              </TrackRight>
-            </Track>
-          ))}
-        </TracksContainer>
-      </Container>
-    );
-  }
-}
+const Recommendations = ({ recommendations }) => (
+  <Container>
+    <Title>Recommended Tracks</Title>
+    <TracksContainer>
+      {recommendations.tracks.map((track, i) => (
+        <Track key={i}>
+          <TrackLeft>
+            <TrackArtwork>
+              {track.album.images[2] && <TrackImage src={track.album.images[2].url} alt="" />}
+            </TrackArtwork>
+            <TrackMeta>
+              <TrackName href={track.external_urls.spotify} target="_blank">
+                {track.name}
+              </TrackName>
+              <ArtistAlbum>
+                {track.artists[0].name}
+                &nbsp;&middot;&nbsp;
+                {track.album.name}
+              </ArtistAlbum>
+            </TrackMeta>
+          </TrackLeft>
+          <TrackRight>
+            <TrackDuration>{formatDuration(track.duration_ms)}</TrackDuration>
+          </TrackRight>
+        </Track>
+      ))}
+    </TracksContainer>
+  </Container>
+);
 
 Recommendations.propTypes = {
   recommendations: PropTypes.object,

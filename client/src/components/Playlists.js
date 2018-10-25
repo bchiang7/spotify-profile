@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import FeatureChart from './FeatureChart';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../style';
+import { theme, mixins, Section } from '../styles';
 
 const Container = styled(Section)``;
 const Title = styled.h3`

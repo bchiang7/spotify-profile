@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getEverything, getRecommendations } from '../spotify';
+import { getUser, getEverything, getRecommendations } from '../spotify';
 
 import Head from './Head';
 import LoginScreen from './LoginScreen';
@@ -11,9 +11,9 @@ import Recommendations from './Recommendations';
 import Playlists from './Playlists';
 
 import styled from 'styled-components/macro';
-import { mixins, GlobalStyle } from '../style';
+import { mixins, GlobalStyle } from '../styles';
 
-const StyledApp = styled.div`
+const AppContainer = styled.div`
   height: 100%;
   min-height: 100vh;
 `;
@@ -34,20 +34,30 @@ class App extends Component {
   };
 
   componentDidMount() {
-    getEverything().then(response => {
-      this.setState({
-        user: response.user,
-        followedArtists: response.followedArtists,
-        recentlyPlayed: response.recentlyPlayed,
-        topArtists: response.topArtists,
-        topTracks: response.topTracks,
-        playlists: response.playlists,
-      });
+    getUser().then(response => {
+      this.setState(
+        {
+          user: response.user,
+        },
+        () => {
+          getEverything().then(response => {
+            this.setState({
+              user: response.user,
+              followedArtists: response.followedArtists,
+              recentlyPlayed: response.recentlyPlayed,
+              topArtists: response.topArtists,
+              topTracks: response.topTracks,
+              playlists: response.playlists,
+            });
+          });
+        },
+      );
     });
   }
 
   componentDidUpdate() {
-    if (!this.state.recommendations) {
+    const { recommendations } = this.state;
+    if (!recommendations) {
       this.getRecommendations();
     }
   }
@@ -78,7 +88,7 @@ class App extends Component {
     const totalPlaylists = playlists ? playlists.total : 0;
 
     return (
-      <StyledApp>
+      <AppContainer>
         <Head />
 
         <GlobalStyle />
@@ -97,7 +107,7 @@ class App extends Component {
         ) : (
           <LoginScreen />
         )}
-      </StyledApp>
+      </AppContainer>
     );
   }
 }

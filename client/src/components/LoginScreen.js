@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../style';
+import { theme, mixins, Section } from '../styles';
 
 const Login = styled(Section)`
   ${mixins.flexCenter};
@@ -23,14 +23,10 @@ const LoginButton = styled.a`
   }
 `;
 
-class LoginScreen extends Component {
-  render() {
-    return (
-      <Login>
-        <LoginButton href="http://localhost:8888/login">Log in to Spotify</LoginButton>
-      </Login>
-    );
-  }
-}
+const LoginScreen = () => (
+  <Login>
+    <LoginButton href="http://localhost:8888/login">Log in to Spotify</LoginButton>
+  </Login>
+);
 
 export default LoginScreen;

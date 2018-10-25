@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { formatDuration } from '../utils';
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../style';
+import { theme, mixins, Section } from '../styles';
 
 const Container = styled(Section)`
   width: 100%;
@@ -49,50 +50,37 @@ const TrackDuration = styled.span`
   font-size: ${theme.fontSizes.sm};
 `;
 
-class RecentlyPlayed extends Component {
-  formatDuration(millis) {
-    const minutes = Math.floor(millis / 60000);
-    const seconds = ((millis % 60000) / 1000).toFixed(0);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
-
-  render() {
-    const { recentlyPlayed } = this.props;
-    // console.log(recentlyPlayed);
-
-    return (
-      <Container>
-        <Title>Recently Played Tracks</Title>
-        <TracksContainer>
-          {recentlyPlayed.items.map((item, i) => (
-            <Track key={i}>
-              <TrackLeft>
-                <TrackArtwork>
-                  {item.track.album.images && (
-                    <TrackImage src={item.track.album.images[0].url} alt="" />
-                  )}
-                </TrackArtwork>
-                <TrackMeta>
-                  <TrackName href={item.track.external_urls.spotify} target="_blank">
-                    {item.track.name}
-                  </TrackName>
-                  <ArtistAlbum>
-                    {item.track.artists[0].name}
-                    &nbsp;&middot;&nbsp;
-                    {item.track.album.name}
-                  </ArtistAlbum>
-                </TrackMeta>
-              </TrackLeft>
-              <TrackRight>
-                <TrackDuration>{this.formatDuration(item.track.duration_ms)}</TrackDuration>
-              </TrackRight>
-            </Track>
-          ))}
-        </TracksContainer>
-      </Container>
-    );
-  }
-}
+const RecentlyPlayed = ({ recentlyPlayed }) => (
+  <Container>
+    <Title>Recently Played Tracks</Title>
+    <TracksContainer>
+      {recentlyPlayed.items.map((item, i) => (
+        <Track key={i}>
+          <TrackLeft>
+            <TrackArtwork>
+              {item.track.album.images && (
+                <TrackImage src={item.track.album.images[0].url} alt="" />
+              )}
+            </TrackArtwork>
+            <TrackMeta>
+              <TrackName href={item.track.external_urls.spotify} target="_blank">
+                {item.track.name}
+              </TrackName>
+              <ArtistAlbum>
+                {item.track.artists[0].name}
+                &nbsp;&middot;&nbsp;
+                {item.track.album.name}
+              </ArtistAlbum>
+            </TrackMeta>
+          </TrackLeft>
+          <TrackRight>
+            <TrackDuration>{formatDuration(item.track.duration_ms)}</TrackDuration>
+          </TrackRight>
+        </Track>
+      ))}
+    </TracksContainer>
+  </Container>
+);
 
 RecentlyPlayed.propTypes = {
   recentlyPlayed: PropTypes.object,
