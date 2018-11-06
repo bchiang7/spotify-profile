@@ -89,27 +89,27 @@ export const getTopTracks = () =>
 
 export const getPlaylists = () => axios.get('https://api.spotify.com/v1/me/playlists', { headers });
 
-const everything = [
-  getUser(),
-  getFollowing(),
-  getRecentlyPlayed(),
-  getTopArtists(),
-  getTopTracks(),
-  getPlaylists(),
-];
+// const everything = [
+//   getUser(),
+//   getFollowing(),
+//   getRecentlyPlayed(),
+//   getTopArtists(),
+//   getTopTracks(),
+//   getPlaylists(),
+// ];
 
-export const getEverything = () => {
-  return axios.all(everything).then(
-    axios.spread((user, followedArtists, recentlyPlayed, topArtists, topTracks, playlists) => {
-      // console.log(recentlyPlayed);
-      return {
-        user: user.data,
-        followedArtists: followedArtists.data,
-        recentlyPlayed: recentlyPlayed.data,
-        topArtists: topArtists.data,
-        topTracks: topTracks.data,
-        playlists: playlists.data,
-      };
-    }),
-  );
-};
+// export const getEverything = () => {
+//   return axios.all(everything).then(
+//     axios.spread((user, followedArtists, recentlyPlayed, topArtists, topTracks, playlists) => {
+//       // console.log(recentlyPlayed);
+//       return {
+//         user: user.data,
+//         followedArtists: followedArtists.data,
+//         recentlyPlayed: recentlyPlayed.data,
+//         topArtists: topArtists.data,
+//         topTracks: topTracks.data,
+//         playlists: playlists.data,
+//       };
+//     }),
+//   );
+// };

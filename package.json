@@ -1,6 +1,6 @@
 {
   "name": "spotify-profile",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "repository": {
@@ -24,6 +24,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "concurrently": "^3.6.0"
+    "concurrently": "^4.0.1"
   }
 }

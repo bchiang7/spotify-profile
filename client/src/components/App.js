@@ -24,6 +24,7 @@ const TopItems = styled.div`
 
 class App extends Component {
   state = {
+    loggedIn: false,
     user: null,
     followedArtists: null,
     recentlyPlayed: null,
@@ -34,25 +35,25 @@ class App extends Component {
   };
 
   componentDidMount() {
-    getUser().then(response => {
-      this.setState(
-        {
-          user: response.user,
-        },
-        () => {
-          getEverything().then(response => {
-            this.setState({
-              user: response.user,
-              followedArtists: response.followedArtists,
-              recentlyPlayed: response.recentlyPlayed,
-              topArtists: response.topArtists,
-              topTracks: response.topTracks,
-              playlists: response.playlists,
-            });
-          });
-        },
-      );
-    });
+    // getUser().then(response => {
+    //   this.setState(
+    //     {
+    //       user: response.user,
+    //     },
+    //     () => {
+    //       getEverything().then(response => {
+    //         this.setState({
+    //           user: response.user,
+    //           followedArtists: response.followedArtists,
+    //           recentlyPlayed: response.recentlyPlayed,
+    //           topArtists: response.topArtists,
+    //           topTracks: response.topTracks,
+    //           playlists: response.playlists,
+    //         });
+    //       });
+    //     },
+    //   );
+    // });
   }
 
   componentDidUpdate() {
@@ -76,6 +77,7 @@ class App extends Component {
 
   render() {
     const {
+      loggedIn,
       user,
       followedArtists,
       recentlyPlayed,
@@ -93,7 +95,7 @@ class App extends Component {
 
         <GlobalStyle />
 
-        {user && followedArtists ? (
+        {loggedIn ? (
           <Profile>
             <User user={user} followedArtists={followedArtists} totalPlaylists={totalPlaylists} />
             {recentlyPlayed && <RecentlyPlayed recentlyPlayed={recentlyPlayed} />}
