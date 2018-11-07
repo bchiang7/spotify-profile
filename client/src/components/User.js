@@ -11,8 +11,8 @@ const Container = styled.header`
   position: relative;
 `;
 const Avatar = styled.div`
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 100%;
   margin-right: ${theme.spacing.md};
 `;
@@ -21,7 +21,6 @@ const NoAvatar = styled.div`
   border-radius: 100%;
   padding: ${theme.spacing.md};
 `;
-const MetaData = styled.div``;
 const Label = styled.div`
   font-size: ${theme.fontSizes.xs};
   text-transform: uppercase;
@@ -85,7 +84,7 @@ class User extends Component {
             </NoAvatar>
           )}
         </Avatar>
-        <MetaData>
+        <div>
           <Label>{user.type}</Label>
           <Name>{user.display_name}</Name>
           <Stats>
@@ -103,7 +102,7 @@ class User extends Component {
               <NumLabel>Playlists</NumLabel>
             </Stat>
           </Stats>
-        </MetaData>
+        </div>
         {/* <LogoutButton href="http://localhost:3000">Log Out</LogoutButton> */}
       </Container>
     );

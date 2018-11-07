@@ -46,9 +46,9 @@ export const getRecommendations = (topTracks, callback) => {
 
   axios
     .get(url, { headers })
-    .then(response => {
-      // console.log(response.data);
-      callback(response.data);
+    .then(res => {
+      // console.log(res.data);
+      callback(res.data);
     })
     .catch(error => console.error(error));
 };
@@ -56,9 +56,9 @@ export const getRecommendations = (topTracks, callback) => {
 export const getPlaylistTracks = (url, callback) => {
   axios
     .get(url, { headers })
-    .then(response => {
-      // console.log(response.data);
-      callback(response.data);
+    .then(res => {
+      // console.log(res.data);
+      callback(res.data);
     })
     .catch(error => console.error(error));
 };
@@ -66,9 +66,9 @@ export const getPlaylistTracks = (url, callback) => {
 export const getAudioFeaturesForTracks = (url, callback) => {
   axios
     .get(url, { headers })
-    .then(response => {
-      // console.log(response.data);
-      callback(response.data);
+    .then(res => {
+      // console.log(res.data);
+      callback(res.data);
     })
     .catch(error => console.error(error));
 };
@@ -89,30 +89,29 @@ export const getTopTracks = () =>
 
 export const getPlaylists = () => axios.get('https://api.spotify.com/v1/me/playlists', { headers });
 
-// xhr errors even when not called
-const everything = [
-  getUser(),
-  getFollowing(),
-  getRecentlyPlayed(),
-  getTopArtists(),
-  getTopTracks(),
-  getPlaylists(),
-];
-
 export const getEverything = () => {
   if (token) {
-    return axios.all(everything).then(
-      axios.spread((user, followedArtists, recentlyPlayed, topArtists, topTracks, playlists) => {
-        // console.log(recentlyPlayed);
-        return {
-          user: user.data,
-          followedArtists: followedArtists.data,
-          recentlyPlayed: recentlyPlayed.data,
-          topArtists: topArtists.data,
-          topTracks: topTracks.data,
-          playlists: playlists.data,
-        };
-      }),
-    );
+    return axios
+      .all([
+        getUser(),
+        getFollowing(),
+        getRecentlyPlayed(),
+        getTopArtists(),
+        getTopTracks(),
+        getPlaylists(),
+      ])
+      .then(
+        axios.spread((user, followedArtists, recentlyPlayed, topArtists, topTracks, playlists) => {
+          // console.log(recentlyPlayed);
+          return {
+            user: user.data,
+            followedArtists: followedArtists.data,
+            recentlyPlayed: recentlyPlayed.data,
+            topArtists: topArtists.data,
+            topTracks: topTracks.data,
+            playlists: playlists.data,
+          };
+        }),
+      );
   }
 };

@@ -31,20 +31,20 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    getUser().then(response => {
+    getUser().then(res => {
       this.setState(
         {
-          user: response.user,
+          user: res.user,
         },
         () => {
-          getEverything().then(response => {
+          getEverything().then(res => {
             this.setState({
-              user: response.user,
-              followedArtists: response.followedArtists,
-              recentlyPlayed: response.recentlyPlayed,
-              topArtists: response.topArtists,
-              topTracks: response.topTracks,
-              playlists: response.playlists,
+              user: res.user,
+              followedArtists: res.followedArtists,
+              recentlyPlayed: res.recentlyPlayed,
+              topArtists: res.topArtists,
+              topTracks: res.topTracks,
+              playlists: res.playlists,
             });
           });
         },
@@ -66,8 +66,8 @@ class Profile extends Component {
       return;
     }
 
-    getRecommendations(topTracks, response => {
-      this.setState({ recommendations: response });
+    getRecommendations(topTracks, res => {
+      this.setState({ recommendations: res });
     });
   }
 
