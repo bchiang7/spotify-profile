@@ -745,6 +745,16 @@
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.2.tgz#e13182e1b69871a422d7863e11a4a6f5b814a4bd"
 
+"@upstatement/eslint-config@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@upstatement/eslint-config/-/eslint-config-0.2.2.tgz#8378d80f9581290dd537966b42611f72169aed16"
+
+"@upstatement/prettier-config@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@upstatement/prettier-config/-/prettier-config-0.2.2.tgz#dd5041c69c0002f206493e2175b1368b159eb603"
+  dependencies:
+    prettier "^1.x.x"
+
 "@webassemblyjs/ast@1.7.6":
   version "1.7.6"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.6.tgz#3ef8c45b3e5e943a153a05281317474fef63e21e"
@@ -6850,7 +6860,7 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^1.14.2, prettier@^1.14.3:
+prettier@^1.14.2, prettier@^1.14.3, prettier@^1.x.x:
   version "1.14.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
 

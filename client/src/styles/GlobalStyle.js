@@ -131,6 +131,7 @@ const GlobalStyle = createGlobalStyle`
 
   svg {
     fill: currentColor;
+    vertical-align: middle;
   }
 
   input {

@@ -39,6 +39,8 @@
     "styled-components": "^4.0.3"
   },
   "devDependencies": {
+    "@upstatement/eslint-config": "^0.2.2",
+    "@upstatement/prettier-config": "^0.2.2",
     "babel-plugin-macros": "^2.4.2",
     "babel-plugin-styled-components": "^1.8.0",
     "eslint-config-prettier": "^3.1.0",

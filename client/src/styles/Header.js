@@ -1,8 +1,7 @@
 import styled from 'styled-components/macro';
-import theme from './theme';
 
 const Header = styled.header`
-  padding: ${theme.spacing.base};
+  margin: 0;
 `;
 
 export default Header;

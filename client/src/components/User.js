@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components/macro';
-import { theme, mixins, Header } from '../styles';
 
-const Container = styled(Header)`
+import { IconUser } from './icons';
+
+import styled from 'styled-components/macro';
+import { theme, mixins } from '../styles';
+
+const Container = styled.header`
   display: flex;
   position: relative;
-  padding: ${theme.spacing.xl} 50px;
 `;
-const Avatar = styled.img`
+const Avatar = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 100%;
-  margin-right: ${theme.spacing.xl};
+  margin-right: ${theme.spacing.md};
+`;
+const NoAvatar = styled.div`
+  border: 2px solid currentColor;
+  border-radius: 100%;
+  padding: ${theme.spacing.md};
 `;
 const MetaData = styled.div``;
 const Label = styled.div`
@@ -69,7 +76,15 @@ class User extends Component {
 
     return (
       <Container>
-        {user.images.length > 0 && <Avatar src={user.images[0].url} />}
+        <Avatar>
+          {user.images.length > 0 ? (
+            <img src={user.images[0].url} alt="avatar" />
+          ) : (
+            <NoAvatar>
+              <IconUser />
+            </NoAvatar>
+          )}
+        </Avatar>
         <MetaData>
           <Label>{user.type}</Label>
           <Name>{user.display_name}</Name>
