@@ -1,4 +1,3 @@
-// const express = require('express');
 const path = require("path");
 const cluster = require("cluster");
 const numCPUs = require("os").cpus().length;
@@ -52,8 +51,6 @@ if (cluster.isMaster) {
     );
   });
 } else {
-  const app = express();
-
   // Priority serve any static files.
   app.use(express.static(path.resolve(__dirname, "../client/build")));
 
@@ -75,7 +72,7 @@ if (cluster.isMaster) {
         response_type: "code",
         client_id: CLIENT_ID,
         scope: scope,
-        REDIRECT_URI: REDIRECT_URI,
+        redirect_uri: REDIRECT_URI,
         state: state
       })}`
     );
@@ -141,10 +138,31 @@ if (cluster.isMaster) {
     }
   });
 
-  // Answer API requests.
-  app.get("/api", function(req, res) {
-    res.set("Content-Type", "application/json");
-    res.send('{"message":"Hello from the custom server!"}');
+  app.get("/refresh_token", function(req, res) {
+    // requesting access token from refresh token
+    const refresh_token = req.query.refresh_token;
+    const authOptions = {
+      url: "https://accounts.spotify.com/api/token",
+      headers: {
+        Authorization: `Basic ${new Buffer(
+          `${client_id}:${client_secret}`
+        ).toString("base64")}`
+      },
+      form: {
+        grant_type: "refresh_token",
+        refresh_token: refresh_token
+      },
+      json: true
+    };
+
+    request.post(authOptions, function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+        const access_token = body.access_token;
+        res.send({
+          access_token: access_token
+        });
+      }
+    });
   });
 
   // All remaining requests return the React app, so it can handle routing.
