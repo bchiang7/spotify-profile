@@ -17,10 +17,6 @@
   "engines": {
     "node": "10.5.0"
   },
-  "cacheDirectories": [
-    "node_modules",
-    "client/node_modules"
-  ],
   "scripts": {
     "client-build": "cd client && yarn",
     "client": "cd client && npm start",

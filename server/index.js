@@ -151,9 +151,9 @@ app.get("/refresh_token", function(req, res) {
 });
 
 // All remaining requests return the React app, so it can handle routing.
-app.get("*", function(request, response) {
-  response.sendFile(path.resolve(__dirname, "../client/public", "index.html"));
-});
+// app.get("*", function(request, response) {
+//   response.sendFile(path.resolve(__dirname, "../client/public", "index.html"));
+// });
 
 // console.log('Listening on http://localhost:8888. \n Go to /login to initiate authentication flow.');
 
