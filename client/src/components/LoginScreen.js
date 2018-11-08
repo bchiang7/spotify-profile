@@ -25,7 +25,7 @@ const LoginButton = styled.a`
 
 const LoginScreen = () => (
   <Login>
-    <LoginButton href="http://localhost:8888/login">Log in to Spotify</LoginButton>
+    <LoginButton href="https://spotify-profile.herokuapp.com/login">Log in to Spotify</LoginButton>
   </Login>
 );
 

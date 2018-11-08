@@ -1,12 +1,7 @@
-/**
- * This is an example of a basic node.js script that performs
- * the Authorization Code oAuth2 flow to authenticate against
- * the Spotify Accounts.
- *
- * For more information, read
- * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
- */
-
+// const express = require('express');
+const path = require("path");
+const cluster = require("cluster");
+const numCPUs = require("os").cpus().length;
 const express = require("express"); // Express web server framework
 const request = require("request"); // 'Request' library
 const cors = require("cors");
@@ -15,11 +10,12 @@ const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
-const client_id = process.env.CLIENT_ID;
-const client_secret = process.env.CLIENT_SECRET;
-const redirect_uri =
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI =
   process.env.REDIRECT_URI || "http://localhost:8888/callback";
-const frontend_uri = process.env.FRONTEND_URI || "http://localhost:3000";
+const FRONTEND_URI = process.env.FRONTEND_URI || "http://localhost:3000";
+const PORT = process.env.PORT || 8888;
 
 /**
  * Generates a random string containing numbers and letters
@@ -39,122 +35,126 @@ const generateRandomString = function(length) {
 
 const stateKey = "spotify_auth_state";
 
-const app = express();
+// Multi-process to utilize all CPU cores.
+if (cluster.isMaster) {
+  console.error(`Node cluster master ${process.pid} is running`);
 
-app
-  .use(express.static(`${__dirname}/public`))
-  .use(cors())
-  .use(cookieParser());
-
-app.get("/login", function(req, res) {
-  const state = generateRandomString(16);
-  res.cookie(stateKey, state);
-
-  // your application requests authorization
-  const scope =
-    "user-read-private user-read-email user-read-playback-state user-read-recently-played user-top-read user-follow-read playlist-read-private playlist-read-collaborative";
-
-  res.redirect(
-    `https://accounts.spotify.com/authorize?${querystring.stringify({
-      response_type: "code",
-      client_id: client_id,
-      scope: scope,
-      redirect_uri: redirect_uri,
-      state: state
-    })}`
-  );
-});
-
-app.get("/callback", function(req, res) {
-  // your application requests refresh and access tokens
-  // after checking the state parameter
-
-  const code = req.query.code || null;
-  const state = req.query.state || null;
-  const storedState = req.cookies ? req.cookies[stateKey] : null;
-
-  if (state === null || state !== storedState) {
-    res.redirect(`/#${querystring.stringify({ error: "state_mismatch" })}`);
-  } else {
-    res.clearCookie(stateKey);
-    const authOptions = {
-      url: "https://accounts.spotify.com/api/token",
-      form: {
-        code: code,
-        redirect_uri: redirect_uri,
-        grant_type: "authorization_code"
-      },
-      headers: {
-        Authorization: `Basic ${new Buffer(
-          `${client_id}:${client_secret}`
-        ).toString("base64")}`
-      },
-      json: true
-    };
-
-    request.post(authOptions, function(error, response, body) {
-      if (!error && response.statusCode === 200) {
-        const access_token = body.access_token;
-
-        const refresh_token = body.refresh_token;
-
-        const options = {
-          url: "https://api.spotify.com/v1/me",
-          headers: { Authorization: `Bearer ${access_token}` },
-          json: true
-        };
-
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
-          // console.log(body);
-        });
-
-        // we can also pass the token to the browser to make requests from there
-        res.redirect(
-          `${frontend_uri}/#${querystring.stringify({
-            access_token: access_token,
-            refresh_token: refresh_token
-          })}`
-        );
-      } else {
-        res.redirect(`/#${querystring.stringify({ error: "invalid_token" })}`);
-      }
-    });
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
   }
-});
 
-app.get("/refresh_token", function(req, res) {
-  // requesting access token from refresh token
-  const refresh_token = req.query.refresh_token;
-  const authOptions = {
-    url: "https://accounts.spotify.com/api/token",
-    headers: {
-      Authorization: `Basic ${new Buffer(
-        `${client_id}:${client_secret}`
-      ).toString("base64")}`
-    },
-    form: {
-      grant_type: "refresh_token",
-      refresh_token: refresh_token
-    },
-    json: true
-  };
+  cluster.on("exit", (worker, code, signal) => {
+    console.error(
+      `Node cluster worker ${
+        worker.process.pid
+      } exited: code ${code}, signal ${signal}`
+    );
+  });
+} else {
+  const app = express();
 
-  request.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      const access_token = body.access_token;
-      res.send({
-        access_token: access_token
+  // Priority serve any static files.
+  app.use(express.static(path.resolve(__dirname, "../client/build")));
+
+  app
+    .use(express.static(`${__dirname}/public`))
+    .use(cors())
+    .use(cookieParser());
+
+  app.get("/login", function(req, res) {
+    const state = generateRandomString(16);
+    res.cookie(stateKey, state);
+
+    // your application requests authorization
+    const scope =
+      "user-read-private user-read-email user-read-playback-state user-read-recently-played user-top-read user-follow-read playlist-read-private playlist-read-collaborative";
+
+    res.redirect(
+      `https://accounts.spotify.com/authorize?${querystring.stringify({
+        response_type: "code",
+        client_id: CLIENT_ID,
+        scope: scope,
+        REDIRECT_URI: REDIRECT_URI,
+        state: state
+      })}`
+    );
+  });
+
+  app.get("/callback", function(req, res) {
+    // your application requests refresh and access tokens
+    // after checking the state parameter
+
+    const code = req.query.code || null;
+    const state = req.query.state || null;
+    const storedState = req.cookies ? req.cookies[stateKey] : null;
+
+    if (state === null || state !== storedState) {
+      res.redirect(`/#${querystring.stringify({ error: "state_mismatch" })}`);
+    } else {
+      res.clearCookie(stateKey);
+      const authOptions = {
+        url: "https://accounts.spotify.com/api/token",
+        form: {
+          code: code,
+          redirect_uri: REDIRECT_URI,
+          grant_type: "authorization_code"
+        },
+        headers: {
+          Authorization: `Basic ${new Buffer(
+            `${CLIENT_ID}:${CLIENT_SECRET}`
+          ).toString("base64")}`
+        },
+        json: true
+      };
+
+      request.post(authOptions, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+          const access_token = body.access_token;
+
+          const refresh_token = body.refresh_token;
+
+          const options = {
+            url: "https://api.spotify.com/v1/me",
+            headers: { Authorization: `Bearer ${access_token}` },
+            json: true
+          };
+
+          // use the access token to access the Spotify Web API
+          request.get(options, function(error, response, body) {
+            // console.log(body);
+          });
+
+          // we can also pass the token to the browser to make requests from there
+          res.redirect(
+            `${FRONTEND_URI}/#${querystring.stringify({
+              access_token: access_token,
+              refresh_token: refresh_token
+            })}`
+          );
+        } else {
+          res.redirect(
+            `/#${querystring.stringify({ error: "invalid_token" })}`
+          );
+        }
       });
     }
   });
-});
 
-// All remaining requests return the React app, so it can handle routing.
-// app.get("*", function(request, response) {
-//   response.sendFile(path.resolve(__dirname, "../client/public", "index.html"));
-// });
+  // Answer API requests.
+  app.get("/api", function(req, res) {
+    res.set("Content-Type", "application/json");
+    res.send('{"message":"Hello from the custom server!"}');
+  });
 
-// console.log('Listening on http://localhost:8888. \n Go to /login to initiate authentication flow.');
+  // All remaining requests return the React app, so it can handle routing.
+  app.get("*", function(request, response) {
+    response.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+  });
 
-app.listen(8888);
+  app.listen(PORT, function() {
+    console.error(
+      `Node cluster worker ${process.pid}: listening on port ${PORT}`
+    );
+  });
+}
