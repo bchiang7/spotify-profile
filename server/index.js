@@ -1,11 +1,11 @@
-const path = require("path");
-const cluster = require("cluster");
-const numCPUs = require("os").cpus().length;
 const express = require("express"); // Express web server framework
 const request = require("request"); // 'Request' library
 const cors = require("cors");
 const querystring = require("querystring");
 const cookieParser = require("cookie-parser");
+const path = require("path");
+const cluster = require("cluster");
+const numCPUs = require("os").cpus().length;
 
 require("dotenv").config();
 
@@ -54,7 +54,7 @@ if (cluster.isMaster) {
   const app = express();
 
   // Priority serve any static files.
-  app.use(express.static(path.resolve(__dirname, "../react-ui/build")));
+  app.use(express.static(path.resolve(__dirname, "../client/build")));
 
   app
     .use(express.static(`${__dirname}/public`))
