@@ -14,15 +14,29 @@
     "url": "https://github.com/bchiang7/spotify-profile/issues"
   },
   "homepage": "https://github.com/bchiang7/spotify-profile#readme",
+  "engines": {
+    "node": "10.5.0"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "react-ui/node_modules"
+  ],
   "scripts": {
     "client-build": "cd client && yarn",
-    "server-build": "cd server && yarn",
-    "build": "concurrently \"npm run client-build\" \"npm run server-build\" ",
+    "build": "concurrently \"npm run client-build\" \"yarn\" ",
     "client": "cd client && npm start",
-    "server": "cd server && npm start",
-    "start": "concurrently \"npm run client\" \"npm run server\" "
+    "server": "node server",
+    "start": "concurrently \"yarn client\" \"yarn server\" ",
+    "heroku-postbuild": "cd client/ && yarn && yarn install --production && yarn build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "cookie-parser": "1.4.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "~4.16.3",
+    "querystring": "~0.2.0",
+    "request": "~2.87.0"
+  },
   "devDependencies": {
     "concurrently": "^4.0.1"
   }

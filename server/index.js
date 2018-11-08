@@ -8,7 +8,7 @@
  */
 
 const express = require("express"); // Express web server framework
-const request = require("request"); // "Request" library
+const request = require("request"); // 'Request' library
 const cors = require("cors");
 const querystring = require("querystring");
 const cookieParser = require("cookie-parser");
@@ -19,6 +19,7 @@ const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 const redirect_uri =
   process.env.REDIRECT_URI || "http://localhost:8888/callback";
+const frontend_uri = process.env.FRONTEND_URI || "http://localhost:3000";
 
 /**
  * Generates a random string containing numbers and letters
@@ -110,7 +111,7 @@ app.get("/callback", function(req, res) {
 
         // we can also pass the token to the browser to make requests from there
         res.redirect(
-          `http://localhost:3000/#${querystring.stringify({
+          `${frontend_uri}/#${querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
           })}`
