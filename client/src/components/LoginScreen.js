@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 
+require('dotenv').config();
+const LOGIN_URI = process.env.LOGIN_URI || 'http://localhost:8888/login';
+
 const Login = styled(Section)`
   ${mixins.flexCenter};
   flex-direction: column;
@@ -25,7 +28,8 @@ const LoginButton = styled.a`
 
 const LoginScreen = () => (
   <Login>
-    <LoginButton href="https://spotify-profile.herokuapp.com/login">Log in to Spotify</LoginButton>
+    <h1>{process.env.NODE_ENV}</h1>
+    <LoginButton href={LOGIN_URI}>Log in to Spotify</LoginButton>
   </Login>
 );
 

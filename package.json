@@ -1,14 +1,14 @@
 {
   "name": "spotify-profile",
   "version": "0.1.0",
-  "description": "",
+  "description": "Spotify Profile",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bchiang7/spotify-profile.git"
+    "url": "https://github.com/bchiang7/spotify-profile.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Brittany Chiang <brittany.chiang@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bchiang7/spotify-profile/issues"
@@ -17,6 +17,7 @@
   "engines": {
     "node": "10.5.0"
   },
+  "proxy": "http://localhost:8888/",
   "scripts": {
     "client-build": "cd client && yarn",
     "client": "cd client && npm start",
@@ -30,5 +31,6 @@
     "express": "~4.16.3",
     "querystring": "~0.2.0",
     "request": "~2.87.0"
-  }
+  },
+  "devDependencies": {}
 }
