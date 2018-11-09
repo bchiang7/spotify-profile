@@ -19,9 +19,14 @@
   },
   "proxy": "http://localhost:8888",
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
+    "linters": {
+      "*.{js}": [
+        "eslint --fix",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "**/server/*.js"
     ]
   },
   "husky": {
