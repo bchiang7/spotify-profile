@@ -26,12 +26,12 @@
       ]
     },
     "ignore": [
-      "**/server/*.js"
+      "**/*.js"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": ""
     }
   },
   "dependencies": {
