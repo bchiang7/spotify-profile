@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Router } from '@reach/router';
 
 import Sidebar from './Sidebar';
+import Player from './Player';
 import User from './User';
 import RecentlyPlayed from './RecentlyPlayed';
 import TopArtists from './TopArtists';
@@ -111,6 +112,8 @@ class Profile extends Component {
         </Router>
 
         <Sidebar />
+
+        <Player />
 
         {/* {playlists && <Playlists playlists={playlists} />} */}
       </Container>

@@ -2,10 +2,10 @@ const theme = {
   colors: {
     green: '#1DB954',
     offGreen: '#1ed760',
-    black: '#191414',
+    black: '#181818',
     white: '#FFFFFF',
     grey: '#9B9B9B',
-    darkGrey: '#181818',
+    darkGrey: '#282828',
   },
 
   fonts: {
