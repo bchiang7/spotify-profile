@@ -19,8 +19,10 @@
   },
   "proxy": "http://localhost:8888/",
   "scripts": {
-    "client-build": "cd client && yarn",
-    "client": "cd client && npm start",
+    "client:install": "cd client && yarn",
+    "client": "cd client && yarn start",
+    "server": "node server",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "start": "node server",
     "heroku-postbuild": "cd client/ && yarn && yarn install --production && yarn build"
   },
@@ -32,5 +34,7 @@
     "querystring": "~0.2.0",
     "request": "~2.87.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "concurrently": "^4.0.1"
+  }
 }
