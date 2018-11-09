@@ -801,13 +801,13 @@
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.2.tgz#e13182e1b69871a422d7863e11a4a6f5b814a4bd"
 
-"@upstatement/eslint-config@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@upstatement/eslint-config/-/eslint-config-0.2.2.tgz#8378d80f9581290dd537966b42611f72169aed16"
+"@upstatement/eslint-config@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@upstatement/eslint-config/-/eslint-config-0.3.0.tgz#ff399ad04d046d8cdd4b35ea66a93141439bab4b"
 
-"@upstatement/prettier-config@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@upstatement/prettier-config/-/prettier-config-0.2.2.tgz#dd5041c69c0002f206493e2175b1368b159eb603"
+"@upstatement/prettier-config@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@upstatement/prettier-config/-/prettier-config-0.3.0.tgz#cf34332dfba90c7586cd0bde134b7fc771163323"
   dependencies:
     prettier "^1.x.x"
 
