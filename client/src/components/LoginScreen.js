@@ -3,7 +3,8 @@ import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 
 require('dotenv').config();
-const LOGIN_URI = process.env.LOGIN_URI || 'http://localhost:8888/login';
+const LOGIN_URI =
+  process.env.NODE_ENV !== 'production' ? 'http://localhost:8888/login' : process.env.LOGIN_URI;
 
 const Login = styled(Section)`
   ${mixins.flexCenter};
