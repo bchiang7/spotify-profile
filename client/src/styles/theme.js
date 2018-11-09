@@ -5,6 +5,7 @@ const theme = {
     black: '#191414',
     white: '#FFFFFF',
     grey: '#9B9B9B',
+    darkGrey: '#181818',
   },
 
   fonts: {

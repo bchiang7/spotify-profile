@@ -11,6 +11,10 @@ const Login = styled(Section)`
   ${mixins.flexCenter};
   flex-direction: column;
   min-height: 100vh;
+
+  h1 {
+    font-size: ${theme.fontSizes.xxl};
+  }
 `;
 const LoginButton = styled.a`
   display: inline-block;
@@ -30,7 +34,7 @@ const LoginButton = styled.a`
 
 const LoginScreen = () => (
   <Login>
-    <h1>{process.env.NODE_ENV}</h1>
+    <h1>Spotify Profile</h1>
     <LoginButton href={LOGIN_URI}>Log in to Spotify</LoginButton>
   </Login>
 );

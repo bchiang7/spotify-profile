@@ -101,7 +101,6 @@ const GlobalStyle = createGlobalStyle`
     font-size: ${theme.fontSizes.base};
     background-color: ${theme.colors.black};
     color: ${theme.colors.white};
-    border-top: 10px solid ${theme.colors.green};
   }
 
   #root {
@@ -150,6 +149,7 @@ const GlobalStyle = createGlobalStyle`
   ol, ul {
     padding: 0;
     margin: 0;
+    list-style: none;
   }
 
   p {

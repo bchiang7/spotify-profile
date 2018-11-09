@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
+import { Router } from '@reach/router';
 
+import Sidebar from './Sidebar';
 import User from './User';
 import RecentlyPlayed from './RecentlyPlayed';
 import TopArtists from './TopArtists';
 import TopTracks from './TopTracks';
 import Recommendations from './Recommendations';
-import Playlists from './Playlists';
+// import Playlists from './Playlists';
 
 import styled from 'styled-components/macro';
-import { theme, mixins } from '../styles';
+import { theme } from '../styles';
 
 import { getUser, getEverything, getRecommendations } from '../spotify';
 
 const Container = styled.div`
   padding: ${theme.spacing.xl};
-`;
-const TopItems = styled.div`
-  ${mixins.flexBetween};
+  padding-left: 180px;
 `;
 
 class Profile extends Component {
@@ -84,18 +84,35 @@ class Profile extends Component {
 
     const totalPlaylists = playlists ? playlists.total : 0;
 
-    return (
-      <Container>
+    const UserRoute = () => (
+      <div>
         {user && (
           <User user={user} followedArtists={followedArtists} totalPlaylists={totalPlaylists} />
         )}
-        {recentlyPlayed && <RecentlyPlayed recentlyPlayed={recentlyPlayed} />}
-        <TopItems>
-          {topArtists && <TopArtists topArtists={topArtists} />}
-          {topTracks && <TopTracks topTracks={topTracks} />}
-        </TopItems>
-        {recommendations && <Recommendations recommendations={recommendations} />}
-        {playlists && <Playlists playlists={playlists} />}
+      </div>
+    );
+    const RecentRoute = () => (
+      <div>{recentlyPlayed && <RecentlyPlayed recentlyPlayed={recentlyPlayed} />}</div>
+    );
+    const ArtistsRoute = () => <div>{topArtists && <TopArtists topArtists={topArtists} />}</div>;
+    const TracksRoute = () => <div>{topTracks && <TopTracks topTracks={topTracks} />}</div>;
+    const RecommendationsRoute = () => (
+      <div>{recommendations && <Recommendations recommendations={recommendations} />}</div>
+    );
+
+    return (
+      <Container>
+        <Router>
+          <UserRoute path="/" />
+          <RecentRoute path="/recent" />
+          <ArtistsRoute path="/artists" />
+          <TracksRoute path="/tracks" />
+          <RecommendationsRoute path="/recommendations" />
+        </Router>
+
+        <Sidebar />
+
+        {/* {playlists && <Playlists playlists={playlists} />} */}
       </Container>
     );
   }
