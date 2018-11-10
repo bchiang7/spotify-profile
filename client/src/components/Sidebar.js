@@ -18,6 +18,9 @@ const Container = styled.nav`
     display: block;
     padding: ${theme.spacing.base};
   }
+  & > * {
+    width: 100%;
+  }
 `;
 const Logo = styled.div`
   font-size: 50px;
@@ -25,7 +28,8 @@ const Logo = styled.div`
   color: ${theme.colors.green};
 `;
 const MenuItem = styled.li`
-  font-size: 12px;
+  width: 100%;
+  font-size: 11px;
   color: ${theme.colors.lightGrey};
   a {
     &:hover,
@@ -36,7 +40,7 @@ const MenuItem = styled.li`
     }
   }
   i {
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 10px;
   }
   span {
@@ -61,6 +65,12 @@ const Sidebar = () => (
     </Logo>
     <ul>
       <MenuItem>
+        <NavLink to="/">
+          <i className="far fa-user" />
+          <span>Profile</span>
+        </NavLink>
+      </MenuItem>
+      <MenuItem>
         <NavLink to="recent">
           <i className="far fa-clock" />
           <span>Recent</span>
@@ -79,6 +89,12 @@ const Sidebar = () => (
         </NavLink>
       </MenuItem>
       <MenuItem>
+        <NavLink to="playlists">
+          <i className="far fa-list-alt" />
+          <span>Playlists</span>
+        </NavLink>
+      </MenuItem>
+      <MenuItem>
         <NavLink to="recommendations">
           <i className="far fa-lightbulb" />
           <span>Recs</span>
@@ -86,7 +102,7 @@ const Sidebar = () => (
       </MenuItem>
     </ul>
     <Info>
-      <i className="far fa-question-circle" />
+      <i className="fab fa-github" />
     </Info>
   </Container>
 );

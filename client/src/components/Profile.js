@@ -7,8 +7,8 @@ import User from './User';
 import RecentlyPlayed from './RecentlyPlayed';
 import TopArtists from './TopArtists';
 import TopTracks from './TopTracks';
+import Playlists from './Playlists';
 import Recommendations from './Recommendations';
-// import Playlists from './Playlists';
 
 import styled from 'styled-components/macro';
 import { theme } from '../styles';
@@ -98,6 +98,7 @@ class Profile extends Component {
     );
     const ArtistsRoute = () => <div>{topArtists && <TopArtists topArtists={topArtists} />}</div>;
     const TracksRoute = () => <div>{topTracks && <TopTracks topTracks={topTracks} />}</div>;
+    const PlaylistsRoute = () => <div>{playlists && <Playlists playlists={playlists} />}</div>;
     const RecommendationsRoute = () => (
       <div>{recommendations && <Recommendations recommendations={recommendations} />}</div>
     );
@@ -111,12 +112,11 @@ class Profile extends Component {
           <RecentRoute path="/recent" />
           <ArtistsRoute path="/artists" />
           <TracksRoute path="/tracks" />
+          <PlaylistsRoute path="/playlists" />
           <RecommendationsRoute path="/recommendations" />
         </Router>
 
         <Player />
-
-        {/* {playlists && <Playlists playlists={playlists} />} */}
       </Container>
     );
   }

@@ -15,6 +15,9 @@ const Container = styled.footer`
   min-width: 620px;
   border-top: 1px solid #000;
   padding: 16px;
+  & > * {
+    height: 100%;
+  }
 `;
 const PlayerLeft = styled.div`
   display: flex;

@@ -14,6 +14,7 @@ const Track = styled.div`
   margin-bottom: ${theme.spacing.md};
 `;
 const TrackLeft = styled.span`
+  ${mixins.overflowEllipsis};
   display: flex;
 `;
 const TrackRight = styled.span``;

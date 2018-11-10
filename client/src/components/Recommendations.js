@@ -12,6 +12,7 @@ const Track = styled.div`
 `;
 const TrackLeft = styled.span`
   display: flex;
+  ${mixins.overflowEllipsis};
 `;
 const TrackRight = styled.span``;
 const TrackArtwork = styled.span`
