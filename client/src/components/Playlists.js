@@ -7,11 +7,6 @@ import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 
 const Container = styled(Section)``;
-const Title = styled.h3`
-  font-size: ${theme.fontSizes.lg};
-  font-weight: 600;
-  margin-bottom: ${theme.spacing.lg};
-`;
 const Wrapper = styled.div`
   ${mixins.flexBetween};
   align-items: flex-start;
@@ -41,7 +36,7 @@ const PlaylistName = styled.a`
 const PlaylistDetails = styled.div`
   text-transform: uppercase;
   margin-bottom: 5px;
-  color: ${theme.colors.grey};
+  color: ${theme.colors.lightGrey};
   font-size: ${theme.fontSizes.xs};
   letter-spacing: 1px;
 `;
@@ -62,7 +57,7 @@ class Playlists extends Component {
 
     return (
       <Container>
-        <Title>Your Playlists</Title>
+        <h2>Your Playlists</h2>
         <Wrapper>
           <PlaylistsContainer>
             {playlists.items.map((playlist, i) => (

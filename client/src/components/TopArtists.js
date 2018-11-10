@@ -3,16 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { theme, Section } from '../styles';
 
-const Container = styled(Section)`
-  flex-grow: 1;
-  width: 50%;
-  margin-right: ${theme.spacing.xl};
-`;
-const Title = styled.h3`
-  font-size: ${theme.fontSizes.lg};
-  font-weight: 600;
-  margin-bottom: ${theme.spacing.lg};
-`;
+const Container = styled(Section)``;
 const ArtistsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -46,7 +37,7 @@ class TopArtists extends Component {
 
     return (
       <Container>
-        <Title>Top Artists</Title>
+        <h2>Top Artists</h2>
         <ArtistsContainer>
           {topArtists.items.map((artist, i) => (
             <Artist key={i}>

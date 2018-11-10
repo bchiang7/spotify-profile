@@ -8,11 +8,6 @@ const Container = styled(Section)`
   width: 100%;
   margin-bottom: ${theme.spacing.xl};
 `;
-const Title = styled.h3`
-  font-size: ${theme.fontSizes.lg};
-  font-weight: 600;
-  margin-bottom: ${theme.spacing.lg};
-`;
 const TracksContainer = styled.div``;
 const Track = styled.div`
   ${mixins.flexBetween};
@@ -39,20 +34,20 @@ const TrackName = styled.a`
   }
 `;
 const ArtistAlbum = styled.div`
-  color: ${theme.colors.grey};
+  color: ${theme.colors.lightGrey};
   font-size: ${theme.fontSizes.sm};
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
 const TrackDuration = styled.span`
-  color: ${theme.colors.grey};
+  color: ${theme.colors.lightGrey};
   font-size: ${theme.fontSizes.sm};
 `;
 
 const RecentlyPlayed = ({ recentlyPlayed }) => (
   <Container>
-    <Title>Recently Played Tracks</Title>
+    <h2>Recently Played Tracks</h2>
     <TracksContainer>
       {recentlyPlayed.items.map((item, i) => (
         <Track key={i}>

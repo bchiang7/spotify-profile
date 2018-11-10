@@ -12,17 +12,24 @@ const getHashParams = () => {
 };
 
 const getAccessToken = () => {
-  const params = getHashParams();
+  const { error, access_token } = getHashParams();
 
-  if (params.error) {
+  if (error) {
     alert('There was an error during authentication');
+    console.error(error);
   }
 
-  if (!params.access_token) {
+  if (!access_token) {
     return;
   }
 
-  return params.access_token;
+  const local_token = window.localStorage.getItem('spotify_access_token');
+
+  if (!local_token) {
+    window.localStorage.setItem('spotify_access_token', access_token);
+  }
+
+  return local_token || access_token;
 };
 
 export const token = getAccessToken();
@@ -81,11 +88,29 @@ export const getFollowing = () =>
 export const getRecentlyPlayed = () =>
   axios.get('https://api.spotify.com/v1/me/player/recently-played', { headers });
 
-export const getTopArtists = () =>
-  axios.get('https://api.spotify.com/v1/me/top/artists', { headers });
+export const getTopArtistsShort = () =>
+  axios.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=short_term', {
+    headers,
+  });
 
-export const getTopTracks = () =>
-  axios.get('https://api.spotify.com/v1/me/top/tracks', { headers });
+export const getTopArtistsMedium = () =>
+  axios.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=medium_term', {
+    headers,
+  });
+
+export const getTopArtistsLong = () =>
+  axios.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term', { headers });
+
+export const getTopTracksShort = () =>
+  axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=short_term', { headers });
+
+export const getTopTracksMedium = () =>
+  axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=medium_term', {
+    headers,
+  });
+
+export const getTopTracksLong = () =>
+  axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', { headers });
 
 export const getPlaylists = () => axios.get('https://api.spotify.com/v1/me/playlists', { headers });
 
@@ -96,8 +121,8 @@ export const getEverything = () => {
         getUser(),
         getFollowing(),
         getRecentlyPlayed(),
-        getTopArtists(),
-        getTopTracks(),
+        getTopArtistsMedium(),
+        getTopTracksMedium(),
         getPlaylists(),
       ])
       .then(

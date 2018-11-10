@@ -17,7 +17,7 @@ import { getUser, getEverything, getRecommendations } from '../spotify';
 
 const Container = styled.div`
   padding: ${theme.spacing.xl};
-  padding-left: 180px;
+  padding-left: 200px;
 `;
 
 class Profile extends Component {
@@ -38,6 +38,7 @@ class Profile extends Component {
           user: res.user,
         },
         () => {
+          // TODO: don't call everything at once now that there's routing
           getEverything().then(res => {
             this.setState({
               user: res.user,

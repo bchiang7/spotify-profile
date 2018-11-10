@@ -4,15 +4,7 @@ import { formatDuration } from '../utils';
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 
-const Container = styled(Section)`
-  width: 50%;
-  margin-bottom: ${theme.spacing.xl};
-`;
-const Title = styled.h3`
-  font-size: ${theme.fontSizes.lg};
-  font-weight: 600;
-  margin-bottom: ${theme.spacing.lg};
-`;
+const Container = styled(Section)``;
 const TracksContainer = styled.div``;
 const Track = styled.div`
   ${mixins.flexBetween};
@@ -39,20 +31,20 @@ const TrackName = styled.a`
   }
 `;
 const ArtistAlbum = styled.div`
-  color: ${theme.colors.grey};
+  color: ${theme.colors.lightGrey};
   font-size: ${theme.fontSizes.sm};
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
 const TrackDuration = styled.span`
-  color: ${theme.colors.grey};
+  color: ${theme.colors.lightGrey};
   font-size: ${theme.fontSizes.sm};
 `;
 
 const TopTracks = ({ topTracks }) => (
   <Container>
-    <Title>Top Tracks</Title>
+    <h2>Top Tracks</h2>
     <TracksContainer>
       {topTracks.items.map((track, i) => (
         <Track key={i}>

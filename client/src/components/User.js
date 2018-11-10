@@ -45,7 +45,7 @@ const Number = styled.div`
   font-size: ${theme.fontSizes.md};
 `;
 const NumLabel = styled.p`
-  color: ${theme.colors.grey};
+  color: ${theme.colors.lightGrey};
   font-size: ${theme.fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 1px;

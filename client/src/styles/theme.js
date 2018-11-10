@@ -4,7 +4,8 @@ const theme = {
     offGreen: '#1ed760',
     black: '#181818',
     white: '#FFFFFF',
-    grey: '#9B9B9B',
+    lightGrey: '#9B9B9B',
+    grey: '#404040',
     darkGrey: '#282828',
   },
 
@@ -44,6 +45,11 @@ const theme = {
   },
 
   transition: `all 0.15s cubic-bezier(0.3, 0, 0.4, 1);`,
+
+  sidebarWidth: '100px',
+  playerHeight: '90px',
+  playerAlbumWidth: '56px',
+  playerControlsWidth: '480px',
 };
 
 export default theme;

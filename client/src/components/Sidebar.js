@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components/macro';
-import { theme } from '../styles';
+import { theme, mixins } from '../styles';
 
 const Container = styled.nav`
-  display: flex;
+  ${mixins.flexBetween};
   flex-direction: column;
   min-height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100px;
+  width: ${theme.sidebarWidth};
   background-color: #040306;
   text-align: center;
-
+  padding-bottom: ${theme.playerHeight};
   a {
     display: block;
     padding: ${theme.spacing.base};
@@ -22,14 +22,11 @@ const Container = styled.nav`
 const Logo = styled.div`
   font-size: 50px;
   margin-top: 20px;
-`;
-const Menu = styled.ul`
-  margin-top: 50px;
+  color: ${theme.colors.green};
 `;
 const MenuItem = styled.li`
   font-size: 12px;
-  color: ${theme.colors.grey};
-
+  color: ${theme.colors.lightGrey};
   a {
     &:hover,
     &:focus,
@@ -38,15 +35,17 @@ const MenuItem = styled.li`
       background-color: ${theme.colors.black};
     }
   }
-
   i {
     font-size: 30px;
     margin-bottom: 10px;
   }
-
   span {
     display: block;
   }
+`;
+const Info = styled.div`
+  font-size: 30px;
+  margin-bottom: 20px;
 `;
 
 const isActive = ({ isCurrent }) => (isCurrent ? { className: 'active' } : null);
@@ -60,7 +59,7 @@ const Sidebar = () => (
         <i className="fab fa-spotify" />
       </Link>
     </Logo>
-    <Menu>
+    <ul>
       <MenuItem>
         <NavLink to="recent">
           <i className="far fa-clock" />
@@ -85,7 +84,10 @@ const Sidebar = () => (
           <span>Recs</span>
         </NavLink>
       </MenuItem>
-    </Menu>
+    </ul>
+    <Info>
+      <i className="far fa-question-circle" />
+    </Info>
   </Container>
 );
 

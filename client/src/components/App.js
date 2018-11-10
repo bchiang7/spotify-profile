@@ -20,6 +20,8 @@ class App extends Component {
   };
 
   componentDidMount() {
+    // const local_token = window.localStorage.getItem('spotify_access_token');
+
     if (token) {
       this.setState({ loggedIn: true });
     }
