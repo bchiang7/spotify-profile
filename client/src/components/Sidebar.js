@@ -80,7 +80,7 @@ const Sidebar = () => (
       </MenuItem>
       <MenuItem>
         <NavLink to="recommendations">
-          <i className="far fa-heart" />
+          <i className="far fa-lightbulb" />
           <span>Recs</span>
         </NavLink>
       </MenuItem>

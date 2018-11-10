@@ -146,6 +146,11 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  button {
+    border-radius: 0;
+    outline: 0;
+  }
+
   ol, ul {
     padding: 0;
     margin: 0;

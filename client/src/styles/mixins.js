@@ -26,6 +26,13 @@ const mixins = {
   outline: css`
     outline: 1px solid red;
   `,
+
+  overflowEllipsis: css`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 1px;
+  `,
 };
 
 export default mixins;

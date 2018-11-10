@@ -29,7 +29,7 @@ const getAccessToken = () => {
     window.localStorage.setItem('spotify_access_token', access_token);
   }
 
-  return local_token || access_token;
+  return access_token;
 };
 
 export const token = getAccessToken();

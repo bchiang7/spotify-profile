@@ -104,6 +104,8 @@ class Profile extends Component {
 
     return (
       <Container>
+        <Sidebar />
+
         <Router>
           <UserRoute path="/" />
           <RecentRoute path="/recent" />
@@ -111,8 +113,6 @@ class Profile extends Component {
           <TracksRoute path="/tracks" />
           <RecommendationsRoute path="/recommendations" />
         </Router>
-
-        <Sidebar />
 
         <Player />
 

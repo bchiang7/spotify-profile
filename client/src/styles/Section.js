@@ -6,8 +6,8 @@ const Section = styled.section`
 
   h2 {
     margin-top: 0;
-    font-size: ${theme.fontSizes.lg};
-    font-weight: 600;
+    font-size: ${theme.fontSizes.xl};
+    font-weight: 700;
     margin-bottom: ${theme.spacing.lg};
   }
 `;

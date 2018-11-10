@@ -4,6 +4,7 @@ const theme = {
     offGreen: '#1ed760',
     black: '#181818',
     white: '#FFFFFF',
+    lightestGrey: '#b3b3b3',
     lightGrey: '#9B9B9B',
     grey: '#404040',
     darkGrey: '#282828',
@@ -50,6 +51,9 @@ const theme = {
   playerHeight: '90px',
   playerAlbumWidth: '56px',
   playerControlsWidth: '480px',
+  playerVolumeButtonWidth: '32px',
+  playerVolumeBarWidth: '84px',
+  playerVolumeBarHeight: '4px',
 };
 
 export default theme;
