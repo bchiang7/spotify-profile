@@ -114,6 +114,17 @@ export const getTopTracksLong = () =>
 
 export const getPlaylists = () => axios.get('https://api.spotify.com/v1/me/playlists', { headers });
 
+export const getUserInfo = () =>
+  axios.all([getUser(), getFollowing(), getPlaylists()]).then(
+    axios.spread((user, followedArtists, playlists) => {
+      return {
+        user: user.data,
+        followedArtists: followedArtists.data,
+        playlists: playlists.data,
+      };
+    }),
+  );
+
 export const getEverything = () => {
   if (token) {
     return axios

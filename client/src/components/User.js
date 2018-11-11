@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { getUserInfo } from '../spotify';
+
 import { IconUser } from './icons';
 
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
 
 const Container = styled.header`
-  display: flex;
-  position: relative;
+  & > div {
+    display: flex;
+    position: relative;
+  }
 `;
 const Avatar = styled.div`
   width: 120px;
@@ -70,49 +74,81 @@ const NumLabel = styled.p`
 // `;
 
 class User extends Component {
+  state = {
+    user: null,
+    followedArtists: null,
+    playlists: null,
+  };
+
+  static propTypes = {
+    user: PropTypes.object,
+    followedArtists: PropTypes.object,
+    totalPlaylists: PropTypes.number,
+  };
+
+  _isMounted = false;
+
+  componentDidMount() {
+    this._isMounted = true;
+
+    getUserInfo().then(({ user, followedArtists, playlists }) => {
+      if (this._isMounted) {
+        this.setState({ user, followedArtists, playlists });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+    this.setState({ user: null, followedArtists: null, playlists: null });
+  }
+
   render() {
-    const { user, followedArtists, totalPlaylists } = this.props;
+    const { user, followedArtists, playlists } = this.state;
+    const totalPlaylists = playlists ? playlists.total : 0;
 
     return (
       <Container>
-        <Avatar>
-          {user.images.length > 0 ? (
-            <img src={user.images[0].url} alt="avatar" />
-          ) : (
-            <NoAvatar>
-              <IconUser />
-            </NoAvatar>
-          )}
-        </Avatar>
-        <div>
-          <Label>{user.type}</Label>
-          <Name>{user.display_name}</Name>
-          <Stats>
-            <Stat>
-              <Number>{user.followers.total}</Number>
-              <NumLabel>Followers</NumLabel>
-            </Stat>
-            {/* This is just artists followed, not users */}
-            <Stat>
-              <Number>{followedArtists.artists.items.length}</Number>
-              <NumLabel>Following</NumLabel>
-            </Stat>
-            <Stat>
-              <Number>{totalPlaylists}</Number>
-              <NumLabel>Playlists</NumLabel>
-            </Stat>
-          </Stats>
-        </div>
-        {/* <LogoutButton href="http://localhost:3000">Log Out</LogoutButton> */}
+        {user && (
+          <div>
+            <Avatar>
+              {user.images.length > 0 ? (
+                <img src={user.images[0].url} alt="avatar" />
+              ) : (
+                <NoAvatar>
+                  <IconUser />
+                </NoAvatar>
+              )}
+            </Avatar>
+            <div>
+              <Label>{user.type}</Label>
+              <Name>{user.display_name}</Name>
+              <Stats>
+                <Stat>
+                  <Number>{user.followers.total}</Number>
+                  <NumLabel>Followers</NumLabel>
+                </Stat>
+
+                {followedArtists && (
+                  <Stat>
+                    <Number>{followedArtists.artists.items.length}</Number>
+                    <NumLabel>Following</NumLabel>
+                  </Stat>
+                )}
+
+                {totalPlaylists && (
+                  <Stat>
+                    <Number>{totalPlaylists}</Number>
+                    <NumLabel>Playlists</NumLabel>
+                  </Stat>
+                )}
+              </Stats>
+            </div>
+          </div>
+        )}
       </Container>
     );
   }
 }
-
-User.propTypes = {
-  user: PropTypes.object,
-  followedArtists: PropTypes.object,
-  totalPlaylists: PropTypes.number,
-};
 
 export default User;

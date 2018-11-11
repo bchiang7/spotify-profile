@@ -13,7 +13,7 @@ import Recommendations from './Recommendations';
 import styled from 'styled-components/macro';
 import { theme } from '../styles';
 
-import { getUser, getEverything, getRecommendations } from '../spotify';
+import { getEverything, getRecommendations } from '../spotify';
 
 const Container = styled.div`
   padding: ${theme.spacing.xl};
@@ -22,35 +22,17 @@ const Container = styled.div`
 
 class Profile extends Component {
   state = {
-    user: null,
-    followedArtists: null,
-    recentlyPlayed: null,
-    topArtists: null,
     topTracks: null,
     playlists: null,
     recommendations: null,
   };
 
   componentDidMount() {
-    getUser().then(res => {
-      this.setState(
-        {
-          user: res.user,
-        },
-        () => {
-          // TODO: don't call everything at once now that there's routing
-          getEverything().then(res => {
-            this.setState({
-              user: res.user,
-              followedArtists: res.followedArtists,
-              recentlyPlayed: res.recentlyPlayed,
-              topArtists: res.topArtists,
-              topTracks: res.topTracks,
-              playlists: res.playlists,
-            });
-          });
-        },
-      );
+    getEverything().then(res => {
+      this.setState({
+        topTracks: res.topTracks,
+        playlists: res.playlists,
+      });
     });
   }
 
@@ -74,29 +56,11 @@ class Profile extends Component {
   }
 
   render() {
-    const {
-      user,
-      followedArtists,
-      recentlyPlayed,
-      topArtists,
-      topTracks,
-      recommendations,
-      playlists,
-    } = this.state;
+    const { topTracks, recommendations, playlists } = this.state;
 
-    const totalPlaylists = playlists ? playlists.total : 0;
-
-    const UserRoute = () => (
-      <div>
-        {user && (
-          <User user={user} followedArtists={followedArtists} totalPlaylists={totalPlaylists} />
-        )}
-      </div>
-    );
-    const RecentRoute = () => (
-      <div>{recentlyPlayed && <RecentlyPlayed recentlyPlayed={recentlyPlayed} />}</div>
-    );
-    const ArtistsRoute = () => <div>{topArtists && <TopArtists topArtists={topArtists} />}</div>;
+    const UserRoute = () => <User />;
+    const RecentRoute = () => <RecentlyPlayed />;
+    const ArtistsRoute = () => <TopArtists />;
     const TracksRoute = () => <div>{topTracks && <TopTracks topTracks={topTracks} />}</div>;
     const PlaylistsRoute = () => <div>{playlists && <Playlists playlists={playlists} />}</div>;
     const RecommendationsRoute = () => (

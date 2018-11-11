@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { formatDuration } from '../utils';
+import { getRecentlyPlayed } from '../spotify';
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 
@@ -46,40 +47,68 @@ const TrackDuration = styled.span`
   font-size: ${theme.fontSizes.sm};
 `;
 
-const RecentlyPlayed = ({ recentlyPlayed }) => (
-  <Container>
-    <h2>Recently Played Tracks</h2>
-    <TracksContainer>
-      {recentlyPlayed.items.map((item, i) => (
-        <Track key={i}>
-          <TrackLeft>
-            <TrackArtwork>
-              {item.track.album.images && (
-                <TrackImage src={item.track.album.images[0].url} alt="" />
-              )}
-            </TrackArtwork>
-            <TrackMeta>
-              <TrackName href={item.track.external_urls.spotify} target="_blank">
-                {item.track.name}
-              </TrackName>
-              <ArtistAlbum>
-                {item.track.artists[0].name}
-                &nbsp;&middot;&nbsp;
-                {item.track.album.name}
-              </ArtistAlbum>
-            </TrackMeta>
-          </TrackLeft>
-          <TrackRight>
-            <TrackDuration>{formatDuration(item.track.duration_ms)}</TrackDuration>
-          </TrackRight>
-        </Track>
-      ))}
-    </TracksContainer>
-  </Container>
-);
+class RecentlyPlayed extends Component {
+  state = {
+    recentlyPlayed: null,
+  };
 
-RecentlyPlayed.propTypes = {
-  recentlyPlayed: PropTypes.object,
-};
+  static propTypes = {
+    recentlyPlayed: PropTypes.object,
+  };
+
+  _isMounted = false;
+
+  componentDidMount() {
+    this._isMounted = true;
+
+    getRecentlyPlayed().then(res => {
+      if (this._isMounted) {
+        this.setState({ recentlyPlayed: res.data });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+    this.setState({ recentlyPlayed: null });
+  }
+
+  render() {
+    const { recentlyPlayed } = this.state;
+
+    return (
+      <Container>
+        <h2>Recently Played Tracks</h2>
+        <TracksContainer>
+          {recentlyPlayed &&
+            recentlyPlayed.items.map((item, i) => (
+              <Track key={i}>
+                <TrackLeft>
+                  <TrackArtwork>
+                    {item.track.album.images && (
+                      <TrackImage src={item.track.album.images[0].url} alt="" />
+                    )}
+                  </TrackArtwork>
+                  <TrackMeta>
+                    <TrackName href={item.track.external_urls.spotify} target="_blank">
+                      {item.track.name}
+                    </TrackName>
+                    <ArtistAlbum>
+                      {item.track.artists[0].name}
+                      &nbsp;&middot;&nbsp;
+                      {item.track.album.name}
+                    </ArtistAlbum>
+                  </TrackMeta>
+                </TrackLeft>
+                <TrackRight>
+                  <TrackDuration>{formatDuration(item.track.duration_ms)}</TrackDuration>
+                </TrackRight>
+              </Track>
+            ))}
+        </TracksContainer>
+      </Container>
+    );
+  }
+}
 
 export default RecentlyPlayed;

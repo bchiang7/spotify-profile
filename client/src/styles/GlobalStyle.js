@@ -149,6 +149,14 @@ const GlobalStyle = createGlobalStyle`
   button {
     border-radius: 0;
     outline: 0;
+    color: ${theme.colors.lightestGrey};
+    font-family: ${theme.fonts.primary};
+    font-size: ${theme.fontSizes.base};
+    padding: ${theme.spacing.base};
+
+    &:hover, &:focus {
+      color: ${theme.colors.white};
+    }
   }
 
   ol, ul {
@@ -159,6 +167,10 @@ const GlobalStyle = createGlobalStyle`
 
   p {
     margin: 0 0 10px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 20px;
   }
 
   span {
