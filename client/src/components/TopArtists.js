@@ -18,12 +18,10 @@ const Ranges = styled.div`
 const RangeButton = styled.button`
   background-color: transparent;
   font-size: ${theme.fontSizes.base};
-  color: ${props => (props.isActive ? theme.colors.white : theme.colors.lightestGrey)};
-
+  color: ${props => (props.isActive ? theme.colors.white : theme.colors.lightGrey)};
   span {
     padding-bottom: 3px;
-    border-bottom: ${props =>
-      props.isActive ? `1px solid ${theme.colors.white}` : `1px solid transparent`};
+    border-bottom: 1px solid ${props => (props.isActive ? theme.colors.white : `transparent`)};
   }
 `;
 const ArtistsContainer = styled.div`

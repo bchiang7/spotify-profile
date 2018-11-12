@@ -1,79 +1,110 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { formatDuration } from '../utils';
+
+import { getTopTracksShort, getTopTracksMedium, getTopTracksLong } from '../spotify';
+
+import Track from './Track';
+
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 
 const Container = styled(Section)``;
-const TracksContainer = styled.div``;
-const Track = styled.div`
+const Header = styled.header`
   ${mixins.flexBetween};
-  margin-bottom: ${theme.spacing.md};
-`;
-const TrackLeft = styled.span`
-  display: flex;
-`;
-const TrackRight = styled.span``;
-const TrackArtwork = styled.span`
-  width: 50px;
-  min-width: 50px;
-  margin-right: ${theme.spacing.base};
-`;
-const TrackImage = styled.img``;
-const TrackMeta = styled.span`
-  max-width: 80%;
-`;
-const TrackName = styled.a`
-  margin-bottom: 5px;
-  border-bottom: 1px solid transparent;
-  &:hover {
-    border-bottom: 1px solid ${theme.colors.white};
+  h2 {
+    margin-bottom: 0;
   }
 `;
-const ArtistAlbum = styled.div`
-  color: ${theme.colors.lightGrey};
-  font-size: ${theme.fontSizes.sm};
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+const Ranges = styled.div`
+  display: flex;
 `;
-const TrackDuration = styled.span`
-  color: ${theme.colors.lightGrey};
-  font-size: ${theme.fontSizes.sm};
+const RangeButton = styled.button`
+  background-color: transparent;
+  font-size: ${theme.fontSizes.base};
+  color: ${props => (props.isActive ? theme.colors.white : theme.colors.lightGrey)};
+  span {
+    padding-bottom: 3px;
+    border-bottom: 1px solid ${props => (props.isActive ? theme.colors.white : `transparent`)};
+  }
+`;
+const TracksContainer = styled.div`
+  margin-top: 50px;
 `;
 
-const TopTracks = ({ topTracks }) => (
-  <Container>
-    <h2>Top Tracks</h2>
-    <TracksContainer>
-      {topTracks.items.map((track, i) => (
-        <Track key={i}>
-          <TrackLeft>
-            <TrackArtwork>
-              <TrackImage src={track.album.images[2].url} alt="" />
-            </TrackArtwork>
-            <TrackMeta>
-              <TrackName href={track.external_urls.spotify} target="_blank">
-                {track.name}
-              </TrackName>
-              <ArtistAlbum>
-                {track.artists[0].name}
-                &nbsp;&middot;&nbsp;
-                {track.album.name}
-              </ArtistAlbum>
-            </TrackMeta>
-          </TrackLeft>
-          <TrackRight>
-            <TrackDuration>{formatDuration(track.duration_ms)}</TrackDuration>
-          </TrackRight>
-        </Track>
-      ))}
-    </TracksContainer>
-  </Container>
-);
+class TopTracks extends Component {
+  state = {
+    topTracks: null,
+    activeRange: '',
+  };
 
-TopTracks.propTypes = {
-  topTracks: PropTypes.object,
-};
+  static propTypes = {
+    topTracks: PropTypes.object,
+  };
+
+  _isMounted = false;
+
+  componentDidMount() {
+    this._isMounted = true;
+
+    getTopTracksLong().then(res => {
+      if (this._isMounted) {
+        this.setState({ topTracks: res.data, activeRange: 'long' });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+    this.setState({ topTracks: null });
+  }
+
+  setActiveRange = range => {
+    if (range === 'long') {
+      getTopTracksLong().then(res => {
+        this.setState({ topTracks: res.data, activeRange: range });
+      });
+    } else if (range === 'medium') {
+      getTopTracksMedium().then(res => {
+        this.setState({ topTracks: res.data, activeRange: range });
+      });
+    } else if (range === 'short') {
+      getTopTracksShort().then(res => {
+        this.setState({ topTracks: res.data, activeRange: range });
+      });
+    }
+  };
+
+  render() {
+    const { topTracks, activeRange } = this.state;
+
+    return (
+      <Container>
+        <Header>
+          <h2>Top Tracks</h2>
+          <Ranges>
+            <RangeButton
+              isActive={activeRange === 'long'}
+              onClick={() => this.setActiveRange('long')}>
+              <span>All Time</span>
+            </RangeButton>
+            <RangeButton
+              isActive={activeRange === 'medium'}
+              onClick={() => this.setActiveRange('medium')}>
+              <span>Last 6 Months</span>
+            </RangeButton>
+            <RangeButton
+              isActive={activeRange === 'short'}
+              onClick={() => this.setActiveRange('short')}>
+              <span>Last 4 Weeks</span>
+            </RangeButton>
+          </Ranges>
+        </Header>
+        <TracksContainer>
+          {topTracks && topTracks.items.map((track, i) => <Track track={track} key={i} />)}
+        </TracksContainer>
+      </Container>
+    );
+  }
+}
 
 export default TopTracks;

@@ -30,11 +30,9 @@ const TrackName = styled.a`
   }
 `;
 const ArtistAlbum = styled.div`
+  ${mixins.overflowEllipsis};
   color: ${theme.colors.lightGrey};
   font-size: ${theme.fontSizes.sm};
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 `;
 const TrackDuration = styled.span`
   color: ${theme.colors.lightGrey};

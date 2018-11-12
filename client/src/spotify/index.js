@@ -92,12 +92,10 @@ export const getTopArtistsShort = () =>
   axios.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=short_term', {
     headers,
   });
-
 export const getTopArtistsMedium = () =>
   axios.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=medium_term', {
     headers,
   });
-
 export const getTopArtistsLong = () =>
   axios.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term', { headers });
 
@@ -110,7 +108,9 @@ export const getTopTracksMedium = () =>
   });
 
 export const getTopTracksLong = () =>
-  axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', { headers });
+  axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', {
+    headers,
+  });
 
 export const getPlaylists = () => axios.get('https://api.spotify.com/v1/me/playlists', { headers });
 

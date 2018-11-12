@@ -11,12 +11,12 @@ const Container = styled.nav`
   top: 0;
   left: 0;
   width: ${theme.sidebarWidth};
-  background-color: #040306;
+  background-color: ${theme.colors.sidebarBlack};
   text-align: center;
   padding-bottom: ${theme.playerHeight};
   a {
     display: block;
-    padding: ${theme.spacing.base};
+    padding: ${theme.spacing.sm};
   }
   & > * {
     width: 100%;
@@ -47,9 +47,27 @@ const MenuItem = styled.li`
     display: block;
   }
 `;
+// const NavLink = styled(Link)`
+//   color: ${props => props.isActive ? theme.colors.white : theme.colors.lightGrey};
+//   background-color: ${props => props.isActive ? theme.colors.black : `transparent`};
+
+//   &:hover,
+//   &:focus {
+//     color: ${theme.colors.white};
+//     background-color: ${theme.colors.black};
+//   }
+// `;
 const Info = styled.div`
-  font-size: 30px;
+  font-size: 20px;
   margin-bottom: 20px;
+  color: ${theme.colors.lightGrey};
+  a {
+    &:hover,
+    &:focus,
+    &.active {
+      color: ${theme.colors.white};
+    }
+  }
 `;
 
 const isActive = ({ isCurrent }) => (isCurrent ? { className: 'active' } : null);
@@ -102,7 +120,9 @@ const Sidebar = () => (
       </MenuItem>
     </ul>
     <Info>
-      <i className="fab fa-github" />
+      <NavLink to="info">
+        <i className="fas fa-info-circle" />
+      </NavLink>
     </Info>
   </Container>
 );

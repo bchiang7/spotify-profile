@@ -53,7 +53,6 @@ class Playlists extends Component {
   render() {
     const { playlists } = this.props;
     const { chartPlaylist } = this.state;
-    // console.log(playlists);
 
     return (
       <Container>

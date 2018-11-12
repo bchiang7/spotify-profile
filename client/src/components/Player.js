@@ -117,6 +117,7 @@ const VolumeButton = styled.button`
   background-color: transparent;
   color: ${theme.colors.lightestGrey};
   font-size: 14px;
+  padding: 0;
   &:hover,
   &:focus {
     color: ${theme.colors.white};

@@ -9,39 +9,32 @@ import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
 
 const Container = styled.header`
-  & > div {
-    display: flex;
-    position: relative;
-  }
+  ${mixins.flexCenter};
+  flex-direction: column;
+  position: relative;
 `;
 const Avatar = styled.div`
   width: 120px;
   height: 120px;
   border-radius: 100%;
-  margin-right: ${theme.spacing.md};
 `;
 const NoAvatar = styled.div`
   border: 2px solid currentColor;
   border-radius: 100%;
   padding: ${theme.spacing.md};
 `;
-const Label = styled.div`
-  font-size: ${theme.fontSizes.xs};
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 5px;
-`;
 const Name = styled.h1`
-  font-size: 42px;
+  font-size: 50px;
   font-weight: 700;
-  margin: 0;
+  margin: 20px 0 0;
 `;
 const Stats = styled.div`
   ${mixins.flexBetween};
   margin-top: ${theme.spacing.base};
+  text-align: center;
 `;
 const Stat = styled.div`
-  margin-right: ${theme.spacing.md};
+  margin: 0 ${theme.spacing.base};
 `;
 const Number = styled.div`
   color: ${theme.colors.green};
@@ -107,10 +100,12 @@ class User extends Component {
     const { user, followedArtists, playlists } = this.state;
     const totalPlaylists = playlists ? playlists.total : 0;
 
+    console.log(user);
+
     return (
-      <Container>
+      <React.Fragment>
         {user && (
-          <div>
+          <Container>
             <Avatar>
               {user.images.length > 0 ? (
                 <img src={user.images[0].url} alt="avatar" />
@@ -120,33 +115,30 @@ class User extends Component {
                 </NoAvatar>
               )}
             </Avatar>
-            <div>
-              <Label>{user.type}</Label>
-              <Name>{user.display_name}</Name>
-              <Stats>
+            <Name>{user.display_name}</Name>
+            <Stats>
+              <Stat>
+                <Number>{user.followers.total}</Number>
+                <NumLabel>Followers</NumLabel>
+              </Stat>
+
+              {followedArtists && (
                 <Stat>
-                  <Number>{user.followers.total}</Number>
-                  <NumLabel>Followers</NumLabel>
+                  <Number>{followedArtists.artists.items.length}</Number>
+                  <NumLabel>Following</NumLabel>
                 </Stat>
+              )}
 
-                {followedArtists && (
-                  <Stat>
-                    <Number>{followedArtists.artists.items.length}</Number>
-                    <NumLabel>Following</NumLabel>
-                  </Stat>
-                )}
-
-                {totalPlaylists && (
-                  <Stat>
-                    <Number>{totalPlaylists}</Number>
-                    <NumLabel>Playlists</NumLabel>
-                  </Stat>
-                )}
-              </Stats>
-            </div>
-          </div>
+              {totalPlaylists && (
+                <Stat>
+                  <Number>{totalPlaylists}</Number>
+                  <NumLabel>Playlists</NumLabel>
+                </Stat>
+              )}
+            </Stats>
+          </Container>
         )}
-      </Container>
+      </React.Fragment>
     );
   }
 }

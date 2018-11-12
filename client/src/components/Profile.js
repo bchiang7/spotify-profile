@@ -8,30 +8,27 @@ import RecentlyPlayed from './RecentlyPlayed';
 import TopArtists from './TopArtists';
 import TopTracks from './TopTracks';
 import Playlists from './Playlists';
-import Recommendations from './Recommendations';
+// import Recommendations from './Recommendations';
 
 import styled from 'styled-components/macro';
-import { theme } from '../styles';
 
-import { getEverything, getRecommendations } from '../spotify';
+import { getRecommendations, getPlaylists } from '../spotify';
 
 const Container = styled.div`
-  padding: ${theme.spacing.xl};
+  padding: 75px;
   padding-left: 200px;
 `;
 
 class Profile extends Component {
   state = {
-    topTracks: null,
     playlists: null,
     recommendations: null,
   };
 
   componentDidMount() {
-    getEverything().then(res => {
+    getPlaylists().then(res => {
       this.setState({
-        topTracks: res.topTracks,
-        playlists: res.playlists,
+        playlists: res.data,
       });
     });
   }
@@ -56,16 +53,16 @@ class Profile extends Component {
   }
 
   render() {
-    const { topTracks, recommendations, playlists } = this.state;
+    const { recommendations, playlists } = this.state;
 
     const UserRoute = () => <User />;
     const RecentRoute = () => <RecentlyPlayed />;
     const ArtistsRoute = () => <TopArtists />;
-    const TracksRoute = () => <div>{topTracks && <TopTracks topTracks={topTracks} />}</div>;
+    const TracksRoute = () => <TopTracks />;
     const PlaylistsRoute = () => <div>{playlists && <Playlists playlists={playlists} />}</div>;
-    const RecommendationsRoute = () => (
-      <div>{recommendations && <Recommendations recommendations={recommendations} />}</div>
-    );
+    // const RecommendationsRoute = () => (
+    //   <div>{recommendations && <Recommendations recommendations={recommendations} />}</div>
+    // );
 
     return (
       <Container>
@@ -77,7 +74,7 @@ class Profile extends Component {
           <ArtistsRoute path="/artists" />
           <TracksRoute path="/tracks" />
           <PlaylistsRoute path="/playlists" />
-          <RecommendationsRoute path="/recommendations" />
+          {/* <RecommendationsRoute path="/recommendations" /> */}
         </Router>
 
         <Player />

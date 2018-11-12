@@ -152,7 +152,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${theme.colors.lightestGrey};
     font-family: ${theme.fonts.primary};
     font-size: ${theme.fontSizes.base};
-    padding: ${theme.spacing.base};
+    padding: 10px;
 
     &:hover, &:focus {
       color: ${theme.colors.white};
