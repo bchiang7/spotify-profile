@@ -11,27 +11,20 @@ import Playlists from './Playlists';
 // import Recommendations from './Recommendations';
 
 import styled from 'styled-components/macro';
+import { theme } from '../styles';
 
-import { getRecommendations, getPlaylists } from '../spotify';
+import { getRecommendations } from '../spotify';
 
 const Container = styled.div`
-  padding: 75px;
-  padding-left: 200px;
+  padding: 75px 75px 165px 200px;
 `;
 
 class Profile extends Component {
   state = {
-    playlists: null,
     recommendations: null,
   };
 
-  componentDidMount() {
-    getPlaylists().then(res => {
-      this.setState({
-        playlists: res.data,
-      });
-    });
-  }
+  componentDidMount() {}
 
   componentDidUpdate() {
     const { recommendations } = this.state;
@@ -47,19 +40,12 @@ class Profile extends Component {
       return;
     }
 
-    getRecommendations(topTracks, res => {
-      this.setState({ recommendations: res });
-    });
+    getRecommendations(topTracks, res => this.setState({ recommendations: res }));
   }
 
   render() {
-    const { recommendations, playlists } = this.state;
+    const { recommendations } = this.state;
 
-    const UserRoute = () => <User />;
-    const RecentRoute = () => <RecentlyPlayed />;
-    const ArtistsRoute = () => <TopArtists />;
-    const TracksRoute = () => <TopTracks />;
-    const PlaylistsRoute = () => <div>{playlists && <Playlists playlists={playlists} />}</div>;
     // const RecommendationsRoute = () => (
     //   <div>{recommendations && <Recommendations recommendations={recommendations} />}</div>
     // );
@@ -69,11 +55,11 @@ class Profile extends Component {
         <Sidebar />
 
         <Router>
-          <UserRoute path="/" />
-          <RecentRoute path="/recent" />
-          <ArtistsRoute path="/artists" />
-          <TracksRoute path="/tracks" />
-          <PlaylistsRoute path="/playlists" />
+          <User path="/" />
+          <RecentlyPlayed path="/recent" />
+          <TopArtists path="/artists" />
+          <TopTracks path="/tracks" />
+          <Playlists path="/playlists" />
           {/* <RecommendationsRoute path="/recommendations" /> */}
         </Router>
 

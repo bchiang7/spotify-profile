@@ -67,16 +67,16 @@ const NumLabel = styled.p`
 // `;
 
 class User extends Component {
-  state = {
-    user: null,
-    followedArtists: null,
-    playlists: null,
-  };
-
   static propTypes = {
     user: PropTypes.object,
     followedArtists: PropTypes.object,
     totalPlaylists: PropTypes.number,
+  };
+
+  state = {
+    user: null,
+    followedArtists: null,
+    playlists: null,
   };
 
   _isMounted = false;

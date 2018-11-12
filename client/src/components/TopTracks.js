@@ -32,13 +32,13 @@ const TracksContainer = styled.div`
 `;
 
 class TopTracks extends Component {
+  static propTypes = {
+    topTracks: PropTypes.object,
+  };
+
   state = {
     topTracks: null,
     activeRange: '',
-  };
-
-  static propTypes = {
-    topTracks: PropTypes.object,
   };
 
   _isMounted = false;

@@ -26,7 +26,7 @@ const RangeButton = styled.button`
 `;
 const ArtistsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: ${theme.spacing.base};
   margin-top: 50px;
 `;
@@ -40,8 +40,8 @@ const ArtistLink = styled.a`
 const ArtistImage = styled.img`
   border-radius: 100%;
   object-fit: cover;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
 `;
 const ArtistName = styled.a`
   margin: ${theme.spacing.base} 0;
@@ -52,13 +52,13 @@ const ArtistName = styled.a`
 `;
 
 class TopArtists extends Component {
+  static propTypes = {
+    topArtists: PropTypes.object,
+  };
+
   state = {
     topArtists: null,
     activeRange: '',
-  };
-
-  static propTypes = {
-    topArtists: PropTypes.object,
   };
 
   _isMounted = false;

@@ -32,11 +32,14 @@ const MenuItem = styled.li`
   font-size: 11px;
   color: ${theme.colors.lightGrey};
   a {
+    border-left: 5px solid transparent;
+
     &:hover,
     &:focus,
     &.active {
       color: ${theme.colors.white};
       background-color: ${theme.colors.black};
+      border-left: 5px solid ${theme.colors.offGreen};
     }
   }
   i {

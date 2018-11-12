@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { getPlaylists } from '../spotify';
 
 import FeatureChart from './FeatureChart';
 
@@ -13,11 +14,9 @@ const Wrapper = styled.div`
 `;
 const PlaylistsContainer = styled(Section)`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  grid-gap: ${theme.spacing.lg};
-  flex-grow: 1;
-  margin-right: ${theme.spacing.lg};
-  max-width: 60%;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: ${theme.spacing.md};
+  width: 100%;
 `;
 const Playlist = styled.div`
   text-align: center;
@@ -42,43 +41,48 @@ const PlaylistDetails = styled.div`
 `;
 
 class Playlists extends Component {
-  state = {
-    chartPlaylist: this.props.playlists.items[0],
+  static propTypes = {
+    playlists: PropTypes.object,
   };
+
+  state = {
+    playlists: null,
+    chartPlaylist: null,
+  };
+
+  componentDidMount() {
+    getPlaylists().then(res => this.setState({ playlists: res.data }));
+  }
 
   showFeatureChart(playlist) {
     this.setState({ chartPlaylist: playlist });
   }
 
   render() {
-    const { playlists } = this.props;
-    const { chartPlaylist } = this.state;
+    const { playlists, chartPlaylist } = this.state;
 
     return (
       <Container>
         <h2>Your Playlists</h2>
         <Wrapper>
           <PlaylistsContainer>
-            {playlists.items.map((playlist, i) => (
-              <Playlist key={i} onClick={() => this.showFeatureChart(playlist)}>
-                {playlist.images.length && <PlaylistImage src={playlist.images[0].url} alt="" />}
-                <PlaylistName href={playlist.external_urls.spotify} target="_blank">
-                  {playlist.name}
-                </PlaylistName>
-                <PlaylistDetails>{playlist.tracks.total} Tracks</PlaylistDetails>
-              </Playlist>
-            ))}
+            {playlists &&
+              playlists.items.map((playlist, i) => (
+                <Playlist key={i} onClick={() => this.showFeatureChart(playlist)}>
+                  {playlist.images.length && <PlaylistImage src={playlist.images[0].url} alt="" />}
+                  <PlaylistName href={playlist.external_urls.spotify} target="_blank">
+                    {playlist.name}
+                  </PlaylistName>
+                  <PlaylistDetails>{playlist.tracks.total} Tracks</PlaylistDetails>
+                </Playlist>
+              ))}
           </PlaylistsContainer>
 
-          <FeatureChart chartPlaylist={chartPlaylist} />
+          {/* <FeatureChart chartPlaylist={chartPlaylist} /> */}
         </Wrapper>
       </Container>
     );
   }
 }
-
-Playlists.propTypes = {
-  playlists: PropTypes.object,
-};
 
 export default Playlists;

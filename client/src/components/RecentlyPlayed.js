@@ -16,12 +16,12 @@ const TracksContainer = styled.div`
 `;
 
 class RecentlyPlayed extends Component {
-  state = {
-    recentlyPlayed: null,
-  };
-
   static propTypes = {
     recentlyPlayed: PropTypes.object,
+  };
+
+  state = {
+    recentlyPlayed: null,
   };
 
   _isMounted = false;
