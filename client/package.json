@@ -20,14 +20,11 @@
   "proxy": "http://localhost:8888",
   "lint-staged": {
     "linters": {
-      "*.{js}": [
+      "**/src/.{js}": [
         "eslint --fix",
         "git add"
       ]
-    },
-    "ignore": [
-      "../server/*"
-    ]
+    }
   },
   "husky": {
     "hooks": {

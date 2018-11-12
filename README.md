@@ -19,4 +19,4 @@ heroku config:set FRONTEND_URI=https://app-name-here.herokuapp.com
 git push heroku master
 ```
 
-Hit http://app-name.herokuapp.com/login and it will redirect to http://app-name.herokuapp.com?access_token=XXXXX where XXXXX is a valid access token
+Then add `http://app-name.herokuapp.com/callback` as a Redirect URI in the spotify application settings. Go to http://app-name.herokuapp.com/login and it should redirect to http://app-name.herokuapp.com?access_token=XXXXX where XXXXX is a valid access token.
