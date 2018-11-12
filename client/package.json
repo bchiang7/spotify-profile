@@ -20,7 +20,7 @@
   "proxy": "http://localhost:8888",
   "lint-staged": {
     "linters": {
-      "**/src/.{js}": [
+      "*.{js}": [
         "eslint --fix",
         "git add"
       ]
@@ -28,7 +28,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "lint-staged && pretty-quick --staged"
     }
   },
   "dependencies": {
