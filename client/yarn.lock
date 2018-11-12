@@ -805,12 +805,6 @@
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@upstatement/eslint-config/-/eslint-config-0.3.0.tgz#ff399ad04d046d8cdd4b35ea66a93141439bab4b"
 
-"@upstatement/prettier-config@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@upstatement/prettier-config/-/prettier-config-0.3.0.tgz#cf34332dfba90c7586cd0bde134b7fc771163323"
-  dependencies:
-    prettier "^1.x.x"
-
 "@webassemblyjs/ast@1.7.6":
   version "1.7.6"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.6.tgz#3ef8c45b3e5e943a153a05281317474fef63e21e"
@@ -1850,7 +1844,7 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
-chalk@2.4.1, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.3.1, chalk@^2.4.1:
+chalk@2.4.1, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.1, chalk@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.1.tgz#18c49ab16a037b6eb0152cc83e3471338215b66e"
   dependencies:
@@ -3143,18 +3137,6 @@ execa@^0.7.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
-execa@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/execa/-/execa-0.8.0.tgz#d8d76bbc1b55217ed190fd6dd49d3c774ecfc8da"
-  dependencies:
-    cross-spawn "^5.0.1"
-    get-stream "^3.0.0"
-    is-stream "^1.1.0"
-    npm-run-path "^2.0.0"
-    p-finally "^1.0.0"
-    signal-exit "^3.0.0"
-    strip-eof "^1.0.0"
-
 execa@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/execa/-/execa-0.9.0.tgz#adb7ce62cf985071f60580deb4a88b9e34712d01"
@@ -4152,7 +4134,7 @@ ignore-walk@^3.0.1:
   dependencies:
     minimatch "^3.0.4"
 
-ignore@^3.3.5, ignore@^3.3.7:
+ignore@^3.3.5:
   version "3.3.10"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.10.tgz#0a97fb876986e8081c631160f8f9f389157f0043"
 
@@ -5694,10 +5676,6 @@ move-concurrently@^1.0.1:
     rimraf "^2.5.4"
     run-queue "^1.0.3"
 
-mri@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/mri/-/mri-1.1.1.tgz#85aa26d3daeeeedf80dc5984af95cc5ca5cad9f1"
-
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -6915,7 +6893,7 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^1.14.2, prettier@^1.15.1, prettier@^1.x.x:
+prettier@^1.14.2:
   version "1.15.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.1.tgz#06c67106afb1b40e74b002353b2079cc7e0e67bf"
 
@@ -6936,16 +6914,6 @@ pretty-format@^23.6.0:
   dependencies:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
-
-pretty-quick@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/pretty-quick/-/pretty-quick-1.8.0.tgz#067ebe744ddb4e1ed4e1ee1af9648815121f78fc"
-  dependencies:
-    chalk "^2.3.0"
-    execa "^0.8.0"
-    find-up "^2.1.0"
-    ignore "^3.3.7"
-    mri "^1.1.0"
 
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"
