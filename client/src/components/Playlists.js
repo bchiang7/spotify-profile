@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from '@reach/router';
 import { getPlaylists } from '../spotify';
-
-import FeatureChart from './FeatureChart';
 
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
@@ -21,11 +20,33 @@ const PlaylistsContainer = styled(Section)`
 const Playlist = styled.div`
   text-align: center;
 `;
+const PlaylistMask = styled.div`
+  ${mixins.flexCenter};
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 30px;
+  color: ${theme.colors.white};
+  opacity: 0;
+  transition: ${theme.transition};
+`;
 const PlaylistImage = styled.img`
   object-fit: cover;
-  cursor: pointer;
 `;
-const PlaylistName = styled.a`
+const PlaylistCover = styled(Link)`
+  position: relative;
+  &:hover {
+    ${PlaylistMask} {
+      opacity: 1;
+    }
+  }
+`;
+const PlaylistName = styled.span`
   margin: ${theme.spacing.base} 0 5px;
   border-bottom: 1px solid transparent;
   &:hover {
@@ -47,19 +68,16 @@ class Playlists extends Component {
 
   state = {
     playlists: null,
-    chartPlaylist: null,
   };
 
   componentDidMount() {
     getPlaylists().then(res => this.setState({ playlists: res.data }));
   }
 
-  showFeatureChart(playlist) {
-    this.setState({ chartPlaylist: playlist });
-  }
-
   render() {
-    const { playlists, chartPlaylist } = this.state;
+    const { playlists } = this.state;
+
+    console.log(playlists);
 
     return (
       <Container>
@@ -67,18 +85,19 @@ class Playlists extends Component {
         <Wrapper>
           <PlaylistsContainer>
             {playlists &&
-              playlists.items.map((playlist, i) => (
-                <Playlist key={i} onClick={() => this.showFeatureChart(playlist)}>
-                  {playlist.images.length && <PlaylistImage src={playlist.images[0].url} alt="" />}
-                  <PlaylistName href={playlist.external_urls.spotify} target="_blank">
-                    {playlist.name}
-                  </PlaylistName>
-                  <PlaylistDetails>{playlist.tracks.total} Tracks</PlaylistDetails>
+              playlists.items.map(({ id, images, name, tracks }, i) => (
+                <Playlist key={i}>
+                  <PlaylistCover to={`${id}`}>
+                    {images && <PlaylistImage src={images[0].url} alt="Album Art" />}
+                    <PlaylistMask>
+                      <i className="fas fa-info-circle" />
+                    </PlaylistMask>
+                  </PlaylistCover>
+                  <PlaylistName>{name}</PlaylistName>
+                  <PlaylistDetails>{tracks.total} Tracks</PlaylistDetails>
                 </Playlist>
               ))}
           </PlaylistsContainer>
-
-          {/* <FeatureChart chartPlaylist={chartPlaylist} /> */}
         </Wrapper>
       </Container>
     );

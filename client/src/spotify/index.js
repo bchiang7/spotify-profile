@@ -36,15 +36,15 @@ export const token = getAccessToken();
 
 const headers = { Authorization: `Bearer ${token}` };
 
-export const getRecommendations = (topTracks, callback) => {
+export const getRecommendations = (tracks, callback) => {
   // get IDs of first 3 artists in topTracks
-  const seed_artists = topTracks.items
+  const seed_artists = tracks.items
     .slice(0, 3)
     .map(track => track.artists[0].id)
     .join(',');
 
   // get IDS of 4th and 5th topTracks
-  const seed_tracks = topTracks.items
+  const seed_tracks = tracks.items
     .slice(3, 5)
     .map(track => track.id)
     .join(',');
@@ -60,15 +60,8 @@ export const getRecommendations = (topTracks, callback) => {
     .catch(error => console.error(error));
 };
 
-export const getPlaylistTracks = (url, callback) => {
-  axios
-    .get(url, { headers })
-    .then(res => {
-      // console.log(res.data);
-      callback(res.data);
-    })
-    .catch(error => console.error(error));
-};
+export const getPlaylistTracks = playlistId =>
+  axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, { headers });
 
 export const getAudioFeaturesForTracks = (url, callback) => {
   axios
@@ -124,30 +117,3 @@ export const getUserInfo = () =>
       };
     }),
   );
-
-export const getEverything = () => {
-  if (token) {
-    return axios
-      .all([
-        getUser(),
-        getFollowing(),
-        getRecentlyPlayed(),
-        getTopArtistsMedium(),
-        getTopTracksMedium(),
-        getPlaylists(),
-      ])
-      .then(
-        axios.spread((user, followedArtists, recentlyPlayed, topArtists, topTracks, playlists) => {
-          // console.log(recentlyPlayed);
-          return {
-            user: user.data,
-            followedArtists: followedArtists.data,
-            recentlyPlayed: recentlyPlayed.data,
-            topArtists: topArtists.data,
-            topTracks: topTracks.data,
-            playlists: playlists.data,
-          };
-        }),
-      );
-  }
-};

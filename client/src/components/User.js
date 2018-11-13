@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from '@reach/router';
 
 import { getUserInfo } from '../spotify';
 
@@ -22,6 +23,11 @@ const NoAvatar = styled.div`
   border: 2px solid currentColor;
   border-radius: 100%;
   padding: ${theme.spacing.md};
+`;
+const UserName = styled.a`
+  &:hover {
+    color: ${theme.colors.offGreen};
+  }
 `;
 const Name = styled.h1`
   font-size: 50px;
@@ -99,8 +105,7 @@ class User extends Component {
   render() {
     const { user, followedArtists, playlists } = this.state;
     const totalPlaylists = playlists ? playlists.total : 0;
-
-    console.log(user);
+    // console.log(user);
 
     return (
       <React.Fragment>
@@ -115,7 +120,9 @@ class User extends Component {
                 </NoAvatar>
               )}
             </Avatar>
-            <Name>{user.display_name}</Name>
+            <UserName href={user.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+              <Name>{user.display_name}</Name>
+            </UserName>
             <Stats>
               <Stat>
                 <Number>{user.followers.total}</Number>
@@ -131,11 +138,17 @@ class User extends Component {
 
               {totalPlaylists && (
                 <Stat>
-                  <Number>{totalPlaylists}</Number>
-                  <NumLabel>Playlists</NumLabel>
+                  <Link to="playlists">
+                    <Number>{totalPlaylists}</Number>
+                    <NumLabel>Playlists</NumLabel>
+                  </Link>
                 </Stat>
               )}
             </Stats>
+
+            {/* <div>{user.product}</div> */}
+
+            {/* <div>{user.country}</div> */}
           </Container>
         )}
       </React.Fragment>

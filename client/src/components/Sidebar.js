@@ -111,7 +111,7 @@ const Sidebar = () => (
       </MenuItem>
       <MenuItem>
         <NavLink to="playlists">
-          <i className="far fa-list-alt" />
+          <i className="fas fa-music" />
           <span>Playlists</span>
         </NavLink>
       </MenuItem>
@@ -124,7 +124,7 @@ const Sidebar = () => (
     </ul>
     <Info>
       <NavLink to="info">
-        <i className="fas fa-info-circle" />
+        <i className="far fa-question-circle" />
       </NavLink>
     </Info>
   </Container>

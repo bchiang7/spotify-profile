@@ -121,13 +121,13 @@ class TopArtists extends Component {
         </Header>
         <ArtistsContainer>
           {topArtists &&
-            topArtists.items.map((artist, i) => (
+            topArtists.items.map(({ external_urls, images, name }, i) => (
               <Artist key={i}>
-                <ArtistLink href={artist.external_urls.spotify} target="_blank">
-                  <ArtistImage src={artist.images[1].url} alt="" />
+                <ArtistLink href={external_urls.spotify} target="_blank">
+                  <ArtistImage src={images[1].url} alt="" />
                 </ArtistLink>
-                <ArtistName href={artist.external_urls.spotify} target="_blank">
-                  {artist.name}
+                <ArtistName href={external_urls.spotify} target="_blank">
+                  {name}
                 </ArtistName>
               </Artist>
             ))}
