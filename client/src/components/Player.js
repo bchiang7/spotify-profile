@@ -58,21 +58,23 @@ const PlayerControls = styled.div`
   ${mixins.flexCenter};
 `;
 const ControlButton = styled.button`
+  width: ${theme.playerVolumeButtonWidth};
+  height: ${theme.playerVolumeButtonWidth};
   color: ${theme.colors.lightestGrey};
   background-color: transparent;
+  padding: 0;
   &:hover,
   &:focus {
     color: ${theme.colors.white};
+    border-color: ${theme.colors.white};
   }
 `;
 const PlayButton = styled(ControlButton)`
-  width: ${theme.playerVolumeButtonWidth};
-  height: ${theme.playerVolumeButtonWidth};
-  font-size: 12px;
+  border: 1px solid ${theme.colors.lightestGrey};
   border-radius: 100%;
   margin: 0 ${theme.spacing.base};
-  font-size: 28px;
-  padding: 0;
+  font-size: 11px;
+  padding: 0 0 0 2px;
 `;
 const PlaybackBar = styled.div`
   ${mixins.flexBetween};
@@ -162,8 +164,8 @@ const Player = () => (
           <i className="fas fa-step-backward" />
         </ControlButton>
         <PlayButton>
-          <i className="far fa-play-circle" />
-          {/* <i class="far fa-pause-circle"></i> */}
+          <i className="fas fa-play" />
+          {/* <i class="fas fa-pause"></i> */}
         </PlayButton>
         <ControlButton>
           <i className="fas fa-step-forward" />

@@ -36,7 +36,7 @@ export const token = getAccessToken();
 
 const headers = { Authorization: `Bearer ${token}` };
 
-export const getRecommendations = (tracks, callback) => {
+export const getRecommendations = tracks => {
   // get IDs of first 3 artists in topTracks
   const seed_artists = tracks.items
     .slice(0, 3)
@@ -51,26 +51,15 @@ export const getRecommendations = (tracks, callback) => {
 
   const url = `https://api.spotify.com/v1/recommendations?seed_artists=${seed_artists}&seed_tracks=${seed_tracks}`;
 
-  axios
-    .get(url, { headers })
-    .then(res => {
-      // console.log(res.data);
-      callback(res.data);
-    })
-    .catch(error => console.error(error));
+  return axios.get(url, { headers });
 };
 
-export const getPlaylistTracks = playlistId =>
-  axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, { headers });
+export const getPlaylist = playlistId =>
+  axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, { headers });
 
-export const getAudioFeaturesForTracks = (url, callback) => {
-  axios
-    .get(url, { headers })
-    .then(res => {
-      // console.log(res.data);
-      callback(res.data);
-    })
-    .catch(error => console.error(error));
+export const getAudioFeaturesForTracks = tracks => {
+  const ids = tracks.map(({ track }) => track.id).join(',');
+  return axios.get(`https://api.spotify.com/v1/audio-features?ids=${ids}`, { headers });
 };
 
 export const getUser = () => axios.get('https://api.spotify.com/v1/me', { headers });
@@ -101,9 +90,7 @@ export const getTopTracksMedium = () =>
   });
 
 export const getTopTracksLong = () =>
-  axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', {
-    headers,
-  });
+  axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', { headers });
 
 export const getPlaylists = () => axios.get('https://api.spotify.com/v1/me/playlists', { headers });
 

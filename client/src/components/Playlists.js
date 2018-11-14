@@ -39,6 +39,7 @@ const PlaylistImage = styled.img`
   object-fit: cover;
 `;
 const PlaylistCover = styled(Link)`
+  ${mixins.coverShadow};
   position: relative;
   &:hover {
     ${PlaylistMask} {
@@ -77,7 +78,7 @@ class Playlists extends Component {
   render() {
     const { playlists } = this.state;
 
-    console.log(playlists);
+    // console.log(playlists);
 
     return (
       <Container>

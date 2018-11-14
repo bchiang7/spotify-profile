@@ -33,6 +33,10 @@ const mixins = {
     white-space: nowrap;
     padding-right: 1px;
   `,
+
+  coverShadow: css`
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  `,
 };
 
 export default mixins;

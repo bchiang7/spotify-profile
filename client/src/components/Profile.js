@@ -13,7 +13,7 @@ import PlaylistInfo from './PlaylistInfo';
 import styled from 'styled-components/macro';
 
 const Container = styled.div`
-  padding: 75px 75px 165px 200px;
+  padding: 70px 50px 165px 150px;
 `;
 
 class Profile extends Component {
@@ -31,7 +31,7 @@ class Profile extends Component {
           <PlaylistInfo path="playlists/:playlistId" />
         </Router>
 
-        <Player />
+        {/* <Player /> */}
       </Container>
     );
   }
