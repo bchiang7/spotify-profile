@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Router } from '@reach/router';
 
 import Sidebar from './Sidebar';
-import Player from './Player';
+// import Player from './Player';
 import User from './User';
 import RecentlyPlayed from './RecentlyPlayed';
 import TopArtists from './TopArtists';
 import TopTracks from './TopTracks';
 import Playlists from './Playlists';
-import PlaylistInfo from './PlaylistInfo';
+import Playlist from './Playlist';
+import Recommendations from './Recommendations';
+import TrackInfo from './TrackInfo';
 
 import styled from 'styled-components/macro';
 
@@ -28,7 +30,9 @@ class Profile extends Component {
           <TopArtists path="artists" />
           <TopTracks path="tracks" />
           <Playlists path="playlists" />
-          <PlaylistInfo path="playlists/:playlistId" />
+          <Playlist path="playlists/:playlistId" />
+          <Recommendations path="recommendations/:playlistId" />
+          <TrackInfo path="track/:trackId" />
         </Router>
 
         {/* <Player /> */}

@@ -13,7 +13,6 @@ const Container = styled.nav`
   width: ${theme.sidebarWidth};
   background-color: ${theme.colors.sidebarBlack};
   text-align: center;
-  padding-bottom: ${theme.playerHeight};
   a {
     display: block;
     padding: ${theme.spacing.sm};
@@ -50,19 +49,10 @@ const MenuItem = styled.li`
     display: block;
   }
 `;
-// const NavLink = styled(Link)`
-//   color: ${props => props.isActive ? theme.colors.white : theme.colors.lightGrey};
-//   background-color: ${props => props.isActive ? theme.colors.black : `transparent`};
 
-//   &:hover,
-//   &:focus {
-//     color: ${theme.colors.white};
-//     background-color: ${theme.colors.black};
-//   }
-// `;
 const Info = styled.div`
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 22px;
+  margin-bottom: 50px;
   color: ${theme.colors.lightGrey};
   a {
     &:hover,
@@ -115,12 +105,12 @@ const Sidebar = () => (
           <span>Playlists</span>
         </NavLink>
       </MenuItem>
-      <MenuItem>
+      {/* <MenuItem>
         <NavLink to="recommendations">
           <i className="far fa-lightbulb" />
           <span>Recs</span>
         </NavLink>
-      </MenuItem>
+      </MenuItem> */}
     </ul>
     <Info>
       <NavLink to="info">

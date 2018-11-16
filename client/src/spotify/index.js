@@ -36,30 +36,48 @@ export const token = getAccessToken();
 
 const headers = { Authorization: `Bearer ${token}` };
 
-export const getRecommendations = tracks => {
-  // get IDs of first 3 artists in topTracks
-  const seed_artists = tracks.items
-    .slice(0, 3)
-    .map(track => track.artists[0].id)
-    .join(',');
-
-  // get IDS of 4th and 5th topTracks
-  const seed_tracks = tracks.items
-    .slice(3, 5)
-    .map(track => track.id)
-    .join(',');
-
-  const url = `https://api.spotify.com/v1/recommendations?seed_artists=${seed_artists}&seed_tracks=${seed_tracks}`;
-
-  return axios.get(url, { headers });
-};
+const getTrackIds = tracks => tracks.map(({ track }) => track.id).join(',');
 
 export const getPlaylist = playlistId =>
   axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, { headers });
 
+export const getPlaylistTracks = playlistId =>
+  axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, { headers });
+
 export const getAudioFeaturesForTracks = tracks => {
-  const ids = tracks.map(({ track }) => track.id).join(',');
+  const ids = getTrackIds(tracks);
   return axios.get(`https://api.spotify.com/v1/audio-features?ids=${ids}`, { headers });
+};
+
+// fuck seed artists, seed tracks, and seed genres are required?
+export const getRecommendationsForTracks = tracks => {
+  const trackIds = getTrackIds(tracks);
+  return axios.get(`https://api.spotify.com/v1/recommendations?seed_tracks=${trackIds}`, {
+    headers,
+  });
+};
+
+export const getTrack = trackId =>
+  axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, { headers });
+
+export const getTrackAudioAnalysis = trackId =>
+  axios.get(`https://api.spotify.com/v1/audio-analysis/${trackId}`, { headers });
+
+export const getTrackAudioFeatures = trackId =>
+  axios.get(`https://api.spotify.com/v1/audio-features/${trackId}`, { headers });
+
+export const getTrackInfo = trackId => {
+  return axios
+    .all([getTrack(trackId), getTrackAudioAnalysis(trackId), getTrackAudioFeatures(trackId)])
+    .then(
+      axios.spread((track, audioAnalysis, audioFeatures) => {
+        return {
+          track: track.data,
+          audioAnalysis: audioAnalysis.data,
+          audioFeatures: audioFeatures.data,
+        };
+      }),
+    );
 };
 
 export const getUser = () => axios.get('https://api.spotify.com/v1/me', { headers });
@@ -94,8 +112,8 @@ export const getTopTracksLong = () =>
 
 export const getPlaylists = () => axios.get('https://api.spotify.com/v1/me/playlists', { headers });
 
-export const getUserInfo = () =>
-  axios.all([getUser(), getFollowing(), getPlaylists()]).then(
+export const getUserInfo = () => {
+  return axios.all([getUser(), getFollowing(), getPlaylists()]).then(
     axios.spread((user, followedArtists, playlists) => {
       return {
         user: user.data,
@@ -104,3 +122,4 @@ export const getUserInfo = () =>
       };
     }),
   );
+};

@@ -21,7 +21,7 @@ const LoginButton = styled.a`
   color: ${theme.colors.white};
   border-radius: 30px;
   padding: 17px 35px;
-  margin-bottom: 70px;
+  margin: 20px 0 70px;
   min-width: 160px;
   font-weight: 700;
   letter-spacing: 2px;

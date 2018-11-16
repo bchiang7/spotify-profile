@@ -49,6 +49,7 @@ const theme = {
   transition: `all 0.15s cubic-bezier(0.3, 0, 0.4, 1);`,
 
   sidebarWidth: '100px',
+
   playerHeight: '90px',
   playerAlbumWidth: '56px',
   playerControlsWidth: '480px',

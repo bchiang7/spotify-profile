@@ -1,76 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { formatDuration } from '../utils';
+
+import { getPlaylistTracks, getRecommendationsForTracks } from '../spotify';
+
+import Track from './Track';
+
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../styles';
+import { theme, mixins } from '../styles';
 
-const Container = styled(Section)``;
+const Container = styled.div``;
 const TracksContainer = styled.div``;
-const Track = styled.div`
-  ${mixins.flexBetween};
-  margin-bottom: ${theme.spacing.md};
-`;
-const TrackLeft = styled.span`
-  display: flex;
-  ${mixins.overflowEllipsis};
-`;
-const TrackRight = styled.span``;
-const TrackArtwork = styled.span`
-  width: 50px;
-  min-width: 50px;
-  margin-right: ${theme.spacing.base};
-`;
-const TrackImage = styled.img``;
-const TrackMeta = styled.span``;
-const TrackName = styled.a`
-  margin-bottom: 5px;
-  border-bottom: 1px solid transparent;
-  &:hover {
-    border-bottom: 1px solid ${theme.colors.white};
+
+class Recommendations extends Component {
+  static propTypes = {
+    playlistId: PropTypes.string,
+  };
+
+  state = {
+    tracks: null,
+    recommendations: null,
+  };
+
+  componentDidMount() {
+    const { playlistId } = this.props;
+    console.log(playlistId);
+
+    getPlaylistTracks(playlistId)
+      .then(res => this.setState({ tracks: res.data }))
+      .then(() => {
+        const { tracks } = this.state;
+        getRecommendationsForTracks(tracks.items).then(res =>
+          this.setState({ recommendations: res.data }),
+        );
+      });
   }
-`;
-const ArtistAlbum = styled.div`
-  ${mixins.overflowEllipsis};
-  color: ${theme.colors.lightGrey};
-  font-size: ${theme.fontSizes.sm};
-`;
-const TrackDuration = styled.span`
-  color: ${theme.colors.lightGrey};
-  font-size: ${theme.fontSizes.sm};
-`;
 
-const Recommendations = ({ recommendations }) => (
-  <Container>
-    <h2>Recommended Tracks</h2>
-    <TracksContainer>
-      {recommendations.tracks.map((track, i) => (
-        <Track key={i}>
-          <TrackLeft>
-            <TrackArtwork>
-              {track.album.images[2] && <TrackImage src={track.album.images[2].url} alt="" />}
-            </TrackArtwork>
-            <TrackMeta>
-              <TrackName href={track.external_urls.spotify} target="_blank">
-                {track.name}
-              </TrackName>
-              <ArtistAlbum>
-                {track.artists[0].name}
-                &nbsp;&middot;&nbsp;
-                {track.album.name}
-              </ArtistAlbum>
-            </TrackMeta>
-          </TrackLeft>
-          <TrackRight>
-            <TrackDuration>{formatDuration(track.duration_ms)}</TrackDuration>
-          </TrackRight>
-        </Track>
-      ))}
-    </TracksContainer>
-  </Container>
-);
-
-Recommendations.propTypes = {
-  recommendations: PropTypes.object,
-};
+  render() {
+    const { recommendations } = this.state;
+    console.log(recommendations);
+    return (
+      <Container>
+        <h2>Recommended Tracks Based On Insert Playlist Here</h2>
+        <TracksContainer>
+          {/* {recommendations &&
+            recommendations.tracks.map((track, i) => <Track track={track} key={i} />)} */}
+        </TracksContainer>
+      </Container>
+    );
+  }
+}
 
 export default Recommendations;

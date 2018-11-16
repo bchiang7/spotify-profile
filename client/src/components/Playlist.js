@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from '@reach/router';
 
 import { getPlaylist, getAudioFeaturesForTracks } from '../spotify';
 
@@ -36,6 +37,18 @@ const Description = styled.p`
   font-size: ${theme.fontSizes.sm};
   color: ${theme.colors.lightGrey};
 `;
+const RecButton = styled(Link)`
+  display: inline-block;
+  background-color: ${theme.colors.green};
+  color: ${theme.colors.white};
+  border-radius: 30px;
+  padding: 12px 25px;
+  margin-top: 20px;
+  font-weight: 700;
+  &:hover {
+    background-color: ${theme.colors.offGreen};
+  }
+`;
 const Owner = styled.p`
   font-size: ${theme.fontSizes.sm};
   color: ${theme.colors.lightGrey};
@@ -46,7 +59,7 @@ const TotalTracks = styled.p`
   margin-top: 20px;
 `;
 
-class PlaylistInfo extends Component {
+class Playlist extends Component {
   static propTypes = {
     playlistId: PropTypes.string,
   };
@@ -72,7 +85,7 @@ class PlaylistInfo extends Component {
 
   render() {
     const { playlist, audioFeatures } = this.state;
-
+    // console.log(playlist);
     return (
       <React.Fragment>
         {playlist && (
@@ -83,11 +96,14 @@ class PlaylistInfo extends Component {
                   <img src={playlist.images[0].url} alt="Album Art" />
                 </PlaylistCover>
               )}
-              <Name>{playlist.name}</Name>
+              <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                <Name>{playlist.name}</Name>
+              </a>
               <Owner>By {playlist.owner.display_name}</Owner>
               {playlist.description && <Description>{playlist.description}</Description>}
               <TotalTracks>{playlist.tracks.total} Tracks</TotalTracks>
-              {/* TotalDuration */}
+
+              <RecButton to={`/recommendations/${playlist.id}`}>Get Recommendations</RecButton>
 
               {audioFeatures && <FeatureChart features={audioFeatures.audio_features} />}
             </Left>
@@ -103,4 +119,4 @@ class PlaylistInfo extends Component {
   }
 }
 
-export default PlaylistInfo;
+export default Playlist;

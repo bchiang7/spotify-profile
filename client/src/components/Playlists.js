@@ -88,13 +88,15 @@ class Playlists extends Component {
             {playlists &&
               playlists.items.map(({ id, images, name, tracks }, i) => (
                 <Playlist key={i}>
-                  <PlaylistCover to={`${id}`}>
+                  <PlaylistCover to={id}>
                     {images && <PlaylistImage src={images[0].url} alt="Album Art" />}
                     <PlaylistMask>
                       <i className="fas fa-info-circle" />
                     </PlaylistMask>
                   </PlaylistCover>
-                  <PlaylistName>{name}</PlaylistName>
+                  <Link to={id}>
+                    <PlaylistName>{name}</PlaylistName>
+                  </Link>
                   <PlaylistDetails>{tracks.total} Tracks</PlaylistDetails>
                 </Playlist>
               ))}
