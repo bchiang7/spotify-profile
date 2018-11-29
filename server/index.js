@@ -1,3 +1,7 @@
+// SPOTIFY WEB API AUTHORIZATION CODE FLOW
+// https://developer.spotify.com/documentation/general/guides/authorization-guide/
+// https://github.com/spotify/web-api-auth-examples
+
 require('dotenv').config();
 
 const CLIENT_ID = process.env.CLIENT_ID;
