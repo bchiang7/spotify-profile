@@ -4,7 +4,7 @@ import Head from './Head';
 import LoginScreen from './LoginScreen';
 import Profile from './Profile';
 
-import { token, getNewToken } from '../spotify';
+import { token } from '../spotify';
 
 import styled from 'styled-components/macro';
 import { GlobalStyle } from '../styles';
@@ -24,7 +24,6 @@ class App extends Component {
       this.setState({ loggedIn: true });
     } else {
       this.setState({ loggedIn: false });
-      console.error('Something went wrong with the access token client side');
     }
   }
 

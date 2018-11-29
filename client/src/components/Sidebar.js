@@ -14,6 +14,7 @@ const Container = styled.nav`
   width: ${theme.sidebarWidth};
   background-color: ${colors.sidebarBlack};
   text-align: center;
+  z-index: 99;
   a {
     display: block;
     padding: ${spacing.sm};
@@ -53,7 +54,7 @@ const MenuItem = styled.li`
 
 const Info = styled.div`
   font-size: 22px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   color: ${colors.lightGrey};
   a {
     &:hover,
