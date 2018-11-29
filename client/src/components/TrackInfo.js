@@ -5,6 +5,8 @@ import { getTrackInfo } from '../spotify';
 
 import FeatureChart from './FeatureChart';
 
+import { IconLoader } from './icons';
+
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
 
@@ -37,8 +39,20 @@ class TrackInfo extends Component {
 
     return (
       <React.Fragment>
-        {track && (
+        {track ? (
           <Container>
+            {track && (
+              <div>
+                <h1>{track.name}</h1>
+                <h2>{track.artists[0].name}</h2>
+                <h3>{track.album.name}</h3>
+                <img src={track.album.images[0].url} alt="" />
+                <a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                  Play on Spotify
+                </a>
+                <p>Duration: {track.duration_ms}</p>
+              </div>
+            )}
             {/* {track.images && (
               <TrackInfoCover>
                 <img src={track.images[0].url} alt="Album Art" />
@@ -57,7 +71,10 @@ class TrackInfo extends Component {
 
             {/* Recommendations */}
           </Container>
+        ) : (
+          <IconLoader />
         )}
+        <IconLoader />
       </React.Fragment>
     );
   }
