@@ -23,21 +23,22 @@ class Recommendations extends Component {
 
   componentDidMount() {
     const { playlistId } = this.props;
-    console.log(playlistId);
 
     getPlaylistTracks(playlistId)
       .then(res => this.setState({ tracks: res.data }))
       .then(() => {
         const { tracks } = this.state;
-        getRecommendationsForTracks(tracks.items).then(res =>
-          this.setState({ recommendations: res.data }),
-        );
+        console.log('get recommendations');
+
+        // getRecommendationsForTracks(tracks.items).then(res =>
+        //   this.setState({ recommendations: res.data }),
+        // );
       });
   }
 
   render() {
     const { recommendations } = this.state;
-    console.log(recommendations);
+    // console.log(recommendations);
     return (
       <Container>
         <h2>Recommended Tracks Based On Insert Playlist Here</h2>

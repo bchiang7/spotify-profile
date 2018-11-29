@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { getTrackInfo } from '../spotify';
-import { formatDuration } from '../utils';
+import { formatDuration, getYear } from '../utils';
 
-import FeatureChart from './FeatureChart';
+// import FeatureChart from './FeatureChart';
 
 import { IconLoader } from './icons';
 
@@ -19,7 +18,7 @@ const TrackContainer = styled.div`
 const Artwork = styled.div`
   ${mixins.coverShadow};
   max-width: 300px;
-  margin-right: 30px;
+  margin-right: 40px;
 `;
 const Info = styled.div`
   flex-grow: 1;
@@ -27,18 +26,22 @@ const Info = styled.div`
 const PlayTrackButton = styled.a`
   ${mixins.greenButton};
 `;
-const Title = styled.h1``;
+const Title = styled.h1`
+  font-weight: 700;
+  font-size: 50px;
+  margin: 0;
+`;
 const Artist = styled.h2`
-  color: ${colors.lightGrey};
-  font-weight: 400;
-  font-size: 20px;
+  color: ${colors.lightestGrey};
+  font-weight: 700;
+  font-size: 30px;
 `;
 const Album = styled.h3`
   color: ${colors.lightGrey};
   font-weight: 400;
   font-size: 16px;
 `;
-const Duration = styled.p``;
+const AlbumInfo = styled.p``;
 
 class TrackInfo extends Component {
   static propTypes = {
@@ -75,9 +78,10 @@ class TrackInfo extends Component {
                 <Title>{track.name}</Title>
                 <Artist>{track.artists[0].name}</Artist>
                 <Album>
-                  {track.album.name} &middot; {track.album.release_date}
+                  {track.album.name} &middot; {getYear(track.album.release_date)} &middot;{' '}
+                  {track.album.total_tracks} tracks
                 </Album>
-                <Duration>Duration: {formatDuration(track.duration_ms)}</Duration>
+                <AlbumInfo />
 
                 <PlayTrackButton
                   href={track.external_urls.spotify}
