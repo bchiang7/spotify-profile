@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getHashParams = () => {
+export const getHashParams = () => {
   const hashParams = {};
   let e;
   const r = /([^&;=]+)=?([^&;]*)/g;
@@ -11,25 +11,39 @@ const getHashParams = () => {
   return hashParams;
 };
 
-const getAccessToken = () => {
-  const { error, access_token } = getHashParams();
+export const getRefreshToken = () => {
+  return window.localStorage.getItem('spotify_refresh_token');
+};
+
+export const refresh_token = getRefreshToken();
+
+export const getNewToken = () => axios.get(`/refresh_token?refresh_token=${refresh_token}`);
+
+export const getAccessToken = () => {
+  const { error, access_token, refresh_token } = getHashParams();
 
   if (error) {
-    alert('There was an error during authentication');
     console.error(error);
+
+    getNewToken().then(res => {
+      const { access_token } = res.data;
+      return access_token;
+    });
   }
 
-  if (!access_token) {
-    return;
+  const local_access_token = window.localStorage.getItem('spotify_access_token');
+  const local_refresh_token = window.localStorage.getItem('spotify_refresh_token');
+
+  if (!local_refresh_token) {
+    window.localStorage.setItem('spotify_refresh_token', refresh_token);
   }
 
-  const local_token = window.localStorage.getItem('spotify_access_token');
-
-  if (!local_token) {
+  if (!local_access_token) {
     window.localStorage.setItem('spotify_access_token', access_token);
+    return access_token;
   }
 
-  return access_token;
+  return local_access_token;
 };
 
 export const token = getAccessToken();

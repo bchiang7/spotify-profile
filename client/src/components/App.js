@@ -4,7 +4,7 @@ import Head from './Head';
 import LoginScreen from './LoginScreen';
 import Profile from './Profile';
 
-import { token } from '../spotify';
+import { token, getNewToken } from '../spotify';
 
 import styled from 'styled-components/macro';
 import { GlobalStyle } from '../styles';
@@ -20,10 +20,10 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // const local_token = window.localStorage.getItem('spotify_access_token');
-
     if (token) {
       this.setState({ loggedIn: true });
+    } else {
+      console.error('Something went wrong with the access token client side');
     }
   }
 
