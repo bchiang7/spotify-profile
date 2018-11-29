@@ -9,6 +9,7 @@ import FeatureChart from './FeatureChart';
 
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
+const { colors, fontSizes } = theme;
 
 const Container = styled.div`
   display: flex;
@@ -30,32 +31,23 @@ const PlaylistCover = styled.div`
 `;
 const Name = styled.h3`
   font-weight: 700;
-  font-size: ${theme.fontSizes.xl};
+  font-size: ${fontSizes.xl};
   margin-top: 20px;
 `;
 const Description = styled.p`
-  font-size: ${theme.fontSizes.sm};
-  color: ${theme.colors.lightGrey};
+  font-size: ${fontSizes.sm};
+  color: ${colors.lightGrey};
 `;
 const RecButton = styled(Link)`
-  display: inline-block;
-  background-color: ${theme.colors.green};
-  color: ${theme.colors.white};
-  border-radius: 30px;
-  padding: 12px 25px;
-  margin-top: 20px;
-  font-weight: 700;
-  &:hover {
-    background-color: ${theme.colors.offGreen};
-  }
+  ${mixins.greenButton};
 `;
 const Owner = styled.p`
-  font-size: ${theme.fontSizes.sm};
-  color: ${theme.colors.lightGrey};
+  font-size: ${fontSizes.sm};
+  color: ${colors.lightGrey};
 `;
 const TotalTracks = styled.p`
-  font-size: ${theme.fontSizes.sm};
-  color: ${theme.colors.white};
+  font-size: ${fontSizes.sm};
+  color: ${colors.white};
   margin-top: 20px;
 `;
 

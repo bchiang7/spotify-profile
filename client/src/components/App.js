@@ -23,6 +23,7 @@ class App extends Component {
     if (token) {
       this.setState({ loggedIn: true });
     } else {
+      this.setState({ loggedIn: false });
       console.error('Something went wrong with the access token client side');
     }
   }

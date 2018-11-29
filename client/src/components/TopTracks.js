@@ -7,6 +7,7 @@ import Track from './Track';
 
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
+const { colors, fontSizes } = theme;
 
 const Container = styled(Section)``;
 const Header = styled.header`
@@ -20,11 +21,11 @@ const Ranges = styled.div`
 `;
 const RangeButton = styled.button`
   background-color: transparent;
-  font-size: ${theme.fontSizes.base};
-  color: ${props => (props.isActive ? theme.colors.white : theme.colors.lightGrey)};
+  font-size: ${fontSizes.base};
+  color: ${props => (props.isActive ? colors.white : colors.lightGrey)};
   span {
     padding-bottom: 3px;
-    border-bottom: 1px solid ${props => (props.isActive ? theme.colors.white : `transparent`)};
+    border-bottom: 1px solid ${props => (props.isActive ? colors.white : `transparent`)};
   }
 `;
 const TracksContainer = styled.div`

@@ -8,6 +8,7 @@ import { IconUser } from './icons';
 
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
+const { colors, fontSizes, spacing } = theme;
 
 const Container = styled.header`
   ${mixins.flexCenter};
@@ -22,11 +23,11 @@ const Avatar = styled.div`
 const NoAvatar = styled.div`
   border: 2px solid currentColor;
   border-radius: 100%;
-  padding: ${theme.spacing.md};
+  padding: ${spacing.md};
 `;
 const UserName = styled.a`
   &:hover {
-    color: ${theme.colors.offGreen};
+    color: ${colors.offGreen};
   }
 `;
 const Name = styled.h1`
@@ -36,39 +37,39 @@ const Name = styled.h1`
 `;
 const Stats = styled.div`
   ${mixins.flexBetween};
-  margin-top: ${theme.spacing.base};
+  margin-top: ${spacing.base};
   text-align: center;
 `;
 const Stat = styled.div`
-  margin: 0 ${theme.spacing.base};
+  margin: 0 ${spacing.base};
 `;
 const Number = styled.div`
-  color: ${theme.colors.green};
+  color: ${colors.green};
   font-weight: 700;
-  font-size: ${theme.fontSizes.md};
+  font-size: ${fontSizes.md};
 `;
 const NumLabel = styled.p`
-  color: ${theme.colors.lightGrey};
-  font-size: ${theme.fontSizes.xs};
+  color: ${colors.lightGrey};
+  font-size: ${fontSizes.xs};
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-top: ${theme.spacing.xs};
+  margin-top: ${spacing.xs};
 `;
 // const LogoutButton = styled.a`
 //   position: absolute;
 //   top: 50px;
 //   right: 50px;
-//   background-color: ${theme.colors.green};
-//   color: ${theme.colors.white};
+//   background-color: ${colors.green};
+//   color: ${colors.white};
 //   border-radius: 30px;
 //   padding: 12px 22px;
-//   font-size: ${theme.fontSizes.xs};
+//   font-size: ${fontSizes.xs};
 //   font-weight: 700;
 //   letter-spacing: 1px;
 //   text-transform: uppercase;
 //   text-align: center;
 //   &:hover {
-//     background-color: ${theme.colors.offGreen};
+//     background-color: ${colors.offGreen};
 //   }
 // `;
 

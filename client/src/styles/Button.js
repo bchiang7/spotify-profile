@@ -1,8 +1,9 @@
 import styled from 'styled-components/macro';
 import theme from './theme';
+const { fontSizes } = theme;
 
 const Button = styled.button`
-  font-size: ${theme.fontSizes.base};
+  font-size: ${fontSizes.base};
   cursor: pointer;
   border: 0;
   border-radius: 0;

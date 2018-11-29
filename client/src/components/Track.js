@@ -5,6 +5,7 @@ import { formatDuration } from '../utils';
 
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
+const { colors, fontSizes, spacing } = theme;
 
 const TrackLeft = styled.span`
   ${mixins.overflowEllipsis};
@@ -16,7 +17,7 @@ const TrackArtwork = styled(Link)`
   position: relative;
   width: 50px;
   min-width: 50px;
-  margin-right: ${theme.spacing.base};
+  margin-right: ${spacing.base};
 `;
 const Mask = styled.div`
   ${mixins.flexCenter};
@@ -29,14 +30,14 @@ const Mask = styled.div`
   left: 0;
   right: 0;
   font-size: 20px;
-  color: ${theme.colors.white};
+  color: ${colors.white};
   opacity: 0;
   transition: ${theme.transition};
 `;
 const TrackContainer = styled.div`
   ${mixins.flexBetween};
   align-items: flex-start;
-  margin-bottom: ${theme.spacing.md};
+  margin-bottom: ${spacing.md};
   &:hover {
     ${Mask} {
       opacity: 1;
@@ -47,17 +48,17 @@ const TrackName = styled.a`
   margin-bottom: 5px;
   border-bottom: 1px solid transparent;
   &:hover {
-    border-bottom: 1px solid ${theme.colors.white};
+    border-bottom: 1px solid ${colors.white};
   }
 `;
 const ArtistAlbum = styled.div`
   ${mixins.overflowEllipsis};
-  color: ${theme.colors.lightGrey};
-  font-size: ${theme.fontSizes.sm};
+  color: ${colors.lightGrey};
+  font-size: ${fontSizes.sm};
 `;
 const TrackDuration = styled.span`
-  color: ${theme.colors.lightGrey};
-  font-size: ${theme.fontSizes.sm};
+  color: ${colors.lightGrey};
+  font-size: ${fontSizes.sm};
 `;
 
 const Track = ({ track }) => (

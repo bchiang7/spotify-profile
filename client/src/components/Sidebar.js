@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
+const { colors, spacing } = theme;
 
 const Container = styled.nav`
   ${mixins.flexBetween};
@@ -11,11 +12,11 @@ const Container = styled.nav`
   top: 0;
   left: 0;
   width: ${theme.sidebarWidth};
-  background-color: ${theme.colors.sidebarBlack};
+  background-color: ${colors.sidebarBlack};
   text-align: center;
   a {
     display: block;
-    padding: ${theme.spacing.sm};
+    padding: ${spacing.sm};
   }
   & > * {
     width: 100%;
@@ -24,21 +25,21 @@ const Container = styled.nav`
 const Logo = styled.div`
   font-size: 50px;
   margin-top: 20px;
-  color: ${theme.colors.green};
+  color: ${colors.green};
 `;
 const MenuItem = styled.li`
   width: 100%;
   font-size: 11px;
-  color: ${theme.colors.lightGrey};
+  color: ${colors.lightGrey};
   a {
     border-left: 5px solid transparent;
 
     &:hover,
     &:focus,
     &.active {
-      color: ${theme.colors.white};
-      background-color: ${theme.colors.black};
-      border-left: 5px solid ${theme.colors.offGreen};
+      color: ${colors.white};
+      background-color: ${colors.black};
+      border-left: 5px solid ${colors.offGreen};
     }
   }
   i {
@@ -53,12 +54,12 @@ const MenuItem = styled.li`
 const Info = styled.div`
   font-size: 22px;
   margin-bottom: 50px;
-  color: ${theme.colors.lightGrey};
+  color: ${colors.lightGrey};
   a {
     &:hover,
     &:focus,
     &.active {
-      color: ${theme.colors.white};
+      color: ${colors.white};
     }
   }
 `;

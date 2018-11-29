@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
+const { colors, fontSizes, spacing } = theme;
 
 const Container = styled.footer`
   ${mixins.flexBetween};
-  background-color: ${theme.colors.darkGrey};
+  background-color: ${colors.darkGrey};
   position: fixed;
   width: 100%;
   height: ${theme.playerHeight};
@@ -34,7 +35,7 @@ const TrackInfo = styled.div`
 const TrackTitle = styled.a`
   ${mixins.overflowEllipsis};
   display: block;
-  font-size: ${theme.fontSizes.sm};
+  font-size: ${fontSizes.sm};
   line-height: 20px;
   letter-spacing: 0.015em;
   font-weight: 600;
@@ -42,10 +43,10 @@ const TrackTitle = styled.a`
 const ArtistName = styled.span`
   ${mixins.overflowEllipsis};
   display: block;
-  font-size: ${theme.fontSizes.xs};
+  font-size: ${fontSizes.xs};
   line-height: 16px;
   letter-spacing: 0.015em;
-  color: ${theme.colors.lightestGrey};
+  color: ${colors.lightestGrey};
 `;
 const PlayerCenter = styled.div`
   ${mixins.flexBetween};
@@ -60,19 +61,19 @@ const PlayerControls = styled.div`
 const ControlButton = styled.button`
   width: ${theme.playerVolumeButtonWidth};
   height: ${theme.playerVolumeButtonWidth};
-  color: ${theme.colors.lightestGrey};
+  color: ${colors.lightestGrey};
   background-color: transparent;
   padding: 0;
   &:hover,
   &:focus {
-    color: ${theme.colors.white};
-    border-color: ${theme.colors.white};
+    color: ${colors.white};
+    border-color: ${colors.white};
   }
 `;
 const PlayButton = styled(ControlButton)`
-  border: 1px solid ${theme.colors.lightestGrey};
+  border: 1px solid ${colors.lightestGrey};
   border-radius: 100%;
-  margin: 0 ${theme.spacing.base};
+  margin: 0 ${spacing.base};
   font-size: 11px;
   padding: 0 0 0 2px;
 `;
@@ -92,14 +93,14 @@ const ProgressBar = styled.div`
   height: ${theme.playerVolumeBarHeight};
 `;
 const ProgressBarBackground = styled.div`
-  background-color: ${theme.colors.grey};
+  background-color: ${colors.grey};
   position: relative;
   width: 100%;
   height: 100%;
   border-radius: 2px;
 `;
 const ProgressBarForeground = styled.div`
-  background-color: ${theme.colors.lightestGrey};
+  background-color: ${colors.lightestGrey};
   position: absolute;
   width: 40%;
   height: 100%;
@@ -117,12 +118,12 @@ const VolumeButton = styled.button`
   width: ${theme.playerVolumeButtonWidth};
   height: ${theme.playerVolumeButtonWidth};
   background-color: transparent;
-  color: ${theme.colors.lightestGrey};
+  color: ${colors.lightestGrey};
   font-size: 14px;
   padding: 0;
   &:hover,
   &:focus {
-    color: ${theme.colors.white};
+    color: ${colors.white};
   }
 `;
 const VolumeBar = styled.div`
@@ -130,14 +131,14 @@ const VolumeBar = styled.div`
   height: ${theme.playerVolumeBarHeight};
 `;
 const VolumeBarBackground = styled.div`
-  background-color: ${theme.colors.grey};
+  background-color: ${colors.grey};
   position: relative;
   width: 100%;
   height: 100%;
   border-radius: 2px;
 `;
 const VolumeBarForeground = styled.div`
-  background-color: ${theme.colors.lightestGrey};
+  background-color: ${colors.lightestGrey};
   position: absolute;
   width: 40%;
   height: 100%;

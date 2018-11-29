@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
+const { colors, fontSizes } = theme;
 
 const LOGIN_URI =
   process.env.NODE_ENV !== 'production'
@@ -12,13 +13,13 @@ const Login = styled(Section)`
   flex-direction: column;
   min-height: 100vh;
   h1 {
-    font-size: ${theme.fontSizes.xxl};
+    font-size: ${fontSizes.xxl};
   }
 `;
 const LoginButton = styled.a`
   display: inline-block;
-  background-color: ${theme.colors.green};
-  color: ${theme.colors.white};
+  background-color: ${colors.green};
+  color: ${colors.white};
   border-radius: 30px;
   padding: 17px 35px;
   margin: 20px 0 70px;
@@ -28,7 +29,7 @@ const LoginButton = styled.a`
   text-transform: uppercase;
   text-align: center;
   &:hover {
-    background-color: ${theme.colors.offGreen};
+    background-color: ${colors.offGreen};
   }
 `;
 

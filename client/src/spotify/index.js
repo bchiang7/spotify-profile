@@ -27,18 +27,18 @@ export const getAccessToken = () => {
 
     getNewToken().then(res => {
       const { access_token } = res.data;
+      window.localStorage.setItem('spotify_access_token', access_token);
       return access_token;
     });
   }
 
   const local_access_token = window.localStorage.getItem('spotify_access_token');
-  const local_refresh_token = window.localStorage.getItem('spotify_refresh_token');
 
-  if (!local_refresh_token) {
+  if (window.localStorage.getItem('spotify_refresh_token') === null) {
     window.localStorage.setItem('spotify_refresh_token', refresh_token);
   }
 
-  if (!local_access_token) {
+  if (window.localStorage.getItem('spotify_access_token') === null) {
     window.localStorage.setItem('spotify_access_token', access_token);
     return access_token;
   }

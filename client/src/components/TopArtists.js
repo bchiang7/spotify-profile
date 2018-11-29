@@ -4,6 +4,7 @@ import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../s
 
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
+const { colors, fontSizes, spacing } = theme;
 
 const Container = styled(Section)``;
 const Header = styled.header`
@@ -17,17 +18,17 @@ const Ranges = styled.div`
 `;
 const RangeButton = styled.button`
   background-color: transparent;
-  font-size: ${theme.fontSizes.base};
-  color: ${props => (props.isActive ? theme.colors.white : theme.colors.lightGrey)};
+  font-size: ${fontSizes.base};
+  color: ${props => (props.isActive ? colors.white : colors.lightGrey)};
   span {
     padding-bottom: 3px;
-    border-bottom: 1px solid ${props => (props.isActive ? theme.colors.white : `transparent`)};
+    border-bottom: 1px solid ${props => (props.isActive ? colors.white : `transparent`)};
   }
 `;
 const ArtistsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: ${theme.spacing.base};
+  grid-gap: ${spacing.base};
   margin-top: 50px;
 `;
 const Artist = styled.div`
@@ -44,10 +45,10 @@ const ArtistImage = styled.img`
   height: 200px;
 `;
 const ArtistName = styled.a`
-  margin: ${theme.spacing.base} 0;
+  margin: ${spacing.base} 0;
   border-bottom: 1px solid transparent;
   &:hover {
-    border-bottom: 1px solid ${theme.colors.white};
+    border-bottom: 1px solid ${colors.white};
   }
 `;
 

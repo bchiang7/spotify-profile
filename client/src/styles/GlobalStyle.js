@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components/macro';
 import theme from './theme';
+const { colors, fontSizes, fonts } = theme;
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -97,10 +98,10 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    font-family: ${theme.fonts.primary};
-    font-size: ${theme.fontSizes.base};
-    background-color: ${theme.colors.black};
-    color: ${theme.colors.white};
+    font-family: ${fonts.primary};
+    font-size: ${fontSizes.base};
+    background-color: ${colors.black};
+    color: ${colors.white};
   }
 
   #root {
@@ -116,7 +117,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button {
-    font-size: ${theme.fontSizes.base};
+    font-size: ${fontSizes.base};
     cursor: pointer;
     border: 0;
     border-radius: 0;
@@ -150,13 +151,13 @@ const GlobalStyle = createGlobalStyle`
   button {
     border-radius: 0;
     outline: 0;
-    color: ${theme.colors.lightestGrey};
-    font-family: ${theme.fonts.primary};
-    font-size: ${theme.fontSizes.base};
+    color: ${colors.lightestGrey};
+    font-family: ${fonts.primary};
+    font-size: ${fontSizes.base};
     padding: 10px;
 
     &:hover, &:focus {
-      color: ${theme.colors.white};
+      color: ${colors.white};
     }
   }
 

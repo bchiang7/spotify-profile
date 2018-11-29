@@ -5,6 +5,7 @@ import { getPlaylists } from '../spotify';
 
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
+const { colors, fontSizes, spacing } = theme;
 
 const Container = styled(Section)``;
 const Wrapper = styled.div`
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
 const PlaylistsContainer = styled(Section)`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: ${theme.spacing.md};
+  grid-gap: ${spacing.md};
   width: 100%;
 `;
 const Playlist = styled.div`
@@ -31,7 +32,7 @@ const PlaylistMask = styled.div`
   left: 0;
   right: 0;
   font-size: 30px;
-  color: ${theme.colors.white};
+  color: ${colors.white};
   opacity: 0;
   transition: ${theme.transition};
 `;
@@ -48,17 +49,17 @@ const PlaylistCover = styled(Link)`
   }
 `;
 const PlaylistName = styled.span`
-  margin: ${theme.spacing.base} 0 5px;
+  margin: ${spacing.base} 0 5px;
   border-bottom: 1px solid transparent;
   &:hover {
-    border-bottom: 1px solid ${theme.colors.white};
+    border-bottom: 1px solid ${colors.white};
   }
 `;
 const PlaylistDetails = styled.div`
   text-transform: uppercase;
   margin-bottom: 5px;
-  color: ${theme.colors.lightGrey};
-  font-size: ${theme.fontSizes.xs};
+  color: ${colors.lightGrey};
+  font-size: ${fontSizes.xs};
   letter-spacing: 1px;
 `;
 

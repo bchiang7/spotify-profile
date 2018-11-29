@@ -6,10 +6,11 @@ import Track from './Track';
 
 import styled from 'styled-components/macro';
 import { theme, Section } from '../styles';
+const { spacing } = theme;
 
 const Container = styled(Section)`
   width: 100%;
-  margin-bottom: ${theme.spacing.xl};
+  margin-bottom: ${spacing.xl};
 `;
 const TracksContainer = styled.div`
   margin-top: 50px;
