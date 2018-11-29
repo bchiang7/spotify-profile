@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import { getPlaylists } from '../spotify';
 
+import Loader from './Loader';
+
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
@@ -86,7 +88,7 @@ class Playlists extends Component {
         <h2>Your Playlists</h2>
         <Wrapper>
           <PlaylistsContainer>
-            {playlists &&
+            {playlists ? (
               playlists.items.map(({ id, images, name, tracks }, i) => (
                 <Playlist key={i}>
                   <PlaylistCover to={id}>
@@ -100,7 +102,10 @@ class Playlists extends Component {
                   </Link>
                   <PlaylistDetails>{tracks.total} Tracks</PlaylistDetails>
                 </Playlist>
-              ))}
+              ))
+            ) : (
+              <Loader />
+            )}
           </PlaylistsContainer>
         </Wrapper>
       </Container>

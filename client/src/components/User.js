@@ -5,6 +5,7 @@ import { Link } from '@reach/router';
 import { getUserInfo } from '../spotify';
 
 import { IconUser } from './icons';
+import Loader from './Loader';
 
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
@@ -110,7 +111,7 @@ class User extends Component {
 
     return (
       <React.Fragment>
-        {user && (
+        {user ? (
           <Container>
             <Avatar>
               {user.images.length > 0 ? (
@@ -151,6 +152,8 @@ class User extends Component {
 
             {/* <div>{user.country}</div> */}
           </Container>
+        ) : (
+          <Loader />
         )}
       </React.Fragment>
     );

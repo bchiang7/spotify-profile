@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../spotify';
-
+import Loader from './Loader';
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
@@ -121,7 +121,7 @@ class TopArtists extends Component {
           </Ranges>
         </Header>
         <ArtistsContainer>
-          {topArtists &&
+          {topArtists ? (
             topArtists.items.map(({ external_urls, images, name }, i) => (
               <Artist key={i}>
                 <ArtistLink href={external_urls.spotify} target="_blank">
@@ -131,7 +131,10 @@ class TopArtists extends Component {
                   {name}
                 </ArtistName>
               </Artist>
-            ))}
+            ))
+          ) : (
+            <Loader />
+          )}
         </ArtistsContainer>
       </Container>
     );

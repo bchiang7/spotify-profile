@@ -5,7 +5,7 @@ import { formatDuration, getYear } from '../utils';
 
 // import FeatureChart from './FeatureChart';
 
-import { IconLoader } from './icons';
+import Loader from './Loader';
 
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
@@ -111,7 +111,7 @@ class TrackInfo extends Component {
             {/* Recommendations */}
           </Container>
         ) : (
-          <IconLoader />
+          <Loader />
         )}
       </React.Fragment>
     );

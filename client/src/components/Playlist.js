@@ -4,6 +4,7 @@ import { Link } from '@reach/router';
 
 import { getPlaylist, getAudioFeaturesForTracks } from '../spotify';
 
+import Loader from './Loader';
 import Track from './Track';
 import FeatureChart from './FeatureChart';
 
@@ -80,7 +81,7 @@ class Playlist extends Component {
     // console.log(playlist);
     return (
       <React.Fragment>
-        {playlist && (
+        {playlist ? (
           <Container>
             <Left>
               {playlist.images && (
@@ -105,6 +106,8 @@ class Playlist extends Component {
             </Right>
             {/* Recommendations */}
           </Container>
+        ) : (
+          <Loader />
         )}
       </React.Fragment>
     );

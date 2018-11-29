@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getTopTracksShort, getTopTracksMedium, getTopTracksLong } from '../spotify';
 
+import Loader from './Loader';
 import Track from './Track';
 
 import styled from 'styled-components/macro';
@@ -101,7 +102,11 @@ class TopTracks extends Component {
           </Ranges>
         </Header>
         <TracksContainer>
-          {topTracks && topTracks.items.map((track, i) => <Track track={track} key={i} />)}
+          {topTracks ? (
+            topTracks.items.map((track, i) => <Track track={track} key={i} />)
+          ) : (
+            <Loader />
+          )}
         </TracksContainer>
       </Container>
     );

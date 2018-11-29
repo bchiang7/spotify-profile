@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getRecentlyPlayed } from '../spotify';
 
+import Loader from './Loader';
 import Track from './Track';
 
 import styled from 'styled-components/macro';
@@ -49,8 +50,11 @@ class RecentlyPlayed extends Component {
       <Container>
         <h2>Recently Played Tracks</h2>
         <TracksContainer>
-          {recentlyPlayed &&
-            recentlyPlayed.items.map(({ track }, i) => <Track track={track} key={i} />)}
+          {recentlyPlayed ? (
+            recentlyPlayed.items.map(({ track }, i) => <Track track={track} key={i} />)
+          ) : (
+            <Loader />
+          )}
         </TracksContainer>
       </Container>
     );
