@@ -6,7 +6,7 @@ const { colors } = theme;
 const Container = styled.div`
   ${mixins.flexCenter};
   width: 100%;
-  height: 100%;
+  height: 80vh;
 `;
 const dance = keyframes`
   from {
@@ -35,7 +35,6 @@ const Bar = styled.div`
   height: 5px;
   margin: 0 2px;
   background-color: ${colors.grey};
-
   animation-name: ${dance};
   animation-duration: 400ms;
   animation-play-state: running;
@@ -43,22 +42,6 @@ const Bar = styled.div`
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-delay: ${props => props.delay || '0ms'};
-
-  &.one {
-    animation-delay: 250ms;
-  }
-  &.two {
-    animation-delay: 715ms;
-  }
-  &.three {
-    animation-delay: 475ms;
-  }
-  &.four {
-    animation-delay: 25ms;
-  }
-  &.five {
-    animation-delay: 190ms;
-  }
 `;
 
 const Loader = () => (

@@ -18,13 +18,17 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   #chart {
+    max-width: 500px;
+    max-height: 500px;
     margin: 0 auto;
+    margin-top: -30px;
   }
 `;
 
 class FeatureChart extends Component {
   static propTypes = {
-    features: PropTypes.array,
+    features: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    type: PropTypes.string,
   };
 
   componentDidMount() {
@@ -37,17 +41,23 @@ class FeatureChart extends Component {
 
   createDataset(features) {
     const dataset = {};
-    properties.forEach(prop => (dataset[prop] = this.avg(features.map(feat => feat[prop]))));
+    properties.forEach(
+      prop =>
+        (dataset[prop] = features.length
+          ? this.avg(features.map(feat => feat[prop]))
+          : features[prop]),
+    );
     return dataset;
   }
 
   createChart(dataset) {
+    const { type } = this.props;
     const ctx = document.getElementById('chart');
     const labels = Object.keys(dataset);
     const data = Object.values(dataset);
 
     new Chart(ctx, {
-      type: 'horizontalBar',
+      type: type || 'bar',
       data: {
         labels,
         datasets: [

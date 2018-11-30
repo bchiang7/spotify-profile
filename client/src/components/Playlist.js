@@ -98,7 +98,9 @@ class Playlist extends Component {
 
               <RecButton to={`/recommendations/${playlist.id}`}>Get Recommendations</RecButton>
 
-              {audioFeatures && <FeatureChart features={audioFeatures.audio_features} />}
+              {audioFeatures && (
+                <FeatureChart features={audioFeatures.audio_features} type="horizontalBar" />
+              )}
             </Left>
             <Right>
               {playlist.tracks &&

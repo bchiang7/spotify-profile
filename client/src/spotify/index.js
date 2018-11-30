@@ -2,16 +2,17 @@ import axios from 'axios';
 import { getHashParams } from '../utils';
 
 // TOKENS ******************************************************************************************
+const EXPIRATION_TIME = 3600 * 1000; // 3600 seconds * 1000 = 1 hour in milliseconds
 
-const setLocalAccessToken = token => window.localStorage.setItem('spotify_access_token', token);
-const setLocalRefreshToken = token => window.localStorage.setItem('spotify_refresh_token', token);
 const setTokenTimestamp = () => window.localStorage.setItem('spotify_token_timestamp', Date.now());
-
+const setLocalAccessToken = token => {
+  setTokenTimestamp();
+  window.localStorage.setItem('spotify_access_token', token);
+};
+const setLocalRefreshToken = token => window.localStorage.setItem('spotify_refresh_token', token);
+const getTokenTimestamp = () => window.localStorage.getItem('spotify_token_timestamp');
 const getLocalAccessToken = () => window.localStorage.getItem('spotify_access_token');
 const getLocalRefreshToken = () => window.localStorage.getItem('spotify_refresh_token');
-const getTokenTimestamp = () => window.localStorage.getItem('spotify_token_timestamp');
-
-const EXPIRATION_TIME = 3600 * 1000; // 3600 seconds * 1000 = 1 hour in milliseconds
 
 // Refresh the token
 export const refreshAccessToken = () =>
@@ -53,7 +54,6 @@ export const getAccessToken = () => {
   // If there is no ACCESS token in local storage, set it and return `access_token` from params
   if (!localAccessToken || localAccessToken === 'undefined') {
     setLocalAccessToken(access_token);
-    setTokenTimestamp();
     return access_token;
   }
 

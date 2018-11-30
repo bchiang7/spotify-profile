@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     src: local('Circular Std Book'), local('CircularStd-Book'),
     url('../fonts/CircularStd-Book.woff2') format('woff2'),
     url('../fonts/CircularStd-Book.woff') format('woff');
-    font-weight: normal;
+    font-weight: 400;
     font-style: normal;
   }
 
@@ -44,7 +44,7 @@ const GlobalStyle = createGlobalStyle`
     src: local('Circular Std Bold'), local('CircularStd-Bold'),
     url('../fonts/CircularStd-Bold.woff2') format('woff2'),
     url('../fonts/CircularStd-Bold.woff') format('woff');
-    font-weight: bold;
+    font-weight: 700;
     font-style: normal;
   }
 
@@ -53,7 +53,7 @@ const GlobalStyle = createGlobalStyle`
     src: local('Circular Std Bold Italic'), local('CircularStd-BoldItalic'),
     url('../fonts/CircularStd-BoldItalic.woff2') format('woff2'),
     url('../fonts/CircularStd-BoldItalic.woff') format('woff');
-    font-weight: bold;
+    font-weight: 700;
     font-style: italic;
   }
 
@@ -62,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
     src: local('Circular Std Book Italic'), local('CircularStd-BookItalic'),
     url('../fonts/CircularStd-BookItalic.woff2') format('woff2'),
     url('../fonts/CircularStd-BookItalic.woff') format('woff');
-    font-weight: normal;
+    font-weight: 400;
     font-style: italic;
   }
 
@@ -106,6 +106,22 @@ const GlobalStyle = createGlobalStyle`
 
   #root {
     min-height: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -.025em;
+  }
+
+  h1 {
+    font-weight: 900;
+  }
+
+  h2 {
+    font-weight: 700;
+  }
+
+  h3 {
+    font-weight: 500;
   }
 
   a {
