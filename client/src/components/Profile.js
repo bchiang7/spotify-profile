@@ -16,7 +16,7 @@ import Info from './Info';
 import styled from 'styled-components/macro';
 
 const Container = styled.div`
-  padding: 70px 50px 165px 150px;
+  padding: 70px 100px 70px 200px;
 `;
 
 class Profile extends Component {

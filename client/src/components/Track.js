@@ -9,7 +9,6 @@ const { colors, fontSizes, spacing } = theme;
 
 const TrackLeft = styled.span`
   ${mixins.overflowEllipsis};
-  display: flex;
 `;
 const TrackRight = styled.span``;
 const TrackArtwork = styled(Link)`
@@ -35,14 +34,18 @@ const Mask = styled.div`
   transition: ${theme.transition};
 `;
 const TrackContainer = styled.div`
-  ${mixins.flexBetween};
-  align-items: flex-start;
+  display: flex;
   margin-bottom: ${spacing.md};
   &:hover {
     ${Mask} {
       opacity: 1;
     }
   }
+`;
+const TrackMeta = styled.div`
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
 `;
 const TrackName = styled.a`
   margin-bottom: 5px;
@@ -63,31 +66,33 @@ const TrackDuration = styled.span`
 
 const Track = ({ track }) => (
   <TrackContainer>
-    <TrackLeft>
-      <TrackArtwork to={`/track/${track.id}`}>
-        {track.album.images.length && <img src={track.album.images[2].url} alt="Album Artwork" />}
-        <Mask>
-          <i className="fas fa-info-circle" />
-        </Mask>
-      </TrackArtwork>
-      <span>
-        {track.name && track.external_urls && (
-          <TrackName href={track.external_urls.spotify} target="_blank">
-            {track.name}
-          </TrackName>
-        )}
-        {track.artists && track.album && (
-          <ArtistAlbum>
-            {track.artists[0].name}
-            &nbsp;&middot;&nbsp;
-            {track.album.name}
-          </ArtistAlbum>
-        )}
-      </span>
-    </TrackLeft>
-    <TrackRight>
-      {track.duration_ms && <TrackDuration>{formatDuration(track.duration_ms)}</TrackDuration>}
-    </TrackRight>
+    <TrackArtwork to={`/track/${track.id}`}>
+      {track.album.images.length && <img src={track.album.images[2].url} alt="Album Artwork" />}
+      <Mask>
+        <i className="fas fa-info-circle" />
+      </Mask>
+    </TrackArtwork>
+    <TrackMeta>
+      <TrackLeft>
+        <span>
+          {track.name && track.external_urls && (
+            <TrackName href={track.external_urls.spotify} target="_blank">
+              {track.name}
+            </TrackName>
+          )}
+          {track.artists && track.album && (
+            <ArtistAlbum>
+              {track.artists[0].name}
+              &nbsp;&middot;&nbsp;
+              {track.album.name}
+            </ArtistAlbum>
+          )}
+        </span>
+      </TrackLeft>
+      <TrackRight>
+        {track.duration_ms && <TrackDuration>{formatDuration(track.duration_ms)}</TrackDuration>}
+      </TrackRight>
+    </TrackMeta>
   </TrackContainer>
 );
 

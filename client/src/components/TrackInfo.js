@@ -41,24 +41,31 @@ const Album = styled.h3`
   font-size: 16px;
 `;
 const AudioFeatures = styled.div`
-  display: flex;
-  max-height: 500px;
+  ${mixins.flexCenter};
+  flex-direction: column;
 `;
 const Features = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-  align-content: flex-start;
-  min-width: 250px;
+  ${mixins.flexBetween};
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 50px;
+  text-align: center;
 
   h4 {
+    color: ${colors.lightGrey};
     font-size: ${fontSizes.sm};
-    margin-bottom: 0;
+    font-weight: 500;
   }
   p {
-    color: ${colors.lightGrey};
-    font-size: 30px;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 0;
   }
+`;
+const DescriptionLink = styled.a`
+  color: ${colors.lightGrey};
+  margin: 30px auto 0;
+  border-bottom: 1px solid ${colors.lightGrey};
 `;
 
 class TrackInfo extends Component {
@@ -74,7 +81,6 @@ class TrackInfo extends Component {
 
   componentDidMount() {
     const { trackId } = this.props;
-
     getTrackInfo(trackId).then(({ track, audioAnalysis, audioFeatures }) => {
       this.setState({ track, audioAnalysis, audioFeatures });
     });
@@ -82,7 +88,7 @@ class TrackInfo extends Component {
 
   render() {
     const { track, audioAnalysis, audioFeatures } = this.state;
-    console.log(audioFeatures);
+    console.log(audioFeatures, audioAnalysis);
 
     return (
       <React.Fragment>
@@ -96,8 +102,7 @@ class TrackInfo extends Component {
                 <Title>{track.name}</Title>
                 <Artist>{track.artists[0].name}</Artist>
                 <Album>
-                  {track.album.name} &middot; {getYear(track.album.release_date)} &middot; Track{' '}
-                  {track.track_number} of {track.album.total_tracks}
+                  {track.album.name} &middot; {getYear(track.album.release_date)}
                 </Album>
                 <PlayTrackButton
                   href={track.external_urls.spotify}
@@ -112,44 +117,35 @@ class TrackInfo extends Component {
               <AudioFeatures>
                 <Features>
                   <div>
-                    <h4>Duration</h4>
                     <p>{formatDuration(audioFeatures.duration_ms)}</p>
+                    <h4>Duration</h4>
                   </div>
                   <div>
-                    <h4>Modality</h4>
                     <p>{audioFeatures.mode === 1 ? 'Major' : 'Minor'}</p>
+                    <h4>Modality</h4>
                   </div>
                   <div>
-                    <h4>Key</h4>
                     <p>{audioFeatures.key}</p>
+                    <h4>Key</h4>
                   </div>
                   <div>
-                    <h4>Time Signature</h4>
                     <p>{audioFeatures.time_signature}</p>
+                    <h4>Time Signature</h4>
                   </div>
                   <div>
-                    <h4>Tempo</h4>
                     <p>{Math.round(audioFeatures.tempo)}</p>
+                    <h4>Tempo (BPM)</h4>
                   </div>
                 </Features>
-                {/* <div>
-                  <h4>Chart Type</h4>
-                  <ul>
-                    <li>
-                      <button>Bar</button>
-                    </li>
-                    <li>
-                      <button>Horizontal Bar</button>
-                    </li>
-                    <li>
-                      <button>Doughnut</button>
-                    </li>
-                    <li>
-                      <button>Polar Area</button>
-                    </li>
-                  </ul>
-                </div> */}
+
                 <FeatureChart features={audioFeatures} type="" />
+
+                <DescriptionLink
+                  href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  See Full Description of Audio Features
+                </DescriptionLink>
               </AudioFeatures>
             )}
           </Container>

@@ -170,7 +170,12 @@ const GlobalStyle = createGlobalStyle`
     color: ${colors.lightestGrey};
     font-family: ${fonts.primary};
     font-size: ${fontSizes.base};
-    padding: 10px;
+    font-weight: 700;
+    display: inline-block;
+    color: ${colors.white};
+    border-radius: 50px;
+    padding: 12px 25px;
+    margin-top: 20px;
 
     &:hover, &:focus {
       color: ${colors.white};

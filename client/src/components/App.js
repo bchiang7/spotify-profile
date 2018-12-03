@@ -20,12 +20,16 @@ class App extends Component {
   };
 
   componentDidMount() {
+    this.setLoggedIn(token);
+  }
+
+  setLoggedIn = token => {
     if (token) {
       this.setState({ loggedIn: true });
     } else {
       this.setState({ loggedIn: false });
     }
-  }
+  };
 
   render() {
     const { loggedIn } = this.state;

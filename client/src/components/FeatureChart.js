@@ -17,6 +17,7 @@ const properties = [
 const Container = styled.div`
   position: relative;
   width: 100%;
+
   #chart {
     max-width: 500px;
     max-height: 500px;
@@ -32,10 +33,18 @@ class FeatureChart extends Component {
   };
 
   componentDidMount() {
+    this.parseData();
+  }
+
+  componentDidUpdate() {
+    this.parseData();
+  }
+
+  parseData = () => {
     const { features } = this.props;
     const dataset = this.createDataset(features);
     this.createChart(dataset);
-  }
+  };
 
   avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
 

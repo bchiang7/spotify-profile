@@ -6,6 +6,7 @@ import { getUserInfo } from '../spotify';
 
 import { IconUser } from './icons';
 import Loader from './Loader';
+import Track from './Track';
 
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
@@ -37,7 +38,8 @@ const Name = styled.h1`
   margin: 20px 0 0;
 `;
 const Stats = styled.div`
-  ${mixins.flexBetween};
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   margin-top: ${spacing.base};
   text-align: center;
 `;
@@ -56,23 +58,33 @@ const NumLabel = styled.p`
   letter-spacing: 1px;
   margin-top: ${spacing.xs};
 `;
-// const LogoutButton = styled.a`
-//   position: absolute;
-//   top: 50px;
-//   right: 50px;
-//   background-color: ${colors.green};
-//   color: ${colors.white};
-//   border-radius: 30px;
-//   padding: 12px 22px;
-//   font-size: ${fontSizes.xs};
-//   font-weight: 700;
-//   letter-spacing: 1px;
-//   text-transform: uppercase;
-//   text-align: center;
-//   &:hover {
-//     background-color: ${colors.offGreen};
-//   }
-// `;
+const LogoutButton = styled.a`
+  background-color: ${colors.green};
+  color: ${colors.white};
+  border-radius: 30px;
+  padding: 12px 22px;
+  font-size: ${fontSizes.xs};
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 20px;
+  &:hover {
+    background-color: ${colors.offGreen};
+  }
+`;
+const Preview = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 100px;
+`;
+const Tracklist = styled.div`
+  width: 45%;
+  h2 {
+    margin-bottom: 30px;
+  }
+`;
 
 class User extends Component {
   static propTypes = {
@@ -85,6 +97,8 @@ class User extends Component {
     user: null,
     followedArtists: null,
     playlists: null,
+    recentlyPlayed: null,
+    topTracks: null,
   };
 
   _isMounted = false;
@@ -92,9 +106,9 @@ class User extends Component {
   componentDidMount() {
     this._isMounted = true;
 
-    getUserInfo().then(({ user, followedArtists, playlists }) => {
+    getUserInfo().then(({ user, followedArtists, playlists, recentlyPlayed, topTracks }) => {
       if (this._isMounted) {
-        this.setState({ user, followedArtists, playlists });
+        this.setState({ user, followedArtists, playlists, recentlyPlayed, topTracks });
       }
     });
   }
@@ -105,9 +119,8 @@ class User extends Component {
   }
 
   render() {
-    const { user, followedArtists, playlists } = this.state;
+    const { user, followedArtists, playlists, recentlyPlayed, topTracks } = this.state;
     const totalPlaylists = playlists ? playlists.total : 0;
-    // console.log(user);
 
     return (
       <React.Fragment>
@@ -148,9 +161,32 @@ class User extends Component {
               )}
             </Stats>
 
-            {/* <div>{user.product}</div> */}
+            <LogoutButton href="https://accounts.spotify.com">Logout</LogoutButton>
 
-            {/* <div>{user.country}</div> */}
+            <Preview>
+              <Tracklist>
+                <h2>Recently Played</h2>
+                <div>
+                  {recentlyPlayed ? (
+                    recentlyPlayed.items
+                      .slice(0, 10)
+                      .map(({ track }, i) => <Track track={track} key={i} />)
+                  ) : (
+                    <Loader />
+                  )}
+                </div>
+              </Tracklist>
+              <Tracklist>
+                <h2>Top Tracks</h2>
+                <div>
+                  {topTracks ? (
+                    topTracks.items.slice(0, 10).map((track, i) => <Track track={track} key={i} />)
+                  ) : (
+                    <Loader />
+                  )}
+                </div>
+              </Tracklist>
+            </Preview>
           </Container>
         ) : (
           <Loader />

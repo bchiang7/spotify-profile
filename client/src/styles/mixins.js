@@ -46,9 +46,10 @@ const mixins = {
     color: ${colors.white};
     border-radius: 50px;
     padding: 12px 25px;
-    margin-top: 20px;
+    margin: 20px 0;
     font-weight: 700;
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: ${colors.offGreen};
     }
   `,

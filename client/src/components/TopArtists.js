@@ -28,7 +28,7 @@ const RangeButton = styled.button`
 const ArtistsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: ${spacing.base};
+  grid-gap: 25px;
   margin-top: 50px;
 `;
 const Artist = styled.div`

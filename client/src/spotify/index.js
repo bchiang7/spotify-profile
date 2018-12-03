@@ -92,18 +92,6 @@ export const getRecentlyPlayed = () =>
  */
 export const getPlaylists = () => axios.get('https://api.spotify.com/v1/me/playlists', { headers });
 
-export const getUserInfo = () => {
-  return axios.all([getUser(), getFollowing(), getPlaylists()]).then(
-    axios.spread((user, followedArtists, playlists) => {
-      return {
-        user: user.data,
-        followedArtists: followedArtists.data,
-        playlists: playlists.data,
-      };
-    }),
-  );
-};
-
 /**
  * Get a User's Top Artists
  * https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/
@@ -189,6 +177,22 @@ export const getTrackAudioAnalysis = trackId =>
  */
 export const getTrackAudioFeatures = trackId =>
   axios.get(`https://api.spotify.com/v1/audio-features/${trackId}`, { headers });
+
+export const getUserInfo = () => {
+  return axios
+    .all([getUser(), getFollowing(), getPlaylists(), getRecentlyPlayed(), getTopTracksLong()])
+    .then(
+      axios.spread((user, followedArtists, playlists, recentlyPlayed, topTracks) => {
+        return {
+          user: user.data,
+          followedArtists: followedArtists.data,
+          playlists: playlists.data,
+          recentlyPlayed: recentlyPlayed.data,
+          topTracks: topTracks.data,
+        };
+      }),
+    );
+};
 
 export const getTrackInfo = trackId => {
   return axios
