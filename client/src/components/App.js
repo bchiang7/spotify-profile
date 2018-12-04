@@ -16,23 +16,15 @@ const AppContainer = styled.div`
 
 class App extends Component {
   state = {
-    loggedIn: false,
+    token: '',
   };
 
   componentDidMount() {
-    this.setLoggedIn(token);
+    this.setState({ token });
   }
 
-  setLoggedIn = token => {
-    if (token) {
-      this.setState({ loggedIn: true });
-    } else {
-      this.setState({ loggedIn: false });
-    }
-  };
-
   render() {
-    const { loggedIn } = this.state;
+    const { token } = this.state;
 
     return (
       <AppContainer>
@@ -40,7 +32,7 @@ class App extends Component {
 
         <GlobalStyle />
 
-        {loggedIn ? <Profile /> : <LoginScreen />}
+        {token ? <Profile /> : <LoginScreen />}
       </AppContainer>
     );
   }

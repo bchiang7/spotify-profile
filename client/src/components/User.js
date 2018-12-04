@@ -59,6 +59,9 @@ const NumLabel = styled.p`
   margin-top: ${spacing.xs};
 `;
 const LogoutButton = styled.a`
+  position: absolute;
+  top: 0;
+  right: 0;
   background-color: ${colors.green};
   color: ${colors.white};
   border-radius: 30px;
@@ -67,22 +70,45 @@ const LogoutButton = styled.a`
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  text-align: center;
-  margin-top: 20px;
-  &:hover {
+
+  &:hover,
+  &:focus {
     background-color: ${colors.offGreen};
   }
 `;
 const Preview = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 70px;
   width: 100%;
   margin-top: 100px;
 `;
 const Tracklist = styled.div`
-  width: 45%;
   h2 {
     margin-bottom: 30px;
+  }
+`;
+const TracklistHeading = styled.div`
+  ${mixins.flexBetween};
+  margin-bottom: 40px;
+  h2 {
+    display: inline-block;
+    margin: 0;
+  }
+`;
+const MoreButton = styled(Link)`
+  color: ${colors.lightestGrey};
+  border: 1px solid ${colors.lightestGrey};
+  border-radius: 30px;
+  padding: 12px 22px;
+  font-size: ${fontSizes.xs};
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  &:hover,
+  &:focus {
+    color: ${colors.white};
+    border: 1px solid ${colors.white};
   }
 `;
 
@@ -117,11 +143,14 @@ class User extends Component {
   render() {
     const { user, followedArtists, playlists, recentlyPlayed, topTracks } = this.state;
     const totalPlaylists = playlists ? playlists.total : 0;
+    // console.log(topTracks);
 
     return (
       <React.Fragment>
         {user ? (
           <Container>
+            {/* <LogoutButton href="https://accounts.spotify.com">Logout</LogoutButton> */}
+
             <Avatar>
               {user.images.length > 0 ? (
                 <img src={user.images[0].url} alt="avatar" />
@@ -157,11 +186,12 @@ class User extends Component {
               )}
             </Stats>
 
-            <LogoutButton href="https://accounts.spotify.com">Logout</LogoutButton>
-
             <Preview>
               <Tracklist>
-                <h2>Recently Played</h2>
+                <TracklistHeading>
+                  <h2>Recently Played</h2>
+                  <MoreButton to="/recent">See More</MoreButton>
+                </TracklistHeading>
                 <div>
                   {recentlyPlayed ? (
                     recentlyPlayed.items
@@ -173,7 +203,10 @@ class User extends Component {
                 </div>
               </Tracklist>
               <Tracklist>
-                <h2>Top Tracks</h2>
+                <TracklistHeading>
+                  <h2>Top Tracks</h2>
+                  <MoreButton to="/tracks">See More</MoreButton>
+                </TracklistHeading>
                 <div>
                   {topTracks ? (
                     topTracks.items.slice(0, 10).map((track, i) => <Track track={track} key={i} />)
