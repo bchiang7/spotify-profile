@@ -6,12 +6,10 @@ import Loader from './Loader';
 import Track from './Track';
 
 import styled from 'styled-components/macro';
-import { theme, Section } from '../styles';
-const { spacing } = theme;
+import { Section } from '../styles';
 
 const Container = styled(Section)`
   width: 100%;
-  margin-bottom: ${spacing.xl};
 `;
 const TracksContainer = styled.div`
   margin-top: 50px;
@@ -26,21 +24,17 @@ class RecentlyPlayed extends Component {
     recentlyPlayed: null,
   };
 
-  _isMounted = false;
-
   componentDidMount() {
-    this._isMounted = true;
-
-    getRecentlyPlayed().then(res => {
-      if (this._isMounted) {
-        this.setState({ recentlyPlayed: res.data });
-      }
-    });
+    this.getData();
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-    this.setState({ recentlyPlayed: null });
+  async getData() {
+    try {
+      const { data } = await getRecentlyPlayed();
+      this.setState({ recentlyPlayed: data });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   render() {

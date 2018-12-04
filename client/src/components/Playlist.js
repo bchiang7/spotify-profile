@@ -64,16 +64,24 @@ class Playlist extends Component {
   };
 
   componentDidMount() {
+    this.getData();
+  }
+
+  async getData() {
     const { playlistId } = this.props;
 
-    getPlaylist(playlistId)
-      .then(res => this.setState({ playlist: res.data }))
-      .then(() => {
+    try {
+      const { data } = await getPlaylist(playlistId);
+      this.setState({ playlist: data });
+
+      if (data) {
         const { playlist } = this.state;
-        getAudioFeaturesForTracks(playlist.tracks.items).then(res =>
-          this.setState({ audioFeatures: res.data }),
-        );
-      });
+        const { data } = await getAudioFeaturesForTracks(playlist.tracks.items);
+        this.setState({ audioFeatures: data });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   render() {

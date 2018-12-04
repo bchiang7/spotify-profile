@@ -75,13 +75,20 @@ class Playlists extends Component {
   };
 
   componentDidMount() {
-    getPlaylists().then(res => this.setState({ playlists: res.data }));
+    this.getData();
+  }
+
+  async getData() {
+    try {
+      const { data } = await getPlaylists();
+      this.setState({ playlists: data });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   render() {
     const { playlists } = this.state;
-
-    // console.log(playlists);
 
     return (
       <Container>

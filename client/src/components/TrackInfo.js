@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getTrackInfo } from '../spotify';
 import { formatDuration, getYear } from '../utils';
+
+import { getTrackInfo } from '../spotify';
 
 import FeatureChart from './FeatureChart';
 
@@ -80,15 +81,23 @@ class TrackInfo extends Component {
   };
 
   componentDidMount() {
+    this.getData();
+  }
+
+  async getData() {
     const { trackId } = this.props;
-    getTrackInfo(trackId).then(({ track, audioAnalysis, audioFeatures }) => {
+
+    try {
+      const { track, audioAnalysis, audioFeatures } = await getTrackInfo(trackId);
       this.setState({ track, audioAnalysis, audioFeatures });
-    });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   render() {
     const { track, audioAnalysis, audioFeatures } = this.state;
-    console.log(audioFeatures, audioAnalysis);
+    // console.log(audioFeatures, audioAnalysis);
 
     return (
       <React.Fragment>

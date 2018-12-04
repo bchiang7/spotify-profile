@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../spotify';
+
 import Loader from './Loader';
+
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
@@ -59,41 +62,41 @@ class TopArtists extends Component {
 
   state = {
     topArtists: null,
-    activeRange: '',
+    activeRange: 'long',
   };
-
-  _isMounted = false;
 
   componentDidMount() {
-    this._isMounted = true;
-
-    getTopArtistsLong().then(res => {
-      if (this._isMounted) {
-        this.setState({ topArtists: res.data, activeRange: 'long' });
-      }
-    });
+    this.getData();
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-    this.setState({ topArtists: null });
-  }
-
-  setActiveRange = range => {
-    if (range === 'long') {
-      getTopArtistsLong().then(res => {
-        this.setState({ topArtists: res.data, activeRange: range });
-      });
-    } else if (range === 'medium') {
-      getTopArtistsMedium().then(res => {
-        this.setState({ topArtists: res.data, activeRange: range });
-      });
-    } else if (range === 'short') {
-      getTopArtistsShort().then(res => {
-        this.setState({ topArtists: res.data, activeRange: range });
-      });
+  async getData() {
+    try {
+      const { data } = await getTopArtistsLong();
+      this.setState({ topArtists: data });
+    } catch (e) {
+      console.error(e);
     }
-  };
+  }
+
+  async changeRange(range) {
+    const apiCall =
+      range === 'long'
+        ? getTopArtistsLong()
+        : range === 'medium'
+        ? getTopArtistsMedium()
+        : range === 'short'
+        ? getTopArtistsShort()
+        : getTopArtistsLong();
+
+    try {
+      const { data } = await apiCall;
+      this.setState({ topArtists: data, activeRange: range });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  setActiveRange = range => this.changeRange(range);
 
   render() {
     const { topArtists, activeRange } = this.state;
@@ -124,10 +127,10 @@ class TopArtists extends Component {
           {topArtists ? (
             topArtists.items.map(({ external_urls, images, name }, i) => (
               <Artist key={i}>
-                <ArtistLink href={external_urls.spotify} target="_blank">
-                  <ArtistImage src={images[1].url} alt="" />
+                <ArtistLink href={external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                  <ArtistImage src={images[1].url} alt="Artist Avatar" />
                 </ArtistLink>
-                <ArtistName href={external_urls.spotify} target="_blank">
+                <ArtistName href={external_urls.spotify} target="_blank" rel="noopener noreferrer">
                   {name}
                 </ArtistName>
               </Artist>

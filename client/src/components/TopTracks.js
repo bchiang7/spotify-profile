@@ -40,41 +40,41 @@ class TopTracks extends Component {
 
   state = {
     topTracks: null,
-    activeRange: '',
+    activeRange: 'long',
   };
-
-  _isMounted = false;
 
   componentDidMount() {
-    this._isMounted = true;
-
-    getTopTracksLong().then(res => {
-      if (this._isMounted) {
-        this.setState({ topTracks: res.data, activeRange: 'long' });
-      }
-    });
+    this.getData();
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-    this.setState({ topTracks: null });
-  }
-
-  setActiveRange = range => {
-    if (range === 'long') {
-      getTopTracksLong().then(res => {
-        this.setState({ topTracks: res.data, activeRange: range });
-      });
-    } else if (range === 'medium') {
-      getTopTracksMedium().then(res => {
-        this.setState({ topTracks: res.data, activeRange: range });
-      });
-    } else if (range === 'short') {
-      getTopTracksShort().then(res => {
-        this.setState({ topTracks: res.data, activeRange: range });
-      });
+  async getData() {
+    try {
+      const { data } = await getTopTracksLong();
+      this.setState({ topTracks: data });
+    } catch (e) {
+      console.error(e);
     }
-  };
+  }
+
+  async changeRange(range) {
+    const apiCall =
+      range === 'long'
+        ? getTopTracksLong()
+        : range === 'medium'
+        ? getTopTracksMedium()
+        : range === 'short'
+        ? getTopTracksShort()
+        : getTopTracksLong();
+
+    try {
+      const { data } = await apiCall;
+      this.setState({ topTracks: data, activeRange: range });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  setActiveRange = range => this.changeRange(range);
 
   render() {
     const { topTracks, activeRange } = this.state;

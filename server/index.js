@@ -159,7 +159,6 @@ if (cluster.isMaster) {
       if (!error && response.statusCode === 200) {
         const access_token = body.access_token;
         res.send({ access_token });
-        res.redirect(`${FRONTEND_URI}`);
       }
     });
   });

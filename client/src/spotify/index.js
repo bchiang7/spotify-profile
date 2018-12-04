@@ -15,8 +15,16 @@ const getLocalAccessToken = () => window.localStorage.getItem('spotify_access_to
 const getLocalRefreshToken = () => window.localStorage.getItem('spotify_refresh_token');
 
 // Refresh the token
-export const refreshAccessToken = () =>
-  axios.get(`/refresh_token?refresh_token=${getLocalRefreshToken()}`);
+const refreshAccessToken = async () => {
+  try {
+    const { data } = await axios.get(`/refresh_token?refresh_token=${getLocalRefreshToken()}`);
+    const { access_token } = data;
+    setLocalAccessToken(access_token);
+    return access_token;
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 // Get access token off of query params (called on application init)
 export const getAccessToken = () => {
@@ -24,23 +32,13 @@ export const getAccessToken = () => {
 
   if (error) {
     console.error(error);
-    // If Spotify returns an error, then refresh the token and return the new token
-    refreshAccessToken().then(res => {
-      const { access_token } = res.data;
-      setLocalAccessToken(access_token);
-      return access_token;
-    });
+    refreshAccessToken();
   }
 
   // If token has expired
   if (Date.now() - getTokenTimestamp() > EXPIRATION_TIME) {
     console.warn('Expired token, refreshing...');
-
-    refreshAccessToken().then(res => {
-      const { access_token } = res.data;
-      setLocalAccessToken(access_token);
-      return access_token;
-    });
+    refreshAccessToken();
   }
 
   const localAccessToken = getLocalAccessToken();

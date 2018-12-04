@@ -101,21 +101,17 @@ class User extends Component {
     topTracks: null,
   };
 
-  _isMounted = false;
-
   componentDidMount() {
-    this._isMounted = true;
-
-    getUserInfo().then(({ user, followedArtists, playlists, recentlyPlayed, topTracks }) => {
-      if (this._isMounted) {
-        this.setState({ user, followedArtists, playlists, recentlyPlayed, topTracks });
-      }
-    });
+    this.getData();
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-    this.setState({ user: null, followedArtists: null, playlists: null });
+  async getData() {
+    try {
+      const { user, followedArtists, playlists, recentlyPlayed, topTracks } = await getUserInfo();
+      this.setState({ user, followedArtists, playlists, recentlyPlayed, topTracks });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   render() {
