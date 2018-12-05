@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { getPlaylistTracks } from '../spotify';
+import { getPlaylistTracks, getRecommendationsForTracks } from '../spotify';
 // import Track from './Track';
 import styled from 'styled-components/macro';
 // import { theme, mixins } from '../styles';
@@ -20,22 +20,32 @@ class Recommendations extends Component {
   };
 
   componentDidMount() {
+    this.getData();
+  }
+
+  async getData() {
     const { playlistId } = this.props;
 
-    getPlaylistTracks(playlistId)
-      .then(res => this.setState({ tracks: res.data }))
-      .then(() => {
-        // const { tracks } = this.state;
-        // console.log('get recommendations');
-        // getRecommendationsForTracks(tracks.items).then(res =>
-        //   this.setState({ recommendations: res.data }),
-        // );
-      });
+    try {
+      const { data } = await getPlaylistTracks(playlistId);
+      this.setState({ tracks: data });
+
+      if (data) {
+        const { tracks } = this.state;
+        const { data } = await getRecommendationsForTracks(tracks);
+        console.log(data);
+
+        this.setState({ recommendations: data });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   render() {
-    // const { recommendations } = this.state;
+    const { recommendations } = this.state;
     // console.log(recommendations);
+
     return (
       <Container>
         <h2>Recommended Tracks Based On Insert Playlist Here</h2>

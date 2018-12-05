@@ -147,13 +147,22 @@ export const getAudioFeaturesForTracks = tracks => {
   return axios.get(`https://api.spotify.com/v1/audio-features?ids=${ids}`, { headers });
 };
 
-// oh no seed artists, seed tracks, and seed genres are required?
-// export const getRecommendationsForTracks = tracks => {
-//   const trackIds = getTrackIds(tracks);
-//   return axios.get(`https://api.spotify.com/v1/recommendations?seed_tracks=${trackIds}`, {
-//     headers,
-//   });
-// };
+/**
+ * Get Recommendations Based on Seeds
+ * https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/
+ */
+export const getRecommendationsForTracks = tracks => {
+  const seed_tracks = getTrackIds(tracks);
+  const seed_artists = '';
+  const seed_genres = '';
+
+  return axios.get(
+    `https://api.spotify.com/v1/recommendations?seed_tracks=${seed_tracks}&seed_artists=${seed_artists}&seed_genres=${seed_genres}`,
+    {
+      headers,
+    },
+  );
+};
 
 /**
  * Get a Track
