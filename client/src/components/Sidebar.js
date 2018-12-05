@@ -47,9 +47,6 @@ const MenuItem = styled.li`
     font-size: 25px;
     margin-bottom: 10px;
   }
-  span {
-    display: block;
-  }
 `;
 
 const Info = styled.div`
@@ -80,39 +77,33 @@ const Sidebar = () => (
       <MenuItem>
         <NavLink to="/">
           <i className="far fa-user" />
-          <span>Profile</span>
+          <div>Profile</div>
         </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to="recent">
           <i className="far fa-clock" />
-          <span>Recent</span>
+          <div>Recent</div>
         </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to="artists">
           <i className="far fa-star" />
-          <span>Top Artists</span>
+          <div>Top Artists</div>
         </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to="tracks">
           <i className="far fa-heart" />
-          <span>Top Tracks</span>
+          <div>Top Tracks</div>
         </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to="playlists">
           <i className="fas fa-music" />
-          <span>Playlists</span>
+          <div>Playlists</div>
         </NavLink>
       </MenuItem>
-      {/* <MenuItem>
-        <NavLink to="recommendations">
-          <i className="far fa-lightbulb" />
-          <span>Recs</span>
-        </NavLink>
-      </MenuItem> */}
     </ul>
     <Info>
       <NavLink to="info">
