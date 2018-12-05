@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
-
 import { getUserInfo } from '../spotify';
 
 import { IconUser } from './icons';
@@ -12,12 +11,10 @@ import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
-const Container = styled(Section)`
-  header {
-    ${mixins.flexCenter};
-    flex-direction: column;
-    position: relative;
-  }
+const Header = styled.header`
+  ${mixins.flexCenter};
+  flex-direction: column;
+  position: relative;
 `;
 const Avatar = styled.div`
   width: 120px;
@@ -60,24 +57,23 @@ const NumLabel = styled.p`
   letter-spacing: 1px;
   margin-top: ${spacing.xs};
 `;
-const LogoutButton = styled.a`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: ${colors.green};
-  color: ${colors.white};
-  border-radius: 30px;
-  padding: 12px 22px;
-  font-size: ${fontSizes.xs};
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-
-  &:hover,
-  &:focus {
-    background-color: ${colors.offGreen};
-  }
-`;
+// const LogoutButton = styled.a`
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   background-color: ${colors.green};
+//   color: ${colors.white};
+//   border-radius: 30px;
+//   padding: 12px 22px;
+//   font-size: ${fontSizes.xs};
+//   font-weight: 700;
+//   letter-spacing: 1px;
+//   text-transform: uppercase;
+//   &:hover,
+//   &:focus {
+//     background-color: ${colors.offGreen};
+//   }
+// `;
 const Preview = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -85,33 +81,17 @@ const Preview = styled.div`
   width: 100%;
   margin-top: 100px;
 `;
-const Tracklist = styled.div`
-  h2 {
-    margin-bottom: 30px;
-  }
-`;
+const Tracklist = styled.div``;
 const TracklistHeading = styled.div`
   ${mixins.flexBetween};
   margin-bottom: 40px;
-  h2 {
+  h3 {
     display: inline-block;
     margin: 0;
   }
 `;
 const MoreButton = styled(Link)`
-  color: ${colors.lightestGrey};
-  border: 1px solid ${colors.lightestGrey};
-  border-radius: 30px;
-  padding: 12px 22px;
-  font-size: ${fontSizes.xs};
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  &:hover,
-  &:focus {
-    color: ${colors.white};
-    border: 1px solid ${colors.white};
-  }
+  ${mixins.button};
 `;
 const ArtistList = styled.ul``;
 const Artist = styled.li`
@@ -168,10 +148,9 @@ class User extends Component {
     return (
       <React.Fragment>
         {user ? (
-          <Container>
-            <header>
+          <Section>
+            <Header>
               {/* <LogoutButton href="https://accounts.spotify.com">Logout</LogoutButton> */}
-
               <Avatar>
                 {user.images.length > 0 ? (
                   <img src={user.images[0].url} alt="avatar" />
@@ -189,14 +168,12 @@ class User extends Component {
                   <Number>{user.followers.total}</Number>
                   <NumLabel>Followers</NumLabel>
                 </Stat>
-
                 {followedArtists && (
                   <Stat>
                     <Number>{followedArtists.artists.items.length}</Number>
                     <NumLabel>Following</NumLabel>
                   </Stat>
                 )}
-
                 {totalPlaylists && (
                   <Stat>
                     <Link to="playlists">
@@ -206,12 +183,12 @@ class User extends Component {
                   </Stat>
                 )}
               </Stats>
-            </header>
+            </Header>
 
             <Preview>
               <Tracklist>
                 <TracklistHeading>
-                  <h2>Top Artists of All Time</h2>
+                  <h3>Top Artists of All Time</h3>
                   <MoreButton to="/artists">See More</MoreButton>
                 </TracklistHeading>
                 <div>
@@ -234,19 +211,19 @@ class User extends Component {
 
               <Tracklist>
                 <TracklistHeading>
-                  <h2>Top Tracks of All Time</h2>
+                  <h3>Top Tracks of All Time</h3>
                   <MoreButton to="/tracks">See More</MoreButton>
                 </TracklistHeading>
-                <div>
+                <ul>
                   {topTracks ? (
                     topTracks.items.slice(0, 10).map((track, i) => <Track track={track} key={i} />)
                   ) : (
                     <Loader />
                   )}
-                </div>
+                </ul>
               </Tracklist>
             </Preview>
-          </Container>
+          </Section>
         ) : (
           <Loader />
         )}

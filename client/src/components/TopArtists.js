@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../spotify';
 
 import Loader from './Loader';
@@ -9,20 +8,22 @@ import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
-const Container = styled(Section)``;
 const Header = styled.header`
   ${mixins.flexBetween};
   h2 {
-    margin-bottom: 0;
+    margin: 0;
   }
 `;
 const Ranges = styled.div`
   display: flex;
+  margin-right: -11px;
 `;
 const RangeButton = styled.button`
   background-color: transparent;
-  font-size: ${fontSizes.base};
   color: ${props => (props.isActive ? colors.white : colors.lightGrey)};
+  font-size: ${fontSizes.base};
+  font-weight: 500;
+  padding: 11px;
   span {
     padding-bottom: 3px;
     border-bottom: 1px solid ${props => (props.isActive ? colors.white : `transparent`)};
@@ -65,6 +66,12 @@ class TopArtists extends Component {
     activeRange: 'long',
   };
 
+  apiCalls = {
+    long: getTopArtistsLong(),
+    medium: getTopArtistsMedium(),
+    short: getTopArtistsShort(),
+  };
+
   componentDidMount() {
     this.getData();
   }
@@ -79,17 +86,8 @@ class TopArtists extends Component {
   }
 
   async changeRange(range) {
-    const apiCall =
-      range === 'long'
-        ? getTopArtistsLong()
-        : range === 'medium'
-        ? getTopArtistsMedium()
-        : range === 'short'
-        ? getTopArtistsShort()
-        : getTopArtistsLong();
-
     try {
-      const { data } = await apiCall;
+      const { data } = await this.apiCalls[range];
       this.setState({ topArtists: data, activeRange: range });
     } catch (e) {
       console.error(e);
@@ -102,7 +100,7 @@ class TopArtists extends Component {
     const { topArtists, activeRange } = this.state;
 
     return (
-      <Container>
+      <Section>
         <Header>
           <h2>Top Artists</h2>
           <Ranges>
@@ -139,7 +137,7 @@ class TopArtists extends Component {
             <Loader />
           )}
         </ArtistsContainer>
-      </Container>
+      </Section>
     );
   }
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
-
 import { getPlaylist, getAudioFeaturesForTracks } from '../spotify';
 
 import Loader from './Loader';
@@ -9,10 +8,10 @@ import Track from './Track';
 import FeatureChart from './FeatureChart';
 
 import styled from 'styled-components/macro';
-import { theme, mixins } from '../styles';
-const { colors, fontSizes } = theme;
+import { theme, mixins, Section } from '../styles';
+const { colors, fontSizes, spacing } = theme;
 
-const Container = styled.div`
+const PlaylistContainer = styled.div`
   display: flex;
 `;
 const Left = styled.div`
@@ -41,6 +40,7 @@ const Description = styled.p`
 `;
 const RecButton = styled(Link)`
   ${mixins.greenButton};
+  margin-bottom: ${spacing.lg};
 `;
 const Owner = styled.p`
   font-size: ${fontSizes.sm};
@@ -90,32 +90,35 @@ class Playlist extends Component {
     return (
       <React.Fragment>
         {playlist ? (
-          <Container>
-            <Left>
-              {playlist.images && (
-                <PlaylistCover>
-                  <img src={playlist.images[0].url} alt="Album Art" />
-                </PlaylistCover>
-              )}
-              <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                <Name>{playlist.name}</Name>
-              </a>
-              <Owner>By {playlist.owner.display_name}</Owner>
-              {playlist.description && <Description>{playlist.description}</Description>}
-              <TotalTracks>{playlist.tracks.total} Tracks</TotalTracks>
+          <Section>
+            <PlaylistContainer>
+              <Left>
+                {playlist.images && (
+                  <PlaylistCover>
+                    <img src={playlist.images[0].url} alt="Album Art" />
+                  </PlaylistCover>
+                )}
+                <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                  <Name>{playlist.name}</Name>
+                </a>
+                <Owner>By {playlist.owner.display_name}</Owner>
+                {playlist.description && <Description>{playlist.description}</Description>}
+                <TotalTracks>{playlist.tracks.total} Tracks</TotalTracks>
 
-              <RecButton to={`/recommendations/${playlist.id}`}>Get Recommendations</RecButton>
+                <RecButton to={`/recommendations/${playlist.id}`}>Get Recommendations</RecButton>
 
-              {audioFeatures && (
-                <FeatureChart features={audioFeatures.audio_features} type="horizontalBar" />
-              )}
-            </Left>
-            <Right>
-              {playlist.tracks &&
-                playlist.tracks.items.map(({ track }, i) => <Track track={track} key={i} />)}
-            </Right>
-            {/* Recommendations */}
-          </Container>
+                {audioFeatures && (
+                  <FeatureChart features={audioFeatures.audio_features} type="horizontalBar" />
+                )}
+              </Left>
+              <Right>
+                <ul>
+                  {playlist.tracks &&
+                    playlist.tracks.items.map(({ track }, i) => <Track track={track} key={i} />)}
+                </ul>
+              </Right>
+            </PlaylistContainer>
+          </Section>
         ) : (
           <Loader />
         )}

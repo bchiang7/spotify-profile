@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { Link } from '@reach/router';
 import { getPlaylist, getRecommendationsForTracks } from '../spotify';
-import Track from './Track';
-import styled from 'styled-components/macro';
-// import { theme, mixins } from '../styles';
 
-const Container = styled.div``;
-const TracksContainer = styled.div`
+import Track from './Track';
+
+import styled from 'styled-components/macro';
+import { theme, Section } from '../styles';
+const { colors } = theme;
+
+const TracksContainer = styled.ul`
   margin-top: 50px;
+`;
+const PlaylistLink = styled(Link)`
+  &:hover {
+    color: ${colors.offGreen};
+  }
 `;
 
 class Recommendations extends Component {
@@ -44,16 +51,21 @@ class Recommendations extends Component {
 
   render() {
     const { playlist, recommendations } = this.state;
-    console.log(recommendations);
+    // console.log(recommendations);
 
     return (
-      <Container>
-        {playlist && <h2>Recommended Tracks Based On {playlist.name}</h2>}
+      <Section>
+        {playlist && (
+          <h2>
+            Recommended Tracks Based On{' '}
+            <PlaylistLink to={`/playlist/${playlist.id}`}>{playlist.name}</PlaylistLink>
+          </h2>
+        )}
         <TracksContainer>
           {recommendations &&
             recommendations.tracks.map((track, i) => <Track track={track} key={i} />)}
         </TracksContainer>
-      </Container>
+      </Section>
     );
   }
 }

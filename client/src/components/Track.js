@@ -33,7 +33,7 @@ const Mask = styled.div`
   opacity: 0;
   transition: ${theme.transition};
 `;
-const TrackContainer = styled.div`
+const TrackContainer = styled.li`
   display: grid;
   grid-template-columns: auto 1fr;
   margin-bottom: ${spacing.md};

@@ -110,18 +110,26 @@ const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -.025em;
-  }
-
-  h1 {
-    font-weight: 900;
-  }
-
-  h2 {
+    margin: 0 0 10px;
     font-weight: 700;
   }
 
-  h3 {
-    font-weight: 500;
+  h1, h2, h3 {
+    font-weight: 900;
+  }
+
+  p {
+    margin: 0 0 10px;
+  }
+
+  ol, ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  span {
+    display: inline-block;
   }
 
   a {
@@ -132,13 +140,6 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-  button {
-    font-size: ${fontSizes.base};
-    cursor: pointer;
-    border: 0;
-    border-radius: 0;
-    transition: ${theme.transition};
-  }
 
   img {
     width: 100%;
@@ -165,40 +166,24 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button {
-    border-radius: 0;
-    outline: 0;
+    display: inline-block;
     color: ${colors.lightestGrey};
     font-family: ${fonts.primary};
     font-size: ${fontSizes.base};
     font-weight: 700;
-    display: inline-block;
-    color: ${colors.white};
     border-radius: 50px;
-    padding: 12px 25px;
-    margin-top: 20px;
+    border: 0;
+    padding: 11px 24px;
+    cursor: pointer;
+    transition: ${theme.transition};
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color: ${colors.white};
+      outline: 0;
     }
   }
 
-  ol, ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  p {
-    margin: 0 0 10px;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    margin: 0 0 10px;
-  }
-
-  span {
-    display: inline-block;
-  }
 `;
 
 export default GlobalStyle;

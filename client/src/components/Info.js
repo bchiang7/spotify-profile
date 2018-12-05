@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-// import { theme } from '../styles';
+import { theme, Section } from '../styles';
 // const { colors, spacing } = theme;
 
-const Container = styled.nav``;
-
 const Info = () => (
-  <Container>
+  <Section>
     <h1>Hey, thanks for stopping by!</h1>
     <p>
       This is a project by Brittany Chiang, made with React, Styled Components, Reach Router, and
@@ -32,7 +30,7 @@ const Info = () => (
     </p>
     <p>Social Links here</p>
     <p>Check out the project on github</p>
-  </Container>
+  </Section>
 );
 
 export default Info;

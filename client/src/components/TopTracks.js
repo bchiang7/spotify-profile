@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { getTopTracksShort, getTopTracksMedium, getTopTracksLong } from '../spotify';
 
 import Loader from './Loader';
@@ -10,7 +9,6 @@ import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 const { colors, fontSizes } = theme;
 
-const Container = styled(Section)``;
 const Header = styled.header`
   ${mixins.flexBetween};
   h2 {
@@ -19,17 +17,20 @@ const Header = styled.header`
 `;
 const Ranges = styled.div`
   display: flex;
+  margin-right: -11px;
 `;
 const RangeButton = styled.button`
   background-color: transparent;
-  font-size: ${fontSizes.base};
   color: ${props => (props.isActive ? colors.white : colors.lightGrey)};
+  font-size: ${fontSizes.base};
+  font-weight: 500;
+  padding: 11px;
   span {
     padding-bottom: 3px;
     border-bottom: 1px solid ${props => (props.isActive ? colors.white : `transparent`)};
   }
 `;
-const TracksContainer = styled.div`
+const TracksContainer = styled.ul`
   margin-top: 50px;
 `;
 
@@ -41,6 +42,12 @@ class TopTracks extends Component {
   state = {
     topTracks: null,
     activeRange: 'long',
+  };
+
+  apiCalls = {
+    long: getTopTracksLong(),
+    medium: getTopTracksMedium(),
+    short: getTopTracksShort(),
   };
 
   componentDidMount() {
@@ -57,17 +64,8 @@ class TopTracks extends Component {
   }
 
   async changeRange(range) {
-    const apiCall =
-      range === 'long'
-        ? getTopTracksLong()
-        : range === 'medium'
-        ? getTopTracksMedium()
-        : range === 'short'
-        ? getTopTracksShort()
-        : getTopTracksLong();
-
     try {
-      const { data } = await apiCall;
+      const { data } = await this.apiCalls[range];
       this.setState({ topTracks: data, activeRange: range });
     } catch (e) {
       console.error(e);
@@ -80,7 +78,7 @@ class TopTracks extends Component {
     const { topTracks, activeRange } = this.state;
 
     return (
-      <Container>
+      <Section>
         <Header>
           <h2>Top Tracks</h2>
           <Ranges>
@@ -108,7 +106,7 @@ class TopTracks extends Component {
             <Loader />
           )}
         </TracksContainer>
-      </Container>
+      </Section>
     );
   }
 }

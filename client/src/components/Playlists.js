@@ -9,7 +9,6 @@ import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
-const Container = styled(Section)``;
 const Wrapper = styled.div`
   ${mixins.flexBetween};
   align-items: flex-start;
@@ -91,7 +90,7 @@ class Playlists extends Component {
     const { playlists } = this.state;
 
     return (
-      <Container>
+      <Section>
         <h2>Your Playlists</h2>
         <Wrapper>
           <PlaylistsContainer>
@@ -115,7 +114,7 @@ class Playlists extends Component {
             )}
           </PlaylistsContainer>
         </Wrapper>
-      </Container>
+      </Section>
     );
   }
 }

@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { formatDuration, getYear } from '../utils';
-
 import { getTrackInfo } from '../spotify';
 
+import Loader from './Loader';
 import FeatureChart from './FeatureChart';
 
-import Loader from './Loader';
-
 import styled from 'styled-components/macro';
-import { theme, mixins } from '../styles';
+import { theme, mixins, Section } from '../styles';
 const { colors, fontSizes } = theme;
 
-const Container = styled.div``;
 const TrackContainer = styled.div`
   display: flex;
   margin-bottom: 70px;
@@ -35,6 +32,7 @@ const Title = styled.h1`
 const Artist = styled.h2`
   color: ${colors.lightestGrey};
   font-size: 20px;
+  margin: 0;
 `;
 const Album = styled.h3`
   color: ${colors.lightGrey};
@@ -51,7 +49,6 @@ const Features = styled.div`
   width: 100%;
   margin-bottom: 50px;
   text-align: center;
-
   h4 {
     color: ${colors.lightGrey};
     font-size: ${fontSizes.sm};
@@ -97,12 +94,12 @@ class TrackInfo extends Component {
 
   render() {
     const { track, audioAnalysis, audioFeatures } = this.state;
-    // console.log(audioFeatures, audioAnalysis);
+    console.log(audioAnalysis);
 
     return (
       <React.Fragment>
         {track ? (
-          <Container>
+          <Section>
             <TrackContainer>
               <Artwork>
                 <img src={track.album.images[0].url} alt="" />
@@ -157,7 +154,7 @@ class TrackInfo extends Component {
                 </DescriptionLink>
               </AudioFeatures>
             )}
-          </Container>
+          </Section>
         ) : (
           <Loader />
         )}
