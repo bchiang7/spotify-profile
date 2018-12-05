@@ -9,13 +9,15 @@ import Loader from './Loader';
 import Track from './Track';
 
 import styled from 'styled-components/macro';
-import { theme, mixins } from '../styles';
+import { theme, mixins, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
-const Container = styled.header`
-  ${mixins.flexCenter};
-  flex-direction: column;
-  position: relative;
+const Container = styled(Section)`
+  header {
+    ${mixins.flexCenter};
+    flex-direction: column;
+    position: relative;
+  }
 `;
 const Avatar = styled.div`
   width: 120px;
@@ -111,6 +113,24 @@ const MoreButton = styled(Link)`
     border: 1px solid ${colors.white};
   }
 `;
+const ArtistList = styled.ul``;
+const Artist = styled.li`
+  display: flex;
+  align-items: center;
+  margin-bottom: ${spacing.md};
+`;
+const ArtistArtwork = styled.img`
+  display: inline-block;
+  position: relative;
+  width: 50px;
+  min-width: 50px;
+  height: 50px;
+  margin-right: ${spacing.base};
+  border-radius: 100%;
+`;
+const ArtistName = styled.span`
+  flex-grow: 1;
+`;
 
 class User extends Component {
   static propTypes = {
@@ -123,7 +143,7 @@ class User extends Component {
     user: null,
     followedArtists: null,
     playlists: null,
-    recentlyPlayed: null,
+    topArtists: null,
     topTracks: null,
   };
 
@@ -133,78 +153,88 @@ class User extends Component {
 
   async getData() {
     try {
-      const { user, followedArtists, playlists, recentlyPlayed, topTracks } = await getUserInfo();
-      this.setState({ user, followedArtists, playlists, recentlyPlayed, topTracks });
+      const { user, followedArtists, playlists, topArtists, topTracks } = await getUserInfo();
+      this.setState({ user, followedArtists, playlists, topArtists, topTracks });
     } catch (e) {
       console.error(e);
     }
   }
 
   render() {
-    const { user, followedArtists, playlists, recentlyPlayed, topTracks } = this.state;
+    const { user, followedArtists, playlists, topArtists, topTracks } = this.state;
     const totalPlaylists = playlists ? playlists.total : 0;
-    // console.log(topTracks);
+    // console.log(topArtists);
 
     return (
       <React.Fragment>
         {user ? (
           <Container>
-            {/* <LogoutButton href="https://accounts.spotify.com">Logout</LogoutButton> */}
+            <header>
+              {/* <LogoutButton href="https://accounts.spotify.com">Logout</LogoutButton> */}
 
-            <Avatar>
-              {user.images.length > 0 ? (
-                <img src={user.images[0].url} alt="avatar" />
-              ) : (
-                <NoAvatar>
-                  <IconUser />
-                </NoAvatar>
-              )}
-            </Avatar>
-            <UserName href={user.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-              <Name>{user.display_name}</Name>
-            </UserName>
-            <Stats>
-              <Stat>
-                <Number>{user.followers.total}</Number>
-                <NumLabel>Followers</NumLabel>
-              </Stat>
-
-              {followedArtists && (
+              <Avatar>
+                {user.images.length > 0 ? (
+                  <img src={user.images[0].url} alt="avatar" />
+                ) : (
+                  <NoAvatar>
+                    <IconUser />
+                  </NoAvatar>
+                )}
+              </Avatar>
+              <UserName href={user.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                <Name>{user.display_name}</Name>
+              </UserName>
+              <Stats>
                 <Stat>
-                  <Number>{followedArtists.artists.items.length}</Number>
-                  <NumLabel>Following</NumLabel>
+                  <Number>{user.followers.total}</Number>
+                  <NumLabel>Followers</NumLabel>
                 </Stat>
-              )}
 
-              {totalPlaylists && (
-                <Stat>
-                  <Link to="playlists">
-                    <Number>{totalPlaylists}</Number>
-                    <NumLabel>Playlists</NumLabel>
-                  </Link>
-                </Stat>
-              )}
-            </Stats>
+                {followedArtists && (
+                  <Stat>
+                    <Number>{followedArtists.artists.items.length}</Number>
+                    <NumLabel>Following</NumLabel>
+                  </Stat>
+                )}
+
+                {totalPlaylists && (
+                  <Stat>
+                    <Link to="playlists">
+                      <Number>{totalPlaylists}</Number>
+                      <NumLabel>Playlists</NumLabel>
+                    </Link>
+                  </Stat>
+                )}
+              </Stats>
+            </header>
 
             <Preview>
               <Tracklist>
                 <TracklistHeading>
-                  <h2>Recently Played</h2>
-                  <MoreButton to="/recent">See More</MoreButton>
+                  <h2>Top Artists of All Time</h2>
+                  <MoreButton to="/artists">See More</MoreButton>
                 </TracklistHeading>
                 <div>
-                  {recentlyPlayed ? (
-                    recentlyPlayed.items
-                      .slice(0, 10)
-                      .map(({ track }, i) => <Track track={track} key={i} />)
+                  {topArtists ? (
+                    <ArtistList>
+                      {topArtists.items.slice(0, 10).map((artist, i) => (
+                        <Artist key={i}>
+                          {artist.images.length && (
+                            <ArtistArtwork src={artist.images[2].url} alt="Artist" />
+                          )}
+                          <ArtistName>{artist.name}</ArtistName>
+                        </Artist>
+                      ))}
+                    </ArtistList>
                   ) : (
                     <Loader />
                   )}
                 </div>
               </Tracklist>
+
               <Tracklist>
                 <TracklistHeading>
-                  <h2>Top Tracks</h2>
+                  <h2>Top Tracks of All Time</h2>
                   <MoreButton to="/tracks">See More</MoreButton>
                 </TracklistHeading>
                 <div>

@@ -16,7 +16,7 @@ import Info from './Info';
 import styled from 'styled-components/macro';
 
 const Container = styled.div`
-  padding: 70px 100px 70px 200px;
+  padding: 0 100px 0 200px;
 `;
 
 class Profile extends Component {
@@ -25,17 +25,19 @@ class Profile extends Component {
       <Container>
         <Sidebar />
 
-        <Router>
-          <User path="/" />
-          <RecentlyPlayed path="recent" />
-          <TopArtists path="artists" />
-          <TopTracks path="tracks" />
-          <Playlists path="playlists" />
-          <Playlist path="playlists/:playlistId" />
-          <Recommendations path="recommendations/:playlistId" />
-          <TrackInfo path="track/:trackId" />
-          <Info path="info" />
-        </Router>
+        <main>
+          <Router>
+            <User path="/" />
+            <RecentlyPlayed path="recent" />
+            <TopArtists path="artists" />
+            <TopTracks path="tracks" />
+            <Playlists path="playlists" />
+            <Playlist path="playlists/:playlistId" />
+            <Recommendations path="recommendations/:playlistId" />
+            <TrackInfo path="track/:trackId" />
+            <Info path="info" />
+          </Router>
+        </main>
 
         {/* <Player /> */}
       </Container>

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { getPlaylistTracks, getRecommendationsForTracks } from '../spotify';
-// import Track from './Track';
+import { getPlaylist, getRecommendationsForTracks } from '../spotify';
+import Track from './Track';
 import styled from 'styled-components/macro';
 // import { theme, mixins } from '../styles';
 
 const Container = styled.div``;
-const TracksContainer = styled.div``;
+const TracksContainer = styled.div`
+  margin-top: 50px;
+`;
 
 class Recommendations extends Component {
   static propTypes = {
@@ -15,7 +17,7 @@ class Recommendations extends Component {
   };
 
   state = {
-    tracks: null,
+    playlist: null,
     recommendations: null,
   };
 
@@ -27,14 +29,12 @@ class Recommendations extends Component {
     const { playlistId } = this.props;
 
     try {
-      const { data } = await getPlaylistTracks(playlistId);
-      this.setState({ tracks: data });
+      const { data } = await getPlaylist(playlistId);
+      this.setState({ playlist: data });
 
       if (data) {
-        const { tracks } = this.state;
-        const { data } = await getRecommendationsForTracks(tracks);
-        console.log(data);
-
+        const { playlist } = this.state;
+        const { data } = await getRecommendationsForTracks(playlist.tracks.items);
         this.setState({ recommendations: data });
       }
     } catch (e) {
@@ -43,15 +43,15 @@ class Recommendations extends Component {
   }
 
   render() {
-    const { recommendations } = this.state;
-    // console.log(recommendations);
+    const { playlist, recommendations } = this.state;
+    console.log(recommendations);
 
     return (
       <Container>
-        <h2>Recommended Tracks Based On Insert Playlist Here</h2>
+        {playlist && <h2>Recommended Tracks Based On {playlist.name}</h2>}
         <TracksContainer>
-          {/* {recommendations &&
-            recommendations.tracks.map((track, i) => <Track track={track} key={i} />)} */}
+          {recommendations &&
+            recommendations.tracks.map((track, i) => <Track track={track} key={i} />)}
         </TracksContainer>
       </Container>
     );

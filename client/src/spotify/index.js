@@ -33,12 +33,14 @@ export const getAccessToken = () => {
   if (error) {
     console.error(error);
     refreshAccessToken();
+    window.location.reload();
   }
 
   // If token has expired
   if (Date.now() - getTokenTimestamp() > EXPIRATION_TIME) {
     console.warn('Expired token, refreshing...');
     refreshAccessToken();
+    window.location.reload();
   }
 
   const localAccessToken = getLocalAccessToken();
@@ -152,7 +154,8 @@ export const getAudioFeaturesForTracks = tracks => {
  * https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/
  */
 export const getRecommendationsForTracks = tracks => {
-  const seed_tracks = getTrackIds(tracks);
+  const shuffledTracks = tracks.sort(() => 0.5 - Math.random());
+  const seed_tracks = getTrackIds(shuffledTracks.slice(0, 5));
   const seed_artists = '';
   const seed_genres = '';
 
@@ -187,14 +190,14 @@ export const getTrackAudioFeatures = trackId =>
 
 export const getUserInfo = () => {
   return axios
-    .all([getUser(), getFollowing(), getPlaylists(), getRecentlyPlayed(), getTopTracksLong()])
+    .all([getUser(), getFollowing(), getPlaylists(), getTopArtistsLong(), getTopTracksLong()])
     .then(
-      axios.spread((user, followedArtists, playlists, recentlyPlayed, topTracks) => {
+      axios.spread((user, followedArtists, playlists, topArtists, topTracks) => {
         return {
           user: user.data,
           followedArtists: followedArtists.data,
           playlists: playlists.data,
-          recentlyPlayed: recentlyPlayed.data,
+          topArtists: topArtists.data,
           topTracks: topTracks.data,
         };
       }),
