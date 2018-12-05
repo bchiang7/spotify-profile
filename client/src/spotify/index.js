@@ -38,7 +38,7 @@ export const getAccessToken = () => {
 
   // If token has expired
   if (Date.now() - getTokenTimestamp() > EXPIRATION_TIME) {
-    console.warn('Expired token, refreshing...');
+    console.warn('Access token has expired, refreshing...');
     refreshAccessToken();
     window.location.reload();
   }
@@ -135,8 +135,7 @@ export const getPlaylistTracks = playlistId =>
   axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, { headers });
 
 /**
- * Get a comma separated string of track IDs from the inputted array of tracks
- * @param {array} tracks - An array of tracks
+ * Return a comma separated string of track IDs from the given array of tracks
  */
 const getTrackIds = tracks => tracks.map(({ track }) => track.id).join(',');
 

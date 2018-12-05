@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import { getPlaylist, getRecommendationsForTracks } from '../spotify';
 
@@ -19,10 +18,6 @@ const PlaylistLink = styled(Link)`
 `;
 
 class Recommendations extends Component {
-  static propTypes = {
-    playlistId: PropTypes.string,
-  };
-
   state = {
     playlist: null,
     recommendations: null,
@@ -51,7 +46,6 @@ class Recommendations extends Component {
 
   render() {
     const { playlist, recommendations } = this.state;
-    // console.log(recommendations);
 
     return (
       <Section>

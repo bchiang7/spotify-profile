@@ -5,7 +5,7 @@ import { theme, Section } from '../styles';
 
 const Info = () => (
   <Section>
-    <h1>Hey, thanks for stopping by!</h1>
+    <h1>Spotify Profile</h1>
     <p>
       This is a project by Brittany Chiang, made with React, Styled Components, Reach Router, and
       the Spotify Web API.

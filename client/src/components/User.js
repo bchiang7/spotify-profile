@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import { getUserInfo } from '../spotify';
 
@@ -113,12 +112,6 @@ const ArtistName = styled.span`
 `;
 
 class User extends Component {
-  static propTypes = {
-    user: PropTypes.object,
-    followedArtists: PropTypes.object,
-    totalPlaylists: PropTypes.number,
-  };
-
   state = {
     user: null,
     followedArtists: null,
@@ -143,7 +136,6 @@ class User extends Component {
   render() {
     const { user, followedArtists, playlists, topArtists, topTracks } = this.state;
     const totalPlaylists = playlists ? playlists.total : 0;
-    // console.log(topArtists);
 
     return (
       <React.Fragment>

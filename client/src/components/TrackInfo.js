@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { formatDuration, getYear } from '../utils';
 import { getTrackInfo } from '../spotify';
 
@@ -67,10 +66,6 @@ const DescriptionLink = styled.a`
 `;
 
 class TrackInfo extends Component {
-  static propTypes = {
-    trackId: PropTypes.string,
-  };
-
   state = {
     track: null,
     audioAnalysis: null,

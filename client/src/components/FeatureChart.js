@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Chart from 'chart.js';
 
 import styled from 'styled-components/macro';
+import { theme } from '../styles';
+const { fonts } = theme;
 
 const properties = [
   'acousticness',
@@ -28,7 +30,7 @@ const Container = styled.div`
 
 class FeatureChart extends Component {
   static propTypes = {
-    features: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    features: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
     type: PropTypes.string,
   };
 
@@ -108,7 +110,7 @@ class FeatureChart extends Component {
           display: true,
           text: `Audio Features`,
           fontSize: 18,
-          fontFamily: 'Circular Std',
+          fontFamily: `${fonts.primary}`,
           fontColor: '#ffffff',
           padding: 30,
         },
@@ -122,7 +124,7 @@ class FeatureChart extends Component {
                 color: 'rgba(255, 255, 255, 0.3)',
               },
               ticks: {
-                fontFamily: 'Circular Std',
+                fontFamily: `${fonts.primary}`,
                 fontSize: 12,
               },
             },
@@ -134,7 +136,7 @@ class FeatureChart extends Component {
               },
               ticks: {
                 beginAtZero: true,
-                fontFamily: 'Circular Std',
+                fontFamily: `${fonts.primary}`,
                 fontSize: 12,
               },
             },

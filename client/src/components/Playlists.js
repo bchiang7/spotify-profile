@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import { getPlaylists } from '../spotify';
 
@@ -65,10 +64,6 @@ const PlaylistDetails = styled.div`
 `;
 
 class Playlists extends Component {
-  static propTypes = {
-    playlists: PropTypes.object,
-  };
-
   state = {
     playlists: null,
   };

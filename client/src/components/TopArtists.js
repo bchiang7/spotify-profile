@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../spotify';
 
 import Loader from './Loader';
@@ -57,10 +56,6 @@ const ArtistName = styled.a`
 `;
 
 class TopArtists extends Component {
-  static propTypes = {
-    topArtists: PropTypes.object,
-  };
-
   state = {
     topArtists: null,
     activeRange: 'long',

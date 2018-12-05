@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { getTopTracksShort, getTopTracksMedium, getTopTracksLong } from '../spotify';
 
 import Loader from './Loader';
@@ -35,10 +34,6 @@ const TracksContainer = styled.ul`
 `;
 
 class TopTracks extends Component {
-  static propTypes = {
-    topTracks: PropTypes.object,
-  };
-
   state = {
     topTracks: null,
     activeRange: 'long',

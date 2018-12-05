@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import { getPlaylist, getAudioFeaturesForTracks } from '../spotify';
 
@@ -53,10 +52,6 @@ const TotalTracks = styled.p`
 `;
 
 class Playlist extends Component {
-  static propTypes = {
-    playlistId: PropTypes.string,
-  };
-
   state = {
     playlist: null,
     tracks: null,
@@ -86,7 +81,7 @@ class Playlist extends Component {
 
   render() {
     const { playlist, audioFeatures } = this.state;
-    // console.log(playlist);
+
     return (
       <React.Fragment>
         {playlist ? (

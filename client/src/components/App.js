@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
+import { token } from '../spotify';
 
 import Head from './Head';
 import LoginScreen from './LoginScreen';
 import Profile from './Profile';
-
-import { token } from '../spotify';
 
 import styled from 'styled-components/macro';
 import { GlobalStyle } from '../styles';

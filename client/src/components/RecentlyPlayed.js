@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { getRecentlyPlayed } from '../spotify';
 
 import Loader from './Loader';
@@ -13,10 +12,6 @@ const TracksContainer = styled.ul`
 `;
 
 class RecentlyPlayed extends Component {
-  static propTypes = {
-    recentlyPlayed: PropTypes.object,
-  };
-
   state = {
     recentlyPlayed: null,
   };

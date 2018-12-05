@@ -98,7 +98,7 @@ const Track = ({ track }) => (
 );
 
 Track.propTypes = {
-  track: PropTypes.object,
+  track: PropTypes.object.isRequired,
 };
 
 export default Track;
