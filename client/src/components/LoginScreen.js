@@ -28,7 +28,8 @@ const LoginButton = styled.a`
   letter-spacing: 2px;
   text-transform: uppercase;
   text-align: center;
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${colors.offGreen};
   }
 `;

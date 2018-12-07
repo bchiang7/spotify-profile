@@ -50,7 +50,8 @@ const ArtistImage = styled.img`
 const ArtistName = styled.a`
   margin: ${spacing.base} 0;
   border-bottom: 1px solid transparent;
-  &:hover {
+  &:hover,
+  &:focus {
     border-bottom: 1px solid ${colors.white};
   }
 `;

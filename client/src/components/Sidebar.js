@@ -1,5 +1,16 @@
 import React from 'react';
 import { Link } from '@reach/router';
+
+import {
+  IconSpotify,
+  IconUser,
+  IconTime,
+  IconMicrophone,
+  IconPlaylist,
+  IconMusic,
+  IconGithub,
+} from './icons';
+
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
 const { colors, spacing } = theme;
@@ -24,17 +35,22 @@ const Container = styled.nav`
   }
 `;
 const Logo = styled.div`
-  font-size: 50px;
-  margin-top: 20px;
   color: ${colors.green};
+  margin-top: 20px;
+  width: 70px;
+  transition: ${theme.transition};
+  &:hover,
+  &:focus {
+    color: ${colors.offGreen};
+  }
 `;
 const MenuItem = styled.li`
   width: 100%;
-  font-size: 11px;
   color: ${colors.lightGrey};
+  font-size: 11px;
   a {
+    padding: 15px;
     border-left: 5px solid transparent;
-
     &:hover,
     &:focus,
     &.active {
@@ -43,16 +59,16 @@ const MenuItem = styled.li`
       border-left: 5px solid ${colors.offGreen};
     }
   }
-  i {
-    font-size: 25px;
-    margin-bottom: 10px;
+  svg {
+    width: 25px;
+    margin-bottom: 8px;
   }
 `;
 
-const Info = styled.div`
-  font-size: 22px;
-  margin-bottom: 30px;
+const Github = styled.div`
   color: ${colors.lightGrey};
+  width: 50px;
+  margin-bottom: 30px;
   a {
     &:hover,
     &:focus,
@@ -70,46 +86,49 @@ const Sidebar = () => (
   <Container>
     <Logo>
       <Link to="/">
-        <i className="fab fa-spotify" />
+        <IconSpotify />
       </Link>
     </Logo>
     <ul>
       <MenuItem>
         <NavLink to="/">
-          <i className="far fa-user" />
+          <IconUser />
           <div>Profile</div>
         </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to="recent">
-          <i className="far fa-clock" />
+          <IconTime />
           <div>Recent</div>
         </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to="artists">
-          <i className="far fa-star" />
+          <IconMicrophone />
           <div>Top Artists</div>
         </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to="tracks">
-          <i className="far fa-heart" />
+          <IconMusic />
           <div>Top Tracks</div>
         </NavLink>
       </MenuItem>
       <MenuItem>
         <NavLink to="playlists">
-          <i className="fas fa-music" />
+          <IconPlaylist />
           <div>Playlists</div>
         </NavLink>
       </MenuItem>
     </ul>
-    <Info>
-      <NavLink to="info">
-        <i className="far fa-question-circle" />
-      </NavLink>
-    </Info>
+    <Github>
+      <a
+        href="https://github.com/bchiang7/spotify-profile"
+        target="_blank"
+        rel="noopener noreferrer">
+        <IconGithub />
+      </a>
+    </Github>
   </Container>
 );
 

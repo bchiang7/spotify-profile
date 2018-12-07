@@ -26,7 +26,8 @@ const NoAvatar = styled.div`
   padding: ${spacing.md};
 `;
 const UserName = styled.a`
-  &:hover {
+  &:hover,
+  &:focus {
     color: ${colors.offGreen};
   }
 `;
@@ -109,6 +110,13 @@ const ArtistArtwork = styled.img`
 `;
 const ArtistName = styled.span`
   flex-grow: 1;
+  a {
+    border-bottom: 1px solid transparent;
+    &:hover,
+    &:focus {
+      border-bottom: 1px solid ${colors.white};
+    }
+  }
 `;
 
 class User extends Component {
@@ -191,7 +199,14 @@ class User extends Component {
                           {artist.images.length && (
                             <ArtistArtwork src={artist.images[2].url} alt="Artist" />
                           )}
-                          <ArtistName>{artist.name}</ArtistName>
+                          <ArtistName>
+                            <a
+                              href={artist.external_urls.spotify}
+                              target="_blank"
+                              rel="noopener noreferrer">
+                              {artist.name}
+                            </a>
+                          </ArtistName>
                         </Artist>
                       ))}
                     </ArtistList>

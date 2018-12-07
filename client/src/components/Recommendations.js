@@ -12,7 +12,8 @@ const TracksContainer = styled.ul`
   margin-top: 50px;
 `;
 const PlaylistLink = styled(Link)`
-  &:hover {
+  &:hover,
+  &:focus {
     color: ${colors.offGreen};
   }
 `;

@@ -11,7 +11,6 @@ import Playlists from './Playlists';
 import Playlist from './Playlist';
 import Recommendations from './Recommendations';
 import TrackInfo from './TrackInfo';
-import Info from './Info';
 
 import styled from 'styled-components/macro';
 
@@ -33,7 +32,6 @@ const Profile = () => (
         <Playlist path="playlists/:playlistId" />
         <Recommendations path="recommendations/:playlistId" />
         <TrackInfo path="track/:trackId" />
-        <Info path="info" />
       </Router>
     </main>
 

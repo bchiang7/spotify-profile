@@ -12,11 +12,12 @@ const Wrapper = styled.div`
   ${mixins.flexBetween};
   align-items: flex-start;
 `;
-const PlaylistsContainer = styled(Section)`
+const PlaylistsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: ${spacing.md};
   width: 100%;
+  margin-top: 50px;
 `;
 const Playlist = styled.div`
   text-align: center;
@@ -42,7 +43,8 @@ const PlaylistImage = styled.img`
 const PlaylistCover = styled(Link)`
   ${mixins.coverShadow};
   position: relative;
-  &:hover {
+  &:hover,
+  &:focus {
     ${PlaylistMask} {
       opacity: 1;
     }
@@ -51,7 +53,8 @@ const PlaylistCover = styled(Link)`
 const PlaylistName = styled.span`
   margin: ${spacing.base} 0 5px;
   border-bottom: 1px solid transparent;
-  &:hover {
+  &:hover,
+  &:focus {
     border-bottom: 1px solid ${colors.white};
   }
 `;

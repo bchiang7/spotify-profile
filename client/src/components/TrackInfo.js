@@ -26,12 +26,11 @@ const PlayTrackButton = styled.a`
 `;
 const Title = styled.h1`
   font-size: 42px;
-  margin: 0;
+  margin: 0 0 5px;
 `;
-const Artist = styled.h2`
+const ArtistName = styled.h2`
   color: ${colors.lightestGrey};
-  font-size: 20px;
-  margin: 0;
+  font-weight: 700;
 `;
 const Album = styled.h3`
   color: ${colors.lightGrey};
@@ -101,7 +100,7 @@ class TrackInfo extends Component {
               </Artwork>
               <Info>
                 <Title>{track.name}</Title>
-                <Artist>{track.artists[0].name}</Artist>
+                <ArtistName>{track.artists[0].name}</ArtistName>
                 <Album>
                   {track.album.name} &middot; {getYear(track.album.release_date)}
                 </Album>

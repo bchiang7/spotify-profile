@@ -37,7 +37,8 @@ const TrackContainer = styled.li`
   display: grid;
   grid-template-columns: auto 1fr;
   margin-bottom: ${spacing.md};
-  &:hover {
+  &:hover,
+  &:focus {
     ${Mask} {
       opacity: 1;
     }
@@ -51,7 +52,8 @@ const TrackMeta = styled.div`
 const TrackName = styled.a`
   margin-bottom: 5px;
   border-bottom: 1px solid transparent;
-  &:hover {
+  &:hover,
+  &:focus {
     border-bottom: 1px solid ${colors.white};
   }
 `;
