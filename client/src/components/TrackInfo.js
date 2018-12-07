@@ -88,7 +88,9 @@ class TrackInfo extends Component {
 
   render() {
     const { track, audioAnalysis, audioFeatures } = this.state;
-    console.log(audioAnalysis);
+    console.log(track, audioAnalysis);
+
+    console.log(track && track.popularity);
 
     return (
       <React.Fragment>
@@ -100,7 +102,18 @@ class TrackInfo extends Component {
               </Artwork>
               <Info>
                 <Title>{track.name}</Title>
-                <ArtistName>{track.artists[0].name}</ArtistName>
+                <ArtistName>
+                  {track.artists &&
+                    track.artists.map(({ name }, i) => {
+                      return (
+                        <span key={i}>
+                          {name}
+                          {track.artists.length > 0 && i === track.artists.length - 1 ? '' : ','}
+                          &nbsp;
+                        </span>
+                      );
+                    })}
+                </ArtistName>
                 <Album>
                   {track.album.name} &middot; {getYear(track.album.release_date)}
                 </Album>
@@ -135,6 +148,10 @@ class TrackInfo extends Component {
                   <div>
                     <p>{Math.round(audioFeatures.tempo)}</p>
                     <h4>Tempo (BPM)</h4>
+                  </div>
+                  <div>
+                    <p>{track.popularity}</p>
+                    <h4>Popularity</h4>
                   </div>
                 </Features>
 

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import { formatDuration } from '../utils';
 
+import { IconInfo } from './icons';
+
 import styled from 'styled-components/macro';
 import { theme, mixins } from '../styles';
 const { colors, fontSizes, spacing } = theme;
@@ -32,6 +34,9 @@ const Mask = styled.div`
   color: ${colors.white};
   opacity: 0;
   transition: ${theme.transition};
+  svg {
+    width: 25px;
+  }
 `;
 const TrackContainer = styled.li`
   display: grid;
@@ -73,7 +78,7 @@ const Track = ({ track }) => (
       <TrackArtwork to={`/track/${track.id}`}>
         {track.album.images.length && <img src={track.album.images[2].url} alt="Album Artwork" />}
         <Mask>
-          <i className="fas fa-info-circle" />
+          <IconInfo />
         </Mask>
       </TrackArtwork>
     </div>
@@ -86,8 +91,16 @@ const Track = ({ track }) => (
         )}
         {track.artists && track.album && (
           <TrackAlbum>
-            {track.artists[0].name}
-            &nbsp;&middot;&nbsp;
+            {track.artists &&
+              track.artists.map(({ name }, i) => {
+                return (
+                  <span key={i}>
+                    {name}
+                    {track.artists.length > 0 && i === track.artists.length - 1 ? '' : ','}&nbsp;
+                  </span>
+                );
+              })}
+            &nbsp;&middot;&nbsp;&nbsp;
             {track.album.name}
           </TrackAlbum>
         )}

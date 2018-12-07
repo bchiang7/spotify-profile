@@ -7,6 +7,7 @@ import IconTime from './time';
 import IconMicrophone from './microphone';
 import IconPlaylist from './playlist';
 import IconMusic from './music';
+import IconInfo from './info';
 
 export {
   IconUser,
@@ -18,4 +19,5 @@ export {
   IconMicrophone,
   IconPlaylist,
   IconMusic,
+  IconInfo,
 };
