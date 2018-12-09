@@ -36,6 +36,14 @@ const Name = styled.h3`
 const Description = styled.p`
   font-size: ${fontSizes.sm};
   color: ${colors.lightGrey};
+  a {
+    color: ${colors.white};
+    border-bottom: 1px solid transparent;
+    &:hover,
+    &:focus {
+      border-bottom: 1px solid ${colors.white};
+    }
+  }
 `;
 const RecButton = styled(Link)`
   ${mixins.greenButton};
@@ -97,7 +105,11 @@ class Playlist extends Component {
                   <Name>{playlist.name}</Name>
                 </a>
                 <Owner>By {playlist.owner.display_name}</Owner>
-                {playlist.description && <Description>{playlist.description}</Description>}
+
+                {playlist.description && (
+                  <Description dangerouslySetInnerHTML={{ __html: playlist.description }} />
+                )}
+
                 <TotalTracks>{playlist.tracks.total} Tracks</TotalTracks>
 
                 <RecButton to={`/recommendations/${playlist.id}`}>Get Recommendations</RecButton>

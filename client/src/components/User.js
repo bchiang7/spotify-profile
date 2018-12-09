@@ -57,23 +57,23 @@ const NumLabel = styled.p`
   letter-spacing: 1px;
   margin-top: ${spacing.xs};
 `;
-// const LogoutButton = styled.a`
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-//   background-color: ${colors.green};
-//   color: ${colors.white};
-//   border-radius: 30px;
-//   padding: 12px 22px;
-//   font-size: ${fontSizes.xs};
-//   font-weight: 700;
-//   letter-spacing: 1px;
-//   text-transform: uppercase;
-//   &:hover,
-//   &:focus {
-//     background-color: ${colors.offGreen};
-//   }
-// `;
+const LogoutButton = styled.a`
+  background-color: transparent;
+  color: ${colors.white};
+  border: 1px solid ${colors.white};
+  border-radius: 30px;
+  margin-top: 30px;
+  padding: 12px 30px;
+  font-size: ${fontSizes.xs};
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  &:hover,
+  &:focus {
+    background-color: ${colors.white};
+    color: ${colors.black};
+  }
+`;
 const Preview = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -150,7 +150,6 @@ class User extends Component {
         {user ? (
           <Section>
             <Header>
-              {/* <LogoutButton href="https://accounts.spotify.com">Logout</LogoutButton> */}
               <Avatar>
                 {user.images.length > 0 ? (
                   <img src={user.images[0].url} alt="avatar" />
@@ -183,6 +182,7 @@ class User extends Component {
                   </Stat>
                 )}
               </Stats>
+              <LogoutButton href="https://accounts.spotify.com">Logout</LogoutButton>
             </Header>
 
             <Preview>

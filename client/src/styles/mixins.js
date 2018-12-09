@@ -42,12 +42,12 @@ const mixins = {
 
   button: css`
     display: inline-block;
-    color: ${colors.lightestGrey};
+    color: ${colors.white};
     font-weight: 700;
     font-size: ${fontSizes.xs};
     letter-spacing: 1px;
     text-transform: uppercase;
-    border: 1px solid ${colors.lightestGrey};
+    border: 1px solid ${colors.white};
     border-radius: 50px;
     padding: 11px 24px;
     cursor: pointer;
@@ -55,8 +55,8 @@ const mixins = {
 
     &:hover,
     &:focus {
-      color: ${colors.white};
-      border: 1px solid ${colors.white};
+      color: ${colors.black};
+      background: ${colors.white};
       outline: 0;
     }
   `,

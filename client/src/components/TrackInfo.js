@@ -47,21 +47,27 @@ const Features = styled.div`
   width: 100%;
   margin-bottom: 50px;
   text-align: center;
-  h4 {
-    color: ${colors.lightGrey};
-    font-size: ${fontSizes.sm};
-    font-weight: 500;
-  }
-  p {
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 0;
-  }
+`;
+const FeatureText = styled.h4`
+  color: ${colors.lightestGrey};
+  font-size: 36px;
+  font-weight: 700;
+`;
+const FeatureLabel = styled.p`
+  color: ${colors.lightestGrey};
+  font-size: ${fontSizes.sm};
+  font-weight: 500;
+  margin-bottom: 0;
 `;
 const DescriptionLink = styled.a`
-  color: ${colors.lightGrey};
+  color: ${colors.lightestGrey};
   margin: 30px auto 0;
-  border-bottom: 1px solid ${colors.lightGrey};
+  border-bottom: 1px solid transparent;
+  &:hover,
+  &:focus {
+    color: ${colors.white};
+    border-bottom: 1px solid ${colors.white};
+  }
 `;
 
 class TrackInfo extends Component {
@@ -88,9 +94,7 @@ class TrackInfo extends Component {
 
   render() {
     const { track, audioAnalysis, audioFeatures } = this.state;
-    console.log(track, audioAnalysis);
-
-    console.log(track && track.popularity);
+    console.log(audioAnalysis);
 
     return (
       <React.Fragment>
@@ -98,7 +102,7 @@ class TrackInfo extends Component {
           <Section>
             <TrackContainer>
               <Artwork>
-                <img src={track.album.images[0].url} alt="" />
+                <img src={track.album.images[0].url} alt="Album Artwork" />
               </Artwork>
               <Info>
                 <Title>{track.name}</Title>
@@ -130,28 +134,28 @@ class TrackInfo extends Component {
               <AudioFeatures>
                 <Features>
                   <div>
-                    <p>{formatDuration(audioFeatures.duration_ms)}</p>
-                    <h4>Duration</h4>
+                    <FeatureText>{formatDuration(audioFeatures.duration_ms)}</FeatureText>
+                    <FeatureLabel>Duration</FeatureLabel>
                   </div>
                   <div>
-                    <p>{audioFeatures.mode === 1 ? 'Major' : 'Minor'}</p>
-                    <h4>Modality</h4>
+                    <FeatureText>{audioFeatures.mode === 1 ? 'Major' : 'Minor'}</FeatureText>
+                    <FeatureLabel>Modality</FeatureLabel>
                   </div>
                   <div>
-                    <p>{audioFeatures.key}</p>
-                    <h4>Key</h4>
+                    <FeatureText>{audioFeatures.key}</FeatureText>
+                    <FeatureLabel>Key</FeatureLabel>
                   </div>
                   <div>
-                    <p>{audioFeatures.time_signature}</p>
-                    <h4>Time Signature</h4>
+                    <FeatureText>{audioFeatures.time_signature}</FeatureText>
+                    <FeatureLabel>Time Signature</FeatureLabel>
                   </div>
                   <div>
-                    <p>{Math.round(audioFeatures.tempo)}</p>
-                    <h4>Tempo (BPM)</h4>
+                    <FeatureText>{Math.round(audioFeatures.tempo)}</FeatureText>
+                    <FeatureLabel>Tempo (BPM)</FeatureLabel>
                   </div>
                   <div>
-                    <p>{track.popularity}</p>
-                    <h4>Popularity</h4>
+                    <FeatureText>{track.popularity}</FeatureText>
+                    <FeatureLabel>Popularity</FeatureLabel>
                   </div>
                 </Features>
 
@@ -161,7 +165,7 @@ class TrackInfo extends Component {
                   href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/"
                   target="_blank"
                   rel="noopener noreferrer">
-                  See Full Description of Audio Features
+                  Full Description of Audio Features
                 </DescriptionLink>
               </AudioFeatures>
             )}

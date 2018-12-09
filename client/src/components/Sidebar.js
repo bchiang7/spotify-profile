@@ -67,13 +67,13 @@ const MenuItem = styled.li`
 
 const Github = styled.div`
   color: ${colors.lightGrey};
-  width: 50px;
+  width: 45px;
   margin-bottom: 30px;
   a {
     &:hover,
     &:focus,
     &.active {
-      color: ${colors.white};
+      color: ${colors.blue};
     }
   }
 `;
