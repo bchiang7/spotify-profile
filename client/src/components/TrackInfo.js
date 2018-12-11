@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { formatDuration, getYear } from '../utils';
+import { formatDuration, getYear, parsePitchClass } from '../utils';
 import { getTrackInfo } from '../spotify';
 
 import Loader from './Loader';
@@ -12,6 +12,15 @@ const { colors, fontSizes } = theme;
 const TrackContainer = styled.div`
   display: flex;
   margin-bottom: 70px;
+
+  a {
+    border-bottom: 1px solid transparent;
+    &:hover,
+    &:focus {
+      color: ${colors.white};
+      border-bottom: 1px solid ${colors.white};
+    }
+  }
 `;
 const Artwork = styled.div`
   ${mixins.coverShadow};
@@ -52,11 +61,11 @@ const FeatureText = styled.h4`
   color: ${colors.lightestGrey};
   font-size: 36px;
   font-weight: 700;
+  margin-bottom: 0;
 `;
 const FeatureLabel = styled.p`
   color: ${colors.lightestGrey};
-  font-size: ${fontSizes.sm};
-  font-weight: 500;
+  font-size: ${fontSizes.xs};
   margin-bottom: 0;
 `;
 const DescriptionLink = styled.a`
@@ -94,7 +103,7 @@ class TrackInfo extends Component {
 
   render() {
     const { track, audioAnalysis, audioFeatures } = this.state;
-    console.log(audioAnalysis);
+    console.log(track, audioAnalysis);
 
     return (
       <React.Fragment>
@@ -119,7 +128,13 @@ class TrackInfo extends Component {
                     })}
                 </ArtistName>
                 <Album>
-                  {track.album.name} &middot; {getYear(track.album.release_date)}
+                  <a
+                    href={track.album.external_urls.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    {track.album.name}
+                  </a>{' '}
+                  &middot; {getYear(track.album.release_date)}
                 </Album>
                 <PlayTrackButton
                   href={track.external_urls.spotify}
@@ -138,12 +153,12 @@ class TrackInfo extends Component {
                     <FeatureLabel>Duration</FeatureLabel>
                   </div>
                   <div>
-                    <FeatureText>{audioFeatures.mode === 1 ? 'Major' : 'Minor'}</FeatureText>
-                    <FeatureLabel>Modality</FeatureLabel>
+                    <FeatureText>{parsePitchClass(audioFeatures.key)}</FeatureText>
+                    <FeatureLabel>Key</FeatureLabel>
                   </div>
                   <div>
-                    <FeatureText>{audioFeatures.key}</FeatureText>
-                    <FeatureLabel>Key</FeatureLabel>
+                    <FeatureText>{audioFeatures.mode === 1 ? 'Major' : 'Minor'}</FeatureText>
+                    <FeatureLabel>Modality</FeatureLabel>
                   </div>
                   <div>
                     <FeatureText>{audioFeatures.time_signature}</FeatureText>
@@ -154,7 +169,7 @@ class TrackInfo extends Component {
                     <FeatureLabel>Tempo (BPM)</FeatureLabel>
                   </div>
                   <div>
-                    <FeatureText>{track.popularity}</FeatureText>
+                    <FeatureText>{track.popularity}%</FeatureText>
                     <FeatureLabel>Popularity</FeatureLabel>
                   </div>
                 </Features>

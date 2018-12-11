@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from '@reach/router';
 import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../spotify';
 
+import { IconInfo } from './icons';
 import Loader from './Loader';
 
 import styled from 'styled-components/macro';
@@ -35,17 +37,47 @@ const ArtistsContainer = styled.div`
   margin-top: 50px;
 `;
 const Artist = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 `;
-const ArtistLink = styled.a`
-  position: relative;
+const Mask = styled.div`
+  ${mixins.flexCenter};
+  position: absolute;
   width: 100%;
-`;
-const ArtistImage = styled.img`
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   border-radius: 100%;
-  object-fit: cover;
+  font-size: 20px;
+  color: ${colors.white};
+  opacity: 0;
+  transition: ${theme.transition};
+  svg {
+    width: 25px;
+  }
+`;
+const ArtistArtwork = styled(Link)`
+  display: inline-block;
+  position: relative;
   width: 200px;
   height: 200px;
+  &:hover,
+  &:focus {
+    ${Mask} {
+      opacity: 1;
+    }
+  }
+  img {
+    border-radius: 100%;
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+  }
 `;
 const ArtistName = styled.a`
   margin: ${spacing.base} 0;
@@ -119,11 +151,14 @@ class TopArtists extends Component {
         </Header>
         <ArtistsContainer>
           {topArtists ? (
-            topArtists.items.map(({ external_urls, images, name }, i) => (
+            topArtists.items.map(({ id, external_urls, images, name }, i) => (
               <Artist key={i}>
-                <ArtistLink href={external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                  <ArtistImage src={images[1].url} alt="Artist Avatar" />
-                </ArtistLink>
+                <ArtistArtwork to={`/artist/${id}`}>
+                  {images.length && <img src={images[1].url} alt="Artist" />}
+                  <Mask>
+                    <IconInfo />
+                  </Mask>
+                </ArtistArtwork>
                 <ArtistName href={external_urls.spotify} target="_blank" rel="noopener noreferrer">
                   {name}
                 </ArtistName>

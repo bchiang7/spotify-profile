@@ -16,6 +16,7 @@ import { theme, mixins } from '../styles';
 const { colors, spacing } = theme;
 
 const Container = styled.nav`
+  ${mixins.coverShadow};
   ${mixins.flexBetween};
   flex-direction: column;
   min-height: 100vh;

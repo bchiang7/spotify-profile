@@ -96,7 +96,7 @@ class Playlist extends Component {
           <Section>
             <PlaylistContainer>
               <Left>
-                {playlist.images && (
+                {playlist.images.length && (
                   <PlaylistCover>
                     <img src={playlist.images[0].url} alt="Album Art" />
                   </PlaylistCover>

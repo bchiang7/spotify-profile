@@ -121,6 +121,42 @@ export const getTopTracksLong = () =>
   axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', { headers });
 
 /**
+ * Get an Artist
+ * https://developer.spotify.com/documentation/web-api/reference/artists/get-artist/
+ */
+export const getArtist = artistId =>
+  axios.get(`https://api.spotify.com/v1/artists/${artistId}`, { headers });
+
+/**
+ * Follow an Artist
+ * https://developer.spotify.com/documentation/web-api/reference/follow/follow-artists-users/
+ */
+export const followArtist = artistId => {
+  const url = `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`;
+  return axios({ method: 'put', url, headers });
+};
+
+/**
+ * Check if Current User Follows Artists
+ * https://developer.spotify.com/documentation/web-api/reference/follow/follow-artists-users/
+ */
+export const doesUserFollowArtist = artistId =>
+  axios.get(`https://api.spotify.com/v1/me/following/contains?type=artist&ids=${artistId}`, {
+    headers,
+  });
+
+/**
+ * Create a Playlist
+ * https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/
+ */
+export const createPlaylist = (userId, name) => {
+  // const params = {
+  //   name,
+  // };
+  // return axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, { headers, userId });
+};
+
+/**
  * Get a Playlist
  * https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlist/
  */
