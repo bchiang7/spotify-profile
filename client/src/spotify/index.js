@@ -150,10 +150,11 @@ export const doesUserFollowArtist = artistId =>
  * https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/
  */
 export const createPlaylist = (userId, name) => {
-  // const params = {
-  //   name,
-  // };
-  // return axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, { headers, userId });
+  const url = `https://api.spotify.com/v1/users/${userId}/playlists`;
+  const params = {
+    name,
+  };
+  return axios({ method: 'put', url, headers, params });
 };
 
 /**
