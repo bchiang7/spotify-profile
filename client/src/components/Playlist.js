@@ -89,6 +89,7 @@ class Playlist extends Component {
 
   render() {
     const { playlist, audioFeatures } = this.state;
+    // console.log(audioFeatures);
 
     return (
       <React.Fragment>
@@ -101,9 +102,11 @@ class Playlist extends Component {
                     <img src={playlist.images[0].url} alt="Album Art" />
                   </PlaylistCover>
                 )}
+
                 <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
                   <Name>{playlist.name}</Name>
                 </a>
+
                 <Owner>By {playlist.owner.display_name}</Owner>
 
                 {playlist.description && (

@@ -163,9 +163,17 @@ export const createPlaylist = (userId, name) => {
  * https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/
  */
 export const addTracksToPlaylist = (playlistId, uris) => {
-  const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
-  const data = JSON.stringify({ uris });
-  return axios({ method: 'post', url, headers, data });
+  const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${uris}`;
+  return axios({ method: 'post', url, headers });
+};
+
+/**
+ * Follow a Playlist
+ * https://developer.spotify.com/documentation/web-api/reference/follow/follow-playlist/
+ */
+export const followPlaylist = playlistId => {
+  const url = `https://api.spotify.com/v1/playlists/${playlistId}/followers`;
+  return axios({ method: 'put', url, headers });
 };
 
 /**

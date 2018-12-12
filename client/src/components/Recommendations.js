@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
-import { getPlaylist, getRecommendationsForTracks, getUser, createPlaylist } from '../spotify';
+import {
+  getPlaylist,
+  getRecommendationsForTracks,
+  getUser,
+  createPlaylist,
+  addTracksToPlaylist,
+  followPlaylist,
+} from '../spotify';
 
 import TrackItem from './TrackItem';
 
@@ -54,17 +61,28 @@ class Recommendations extends Component {
     }
   }
 
+  getTrackUris = recommendations => recommendations.tracks.map(({ uri }) => uri);
+
   createPlaylist = async () => {
-    const { playlist } = this.state;
+    const { playlist, recommendations } = this.state;
+    const uris = this.getTrackUris(recommendations).join(',');
 
     try {
       const { data } = await getUser();
       const userId = data.id;
-      const name = `Recommended Tracks Based On ${playlist.name}`;
+      const name = `Recommended Tracks Based on ${playlist.name}`;
 
       if (data) {
         const { data } = await createPlaylist(userId, name);
-        console.log(data);
+        const playlistId = data.id;
+
+        if (data) {
+          const { data } = await addTracksToPlaylist(playlistId, uris);
+
+          if (data) {
+            await followPlaylist(playlistId);
+          }
+        }
       }
     } catch (e) {
       console.error(e);
@@ -73,6 +91,7 @@ class Recommendations extends Component {
 
   render() {
     const { playlist, recommendations } = this.state;
+    // console.log(recommendations);
 
     return (
       <Section>
@@ -83,6 +102,7 @@ class Recommendations extends Component {
               <PlaylistLink to={`/playlist/${playlist.id}`}>{playlist.name}</PlaylistLink>
             </h2>
             <SaveButton onClick={this.createPlaylist}>Save Playlist to Spotify</SaveButton>
+            {/* Change save button to "open in spotify" button once created */}
           </PlaylistHeading>
         )}
         <TracksContainer>

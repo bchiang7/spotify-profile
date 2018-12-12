@@ -21,6 +21,8 @@ const PlaylistsContainer = styled.div`
   margin-top: 50px;
 `;
 const Playlist = styled.div`
+  display: flex;
+  flex-direction: column;
   text-align: center;
 `;
 const PlaylistMask = styled.div`
@@ -45,7 +47,7 @@ const PlaylistCover = styled(Link)`
   ${mixins.coverShadow};
   position: relative;
   width: 100%;
-  height: 100%;
+  margin-bottom: ${spacing.base};
   &:hover,
   &:focus {
     ${PlaylistMask} {
@@ -55,24 +57,34 @@ const PlaylistCover = styled(Link)`
 `;
 const PlaceholderArtwork = styled.div`
   ${mixins.flexCenter};
+  position: relative;
   width: 100%;
-  height: 100%;
+  padding-bottom: 100%;
+  background-color: ${colors.darkGrey};
   svg {
     width: 50px;
     height: 50px;
   }
 `;
-const PlaylistName = styled.span`
-  margin: ${spacing.base} 0 5px;
+const PlaceholderContent = styled.div`
+  ${mixins.flexCenter};
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`;
+const PlaylistName = styled(Link)`
+  display: inline;
   border-bottom: 1px solid transparent;
   &:hover,
   &:focus {
     border-bottom: 1px solid ${colors.white};
   }
 `;
-const PlaylistDetails = styled.div`
+const TotalTracks = styled.div`
   text-transform: uppercase;
-  margin-bottom: 5px;
+  margin: 5px 0;
   color: ${colors.lightGrey};
   font-size: ${fontSizes.xs};
   letter-spacing: 1px;
@@ -111,9 +123,11 @@ class Playlists extends Component {
                     {images.length ? (
                       <PlaylistImage src={images[0].url} alt="Album Art" />
                     ) : (
-                      // <img src="http://blindraccoon.com/wp-content/uploads/albumcover-placeholder.jpg" alt=""/>
+                      // <img src="./icons" alt=""/>
                       <PlaceholderArtwork>
-                        <IconMusic />
+                        <PlaceholderContent>
+                          <IconMusic />
+                        </PlaceholderContent>
                       </PlaceholderArtwork>
                     )}
                     <PlaylistMask>
@@ -121,10 +135,8 @@ class Playlists extends Component {
                     </PlaylistMask>
                   </PlaylistCover>
                   <div>
-                    <Link to={id}>
-                      <PlaylistName>{name}</PlaylistName>
-                    </Link>
-                    <PlaylistDetails>{tracks.total} Tracks</PlaylistDetails>
+                    <PlaylistName to={id}>{name}</PlaylistName>
+                    <TotalTracks>{tracks.total} Tracks</TotalTracks>
                   </div>
                 </Playlist>
               ))
