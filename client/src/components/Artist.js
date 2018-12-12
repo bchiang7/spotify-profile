@@ -39,8 +39,11 @@ const Stat = styled.div`
 const Number = styled.div`
   color: ${colors.blue};
   font-weight: 700;
-  font-size: ${fontSizes.md};
+  font-size: ${fontSizes.lg};
   text-transform: capitalize;
+`;
+const Genre = styled.div`
+  font-size: ${fontSizes.md};
 `;
 const NumLabel = styled.p`
   color: ${colors.lightGrey};
@@ -55,13 +58,15 @@ const FollowButton = styled.button`
   padding: 12px 50px;
   background-color: ${props => (props.isFollowing ? 'transparent' : colors.green)};
   border: 1px solid ${props => (props.isFollowing ? 'white' : 'transparent')};
+  pointer-events: ${props => (props.isFollowing ? 'none' : 'auto')};
+  cursor: ${props => (props.isFollowing ? 'default' : 'pointer')};
   &:hover,
   &:focus {
     background-color: ${props => (props.isFollowing ? 'transparent' : colors.offGreen)};
   }
 `;
 
-class ArtistInfo extends Component {
+class Artist extends Component {
   state = {
     artist: null,
     isFollowing: null,
@@ -87,7 +92,7 @@ class ArtistInfo extends Component {
     const { artistId } = this.props;
 
     try {
-      const { data } = await followArtist(artistId);
+      await followArtist(artistId);
       this.setState({ isFollowing: true });
     } catch (e) {
       console.error(e);
@@ -126,7 +131,7 @@ class ArtistInfo extends Component {
                   <Stat>
                     <Number>
                       {artist.genres.map(genre => (
-                        <div key={genre}>{genre}</div>
+                        <Genre key={genre}>{genre}</Genre>
                       ))}
                     </Number>
                     <NumLabel>Genres</NumLabel>
@@ -152,4 +157,4 @@ class ArtistInfo extends Component {
   }
 }
 
-export default ArtistInfo;
+export default Artist;

@@ -4,7 +4,7 @@ import { getUserInfo } from '../spotify';
 
 import { IconUser, IconInfo } from './icons';
 import Loader from './Loader';
-import Track from './Track';
+import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
@@ -259,7 +259,9 @@ class User extends Component {
                 </TracklistHeading>
                 <ul>
                   {topTracks ? (
-                    topTracks.items.slice(0, 10).map((track, i) => <Track track={track} key={i} />)
+                    topTracks.items
+                      .slice(0, 10)
+                      .map((track, i) => <TrackItem track={track} key={i} />)
                   ) : (
                     <Loader />
                   )}

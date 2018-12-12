@@ -64,7 +64,10 @@ export const token = getAccessToken();
 
 // API CALLS ***************************************************************************************
 
-const headers = { Authorization: `Bearer ${token}` };
+const headers = {
+  Authorization: `Bearer ${token}`,
+  'Content-Type': 'application/json',
+};
 
 /**
  * Get Current User's Profile
@@ -151,10 +154,18 @@ export const doesUserFollowArtist = artistId =>
  */
 export const createPlaylist = (userId, name) => {
   const url = `https://api.spotify.com/v1/users/${userId}/playlists`;
-  const params = {
-    name,
-  };
-  return axios({ method: 'put', url, headers, params });
+  const data = JSON.stringify({ name });
+  return axios({ method: 'post', url, headers, data });
+};
+
+/**
+ * Add Tracks to a Playlist
+ * https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/
+ */
+export const addTracksToPlaylist = (playlistId, uris) => {
+  const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+  const data = JSON.stringify({ uris });
+  return axios({ method: 'post', url, headers, data });
 };
 
 /**

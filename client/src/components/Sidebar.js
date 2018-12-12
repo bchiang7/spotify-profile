@@ -98,12 +98,6 @@ const Sidebar = () => (
         </NavLink>
       </MenuItem>
       <MenuItem>
-        <NavLink to="recent">
-          <IconTime />
-          <div>Recent</div>
-        </NavLink>
-      </MenuItem>
-      <MenuItem>
         <NavLink to="artists">
           <IconMicrophone />
           <div>Top Artists</div>
@@ -113,6 +107,12 @@ const Sidebar = () => (
         <NavLink to="tracks">
           <IconMusic />
           <div>Top Tracks</div>
+        </NavLink>
+      </MenuItem>
+      <MenuItem>
+        <NavLink to="recent">
+          <IconTime />
+          <div>Recent</div>
         </NavLink>
       </MenuItem>
       <MenuItem>

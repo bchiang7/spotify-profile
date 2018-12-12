@@ -3,7 +3,7 @@ import { Link } from '@reach/router';
 import { getPlaylist, getAudioFeaturesForTracks } from '../spotify';
 
 import Loader from './Loader';
-import Track from './Track';
+import TrackItem from './TrackItem';
 import FeatureChart from './FeatureChart';
 
 import styled from 'styled-components/macro';
@@ -121,7 +121,9 @@ class Playlist extends Component {
               <Right>
                 <ul>
                   {playlist.tracks &&
-                    playlist.tracks.items.map(({ track }, i) => <Track track={track} key={i} />)}
+                    playlist.tracks.items.map(({ track }, i) => (
+                      <TrackItem track={track} key={i} />
+                    ))}
                 </ul>
               </Right>
             </PlaylistContainer>

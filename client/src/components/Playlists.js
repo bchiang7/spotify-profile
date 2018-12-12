@@ -3,6 +3,7 @@ import { Link } from '@reach/router';
 import { getPlaylists } from '../spotify';
 
 import Loader from './Loader';
+import { IconMusic } from './icons';
 
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
@@ -43,11 +44,22 @@ const PlaylistImage = styled.img`
 const PlaylistCover = styled(Link)`
   ${mixins.coverShadow};
   position: relative;
+  width: 100%;
+  height: 100%;
   &:hover,
   &:focus {
     ${PlaylistMask} {
       opacity: 1;
     }
+  }
+`;
+const PlaceholderArtwork = styled.div`
+  ${mixins.flexCenter};
+  width: 100%;
+  height: 100%;
+  svg {
+    width: 50px;
+    height: 50px;
   }
 `;
 const PlaylistName = styled.span`
@@ -96,15 +108,24 @@ class Playlists extends Component {
               playlists.items.map(({ id, images, name, tracks }, i) => (
                 <Playlist key={i}>
                   <PlaylistCover to={id}>
-                    {images && <PlaylistImage src={images[0].url} alt="Album Art" />}
+                    {images.length ? (
+                      <PlaylistImage src={images[0].url} alt="Album Art" />
+                    ) : (
+                      // <img src="http://blindraccoon.com/wp-content/uploads/albumcover-placeholder.jpg" alt=""/>
+                      <PlaceholderArtwork>
+                        <IconMusic />
+                      </PlaceholderArtwork>
+                    )}
                     <PlaylistMask>
                       <i className="fas fa-info-circle" />
                     </PlaylistMask>
                   </PlaylistCover>
-                  <Link to={id}>
-                    <PlaylistName>{name}</PlaylistName>
-                  </Link>
-                  <PlaylistDetails>{tracks.total} Tracks</PlaylistDetails>
+                  <div>
+                    <Link to={id}>
+                      <PlaylistName>{name}</PlaylistName>
+                    </Link>
+                    <PlaylistDetails>{tracks.total} Tracks</PlaylistDetails>
+                  </div>
                 </Playlist>
               ))
             ) : (

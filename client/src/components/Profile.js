@@ -10,8 +10,8 @@ import TopTracks from './TopTracks';
 import Playlists from './Playlists';
 import Playlist from './Playlist';
 import Recommendations from './Recommendations';
-import TrackInfo from './TrackInfo';
-import ArtistInfo from './ArtistInfo';
+import Track from './Track';
+import Artist from './Artist';
 
 import styled from 'styled-components/macro';
 
@@ -32,8 +32,8 @@ const Profile = () => (
         <Playlists path="playlists" />
         <Playlist path="playlists/:playlistId" />
         <Recommendations path="recommendations/:playlistId" />
-        <TrackInfo path="track/:trackId" />
-        <ArtistInfo path="artist/:artistId" />
+        <Track path="track/:trackId" />
+        <Artist path="artist/:artistId" />
       </Router>
     </main>
 

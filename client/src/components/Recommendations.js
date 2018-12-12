@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
-import { getPlaylist, getRecommendationsForTracks, createPlaylist } from '../spotify';
+import { getPlaylist, getRecommendationsForTracks, getUser, createPlaylist } from '../spotify';
 
-import Track from './Track';
+import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
@@ -56,12 +56,16 @@ class Recommendations extends Component {
 
   createPlaylist = async () => {
     const { playlist } = this.state;
-    const name = `Recommended Tracks Based On ${playlist.name}`;
-    const userId = '';
 
     try {
-      const { data } = await createPlaylist(userId, name);
-      console.log(data);
+      const { data } = await getUser();
+      const userId = data.id;
+      const name = `Recommended Tracks Based On ${playlist.name}`;
+
+      if (data) {
+        const { data } = await createPlaylist(userId, name);
+        console.log(data);
+      }
     } catch (e) {
       console.error(e);
     }
@@ -83,7 +87,7 @@ class Recommendations extends Component {
         )}
         <TracksContainer>
           {recommendations &&
-            recommendations.tracks.map((track, i) => <Track track={track} key={i} />)}
+            recommendations.tracks.map((track, i) => <TrackItem track={track} key={i} />)}
         </TracksContainer>
       </Section>
     );

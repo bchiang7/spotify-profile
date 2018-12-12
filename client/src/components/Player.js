@@ -29,7 +29,7 @@ const CoverArt = styled.span`
   display: inline-block;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 `;
-const TrackInfo = styled.div`
+const NowPlayingInfo = styled.div`
   margin: 0 14px;
 `;
 const TrackTitle = styled.a`
@@ -154,10 +154,10 @@ const Player = () => (
           alt="Cover Art"
         />
       </CoverArt>
-      <TrackInfo>
+      <NowPlayingInfo>
         <TrackTitle href="#">Alejandro</TrackTitle>
         <ArtistName>Lady Gaga</ArtistName>
-      </TrackInfo>
+      </NowPlayingInfo>
     </PlayerLeft>
     <PlayerCenter>
       <PlayerControls>

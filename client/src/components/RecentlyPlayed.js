@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getRecentlyPlayed } from '../spotify';
 
 import Loader from './Loader';
-import Track from './Track';
+import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
 import { Section } from '../styles';
@@ -37,7 +37,7 @@ class RecentlyPlayed extends Component {
         <h2>Recently Played Tracks</h2>
         <TracksContainer>
           {recentlyPlayed ? (
-            recentlyPlayed.items.map(({ track }, i) => <Track track={track} key={i} />)
+            recentlyPlayed.items.map(({ track }, i) => <TrackItem track={track} key={i} />)
           ) : (
             <Loader />
           )}

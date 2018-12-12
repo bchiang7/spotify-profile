@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getTopTracksShort, getTopTracksMedium, getTopTracksLong } from '../spotify';
 
 import Loader from './Loader';
-import Track from './Track';
+import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
 import { theme, mixins, Section } from '../styles';
@@ -96,7 +96,7 @@ class TopTracks extends Component {
         </Header>
         <TracksContainer>
           {topTracks ? (
-            topTracks.items.map((track, i) => <Track track={track} key={i} />)
+            topTracks.items.map((track, i) => <TrackItem track={track} key={i} />)
           ) : (
             <Loader />
           )}
