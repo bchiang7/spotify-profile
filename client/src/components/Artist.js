@@ -93,7 +93,7 @@ class Artist extends Component {
 
     try {
       await followArtist(artistId);
-      this.setState({ isFollowing: true });
+      this.isFollowing();
     } catch (e) {
       console.error(e);
     }

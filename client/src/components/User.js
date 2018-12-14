@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
-import { getUserInfo } from '../spotify';
+import { getUserInfo, logout } from '../spotify';
 
 import { IconUser, IconInfo } from './icons';
 import Loader from './Loader';
@@ -213,7 +213,7 @@ class User extends Component {
                   </Stat>
                 )}
               </Stats>
-              <LogoutButton href="https://accounts.spotify.com">Logout</LogoutButton>
+              <LogoutButton onClick={logout}>Logout</LogoutButton>
             </Header>
 
             <Preview>

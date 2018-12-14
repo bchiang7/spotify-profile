@@ -62,6 +62,13 @@ export const getAccessToken = () => {
 
 export const token = getAccessToken();
 
+export const logout = () => {
+  window.localStorage.removeItem('spotify_token_timestamp');
+  window.localStorage.removeItem('spotify_access_token');
+  window.localStorage.removeItem('spotify_refresh_token');
+  window.location.reload();
+};
+
 // API CALLS ***************************************************************************************
 
 const headers = {
@@ -145,6 +152,15 @@ export const followArtist = artistId => {
  */
 export const doesUserFollowArtist = artistId =>
   axios.get(`https://api.spotify.com/v1/me/following/contains?type=artist&ids=${artistId}`, {
+    headers,
+  });
+
+/**
+ * Check if Users Follow a Playlist
+ * https://developer.spotify.com/documentation/web-api/reference/follow/follow-artists-users/
+ */
+export const doesUserFollowPlaylist = (playlistId, userId) =>
+  axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/followers/contains?ids=${userId}`, {
     headers,
   });
 
