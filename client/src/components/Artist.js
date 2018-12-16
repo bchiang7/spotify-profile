@@ -16,6 +16,7 @@ const ArtistContainer = styled(Section)`
 `;
 const Artwork = styled.div`
   ${mixins.coverShadow};
+  border-radius: 100%;
   img {
     object-fit: cover;
     border-radius: 100%;

@@ -30,11 +30,15 @@ const RangeButton = styled.button`
   color: ${props => (props.isActive ? colors.white : colors.lightGrey)};
   font-size: ${fontSizes.base};
   font-weight: 500;
-  padding: 11px;
+  padding: 10px;
+  ${media.phablet`
+    font-size: ${fontSizes.sm};
+  `};
   span {
     padding-bottom: 2px;
     border-bottom: 1px solid ${props => (props.isActive ? colors.white : `transparent`)};
     line-height: 1.5;
+    white-space: nowrap;
   }
 `;
 const TracksContainer = styled.ul`

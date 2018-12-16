@@ -31,20 +31,27 @@ const RangeButton = styled.button`
   color: ${props => (props.isActive ? colors.white : colors.lightGrey)};
   font-size: ${fontSizes.base};
   font-weight: 500;
-  padding: 11px;
+  padding: 10px;
+  ${media.phablet`
+    font-size: ${fontSizes.sm};
+  `};
   span {
     padding-bottom: 2px;
     border-bottom: 1px solid ${props => (props.isActive ? colors.white : `transparent`)};
     line-height: 1.5;
+    white-space: nowrap;
   }
 `;
 const ArtistsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 25px;
+  grid-gap: 20px;
   margin-top: 50px;
   ${media.tablet`
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  `};
+  ${media.phablet`
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   `};
 `;
 const Artist = styled.div`
@@ -81,6 +88,10 @@ const ArtistArtwork = styled(Link)`
     width: 150px;
     height: 150px;
   `};
+  ${media.phablet`
+    width: 120px;
+    height: 120px;
+  `};
   &:hover,
   &:focus {
     ${Mask} {
@@ -95,6 +106,10 @@ const ArtistArtwork = styled(Link)`
     ${media.tablet`
       width: 150px;
       height: 150px;
+    `};
+    ${media.phablet`
+      width: 120px;
+      height: 120px;
     `};
   }
 `;

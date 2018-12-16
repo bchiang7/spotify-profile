@@ -136,7 +136,6 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-
   img {
     width: 100%;
     max-width: 100%;

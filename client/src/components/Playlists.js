@@ -22,6 +22,9 @@ const PlaylistsContainer = styled.div`
   ${media.tablet`
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   `};
+  ${media.phablet`
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  `};
 `;
 const Playlist = styled.div`
   display: flex;

@@ -33,13 +33,9 @@ const Container = styled.nav`
     right: 0;
     width: 100%;
     min-height: 70px;
-    max-height: 70px;
+    height: 70px;
     flex-direction: row;
   `};
-  a {
-    display: block;
-    padding: ${spacing.sm};
-  }
   & > * {
     width: 100%;
     ${media.tablet`
@@ -49,8 +45,9 @@ const Container = styled.nav`
 `;
 const Logo = styled.div`
   color: ${colors.green};
-  margin-top: 20px;
+  margin-top: 30px;
   width: 70px;
+  height: 70px;
   transition: ${theme.transition};
   ${media.tablet`
     display: none;
@@ -59,10 +56,14 @@ const Logo = styled.div`
   &:focus {
     color: ${colors.offGreen};
   }
+  svg {
+    width: 50px;
+  }
 `;
 const Github = styled.div`
   color: ${colors.lightGrey};
   width: 45px;
+  height: 45px;
   margin-bottom: 30px;
   ${media.tablet`
     display: none;
@@ -72,6 +73,9 @@ const Github = styled.div`
     &:focus,
     &.active {
       color: ${colors.blue};
+    }
+    svg {
+      width: 30px;
     }
   }
 `;
@@ -92,11 +96,15 @@ const MenuItem = styled.li`
     flex-grow: 1;
   `};
   a {
-    padding: 15px;
+    display: block;
+    padding: 15px 0;
     border-left: 5px solid transparent;
+    width: 100%;
+    height: 100%;
     ${media.tablet`
-      padding: 10px;
-      height: 100%;
+      ${mixins.flexCenter};
+      flex-direction: column;
+      padding: 0;
       border-left: 0;
       border-bottom: 3px solid transparent;
     `};
@@ -114,6 +122,7 @@ const MenuItem = styled.li`
   }
   svg {
     width: 20px;
+    height: 20px;
     margin-bottom: 8px;
   }
 `;
