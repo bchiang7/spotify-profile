@@ -5,18 +5,25 @@ import Loader from './Loader';
 import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../styles';
+import { theme, mixins, media, Section } from '../styles';
 const { colors, fontSizes } = theme;
 
 const Header = styled.header`
   ${mixins.flexBetween};
+  ${media.tablet`
+    display: block;
+  `};
   h2 {
-    margin-bottom: 0;
+    margin: 0;
   }
 `;
 const Ranges = styled.div`
   display: flex;
   margin-right: -11px;
+  ${media.tablet`
+    justify-content: center;
+    margin: 30px 0 0;
+  `};
 `;
 const RangeButton = styled.button`
   background-color: transparent;

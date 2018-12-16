@@ -40,6 +40,7 @@ const Title = styled.h1`
 const ArtistName = styled.h2`
   color: ${colors.lightestGrey};
   font-weight: 700;
+  text-align: left !important;
 `;
 const Album = styled.h3`
   color: ${colors.lightGrey};
@@ -51,11 +52,15 @@ const AudioFeatures = styled.div`
   flex-direction: column;
 `;
 const Features = styled.div`
-  ${mixins.flexBetween};
-  justify-content: space-around;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   width: 100%;
   margin-bottom: 50px;
   text-align: center;
+`;
+const Feature = styled.div`
+  margin: 20px;
 `;
 const FeatureText = styled.h4`
   color: ${colors.lightestGrey};
@@ -148,30 +153,30 @@ class Track extends Component {
             {audioFeatures && (
               <AudioFeatures>
                 <Features>
-                  <div>
+                  <Feature>
                     <FeatureText>{formatDuration(audioFeatures.duration_ms)}</FeatureText>
                     <FeatureLabel>Duration</FeatureLabel>
-                  </div>
-                  <div>
+                  </Feature>
+                  <Feature>
                     <FeatureText>{parsePitchClass(audioFeatures.key)}</FeatureText>
                     <FeatureLabel>Key</FeatureLabel>
-                  </div>
-                  <div>
+                  </Feature>
+                  <Feature>
                     <FeatureText>{audioFeatures.mode === 1 ? 'Major' : 'Minor'}</FeatureText>
                     <FeatureLabel>Modality</FeatureLabel>
-                  </div>
-                  <div>
+                  </Feature>
+                  <Feature>
                     <FeatureText>{audioFeatures.time_signature}</FeatureText>
                     <FeatureLabel>Time Signature</FeatureLabel>
-                  </div>
-                  <div>
+                  </Feature>
+                  <Feature>
                     <FeatureText>{Math.round(audioFeatures.tempo)}</FeatureText>
                     <FeatureLabel>Tempo (BPM)</FeatureLabel>
-                  </div>
-                  <div>
+                  </Feature>
+                  <Feature>
                     <FeatureText>{track.popularity}%</FeatureText>
                     <FeatureLabel>Popularity</FeatureLabel>
-                  </div>
+                  </Feature>
                 </Features>
 
                 <FeatureChart features={audioFeatures} type="" />

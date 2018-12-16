@@ -13,11 +13,15 @@ import {
 import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../styles';
+import { theme, mixins, media, Section } from '../styles';
 const { colors } = theme;
 
 const PlaylistHeading = styled.div`
   ${mixins.flexBetween};
+  ${media.tablet`
+    flex-direction: column;
+
+  `};
   h2 {
     margin-bottom: 0;
   }

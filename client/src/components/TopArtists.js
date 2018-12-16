@@ -6,11 +6,14 @@ import { IconInfo } from './icons';
 import Loader from './Loader';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../styles';
+import { theme, mixins, media, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
 const Header = styled.header`
   ${mixins.flexBetween};
+  ${media.tablet`
+    display: block;
+  `};
   h2 {
     margin: 0;
   }
@@ -18,6 +21,10 @@ const Header = styled.header`
 const Ranges = styled.div`
   display: flex;
   margin-right: -11px;
+  ${media.tablet`
+    justify-content: center;
+    margin: 30px 0 0;
+  `};
 `;
 const RangeButton = styled.button`
   background-color: transparent;
@@ -35,6 +42,9 @@ const ArtistsContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 25px;
   margin-top: 50px;
+  ${media.tablet`
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  `};
 `;
 const Artist = styled.div`
   display: flex;
@@ -66,6 +76,10 @@ const ArtistArtwork = styled(Link)`
   position: relative;
   width: 200px;
   height: 200px;
+  ${media.tablet`
+    width: 150px;
+    height: 150px;
+  `};
   &:hover,
   &:focus {
     ${Mask} {
@@ -77,6 +91,10 @@ const ArtistArtwork = styled(Link)`
     object-fit: cover;
     width: 200px;
     height: 200px;
+    ${media.tablet`
+      width: 150px;
+      height: 150px;
+    `};
   }
 `;
 const ArtistName = styled.a`

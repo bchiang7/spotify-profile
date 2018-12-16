@@ -6,7 +6,7 @@ import Loader from './Loader';
 import { IconMusic } from './icons';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../styles';
+import { theme, mixins, media, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
 const Wrapper = styled.div`
@@ -19,6 +19,9 @@ const PlaylistsContainer = styled.div`
   grid-gap: ${spacing.md};
   width: 100%;
   margin-top: 50px;
+  ${media.tablet`
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  `};
 `;
 const Playlist = styled.div`
   display: flex;

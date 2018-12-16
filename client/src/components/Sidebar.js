@@ -12,7 +12,7 @@ import {
 } from './icons';
 
 import styled from 'styled-components/macro';
-import { theme, mixins } from '../styles';
+import { theme, mixins, media } from '../styles';
 const { colors, spacing } = theme;
 
 const Container = styled.nav`
@@ -27,12 +27,24 @@ const Container = styled.nav`
   background-color: ${colors.sidebarBlack};
   text-align: center;
   z-index: 99;
+  ${media.tablet`
+    top: auto;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    min-height: 70px;
+    max-height: 70px;
+    flex-direction: row;
+  `};
   a {
     display: block;
     padding: ${spacing.sm};
   }
   & > * {
     width: 100%;
+    ${media.tablet`
+      height: 100%;
+    `};
   }
 `;
 const Logo = styled.div`
@@ -40,42 +52,69 @@ const Logo = styled.div`
   margin-top: 20px;
   width: 70px;
   transition: ${theme.transition};
+  ${media.tablet`
+    display: none;
+  `};
   &:hover,
   &:focus {
     color: ${colors.offGreen};
   }
 `;
-const MenuItem = styled.li`
-  width: 100%;
-  color: ${colors.lightGrey};
-  font-size: 11px;
-  a {
-    padding: 15px;
-    border-left: 5px solid transparent;
-    &:hover,
-    &:focus,
-    &.active {
-      color: ${colors.white};
-      background-color: ${colors.black};
-      border-left: 5px solid ${colors.offGreen};
-    }
-  }
-  svg {
-    width: 25px;
-    margin-bottom: 8px;
-  }
-`;
-
 const Github = styled.div`
   color: ${colors.lightGrey};
   width: 45px;
   margin-bottom: 30px;
+  ${media.tablet`
+    display: none;
+  `};
   a {
     &:hover,
     &:focus,
     &.active {
       color: ${colors.blue};
     }
+  }
+`;
+const Menu = styled.ul`
+  display: flex;
+  flex-direction: column;
+  ${media.tablet`
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+  `};
+`;
+const MenuItem = styled.li`
+  color: ${colors.lightGrey};
+  font-size: 11px;
+  ${media.tablet`
+    height: 100%;
+    flex-grow: 1;
+  `};
+  a {
+    padding: 15px;
+    border-left: 5px solid transparent;
+    ${media.tablet`
+      padding: 10px;
+      height: 100%;
+      border-left: 0;
+      border-bottom: 3px solid transparent;
+    `};
+    &:hover,
+    &:focus,
+    &.active {
+      color: ${colors.white};
+      background-color: ${colors.black};
+      border-left: 5px solid ${colors.offGreen};
+      ${media.tablet`
+        border-left: 0;
+        border-bottom: 3px solid ${colors.offGreen};
+      `};
+    }
+  }
+  svg {
+    width: 20px;
+    margin-bottom: 8px;
   }
 `;
 
@@ -90,7 +129,7 @@ const Sidebar = () => (
         <IconSpotify />
       </Link>
     </Logo>
-    <ul>
+    <Menu>
       <MenuItem>
         <NavLink to="/">
           <IconUser />
@@ -121,7 +160,7 @@ const Sidebar = () => (
           <div>Playlists</div>
         </NavLink>
       </MenuItem>
-    </ul>
+    </Menu>
     <Github>
       <a
         href="https://github.com/bchiang7/spotify-profile"

@@ -2,7 +2,6 @@ import React from 'react';
 import { Router } from '@reach/router';
 
 import Sidebar from './Sidebar';
-// import Player from './Player';
 import User from './User';
 import RecentlyPlayed from './RecentlyPlayed';
 import TopArtists from './TopArtists';
@@ -14,9 +13,16 @@ import Track from './Track';
 import Artist from './Artist';
 
 import styled from 'styled-components/macro';
+import { media } from '../styles';
 
 const Container = styled.div`
   padding: 0 100px 0 200px;
+  ${media.tablet`
+    padding: 50px;
+  `};
+  ${media.phablet`
+    padding: 20px;
+  `};
 `;
 
 const Profile = () => (

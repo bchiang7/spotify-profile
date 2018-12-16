@@ -7,26 +7,39 @@ import TrackItem from './TrackItem';
 import FeatureChart from './FeatureChart';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../styles';
+import { theme, mixins, media, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
 const PlaylistContainer = styled.div`
   display: flex;
+  ${media.tablet`
+    display: block;
+  `};
 `;
 const Left = styled.div`
   width: 30%;
   text-align: center;
   min-width: 200px;
+  ${media.tablet`
+    width: 100%;
+    min-width: auto;
+  `};
 `;
 const Right = styled.div`
   flex-grow: 1;
   margin-left: 50px;
+  ${media.tablet`
+    margin: 0;
+  `};
 `;
 const PlaylistCover = styled.div`
   ${mixins.coverShadow};
   width: 100%;
   max-width: 300px;
   margin: 0 auto;
+  ${media.tablet`
+    display: none;
+  `};
 `;
 const Name = styled.h3`
   font-weight: 700;
