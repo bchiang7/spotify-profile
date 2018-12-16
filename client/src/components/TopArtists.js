@@ -33,8 +33,9 @@ const RangeButton = styled.button`
   font-weight: 500;
   padding: 11px;
   span {
-    padding-bottom: 3px;
+    padding-bottom: 2px;
     border-bottom: 1px solid ${props => (props.isActive ? colors.white : `transparent`)};
+    line-height: 1.5;
   }
 `;
 const ArtistsContainer = styled.div`

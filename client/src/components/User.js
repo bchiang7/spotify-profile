@@ -7,7 +7,7 @@ import Loader from './Loader';
 import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../styles';
+import { theme, mixins, media, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
 const Header = styled.header`
@@ -35,16 +35,21 @@ const Name = styled.h1`
   font-size: 50px;
   font-weight: 700;
   margin: 20px 0 0;
+  ${media.tablet`
+    font-size: 40px;
+  `};
+  ${media.phablet`
+    font-size: 8vw;
+  `};
 `;
 const Stats = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 30px;
   margin-top: ${spacing.base};
   text-align: center;
 `;
-const Stat = styled.div`
-  margin: 0 ${spacing.base};
-`;
+const Stat = styled.div``;
 const Number = styled.div`
   color: ${colors.green};
   font-weight: 700;
@@ -81,8 +86,18 @@ const Preview = styled.div`
   grid-gap: 70px;
   width: 100%;
   margin-top: 100px;
+  ${media.tablet`
+    display: block;
+    margin-top: 70px;
+  `};
 `;
-const Tracklist = styled.div``;
+const Tracklist = styled.div`
+  ${media.tablet`
+    &:last-of-type {
+      margin-top: 50px;
+    }
+  `};
+`;
 const TracklistHeading = styled.div`
   ${mixins.flexBetween};
   margin-bottom: 40px;

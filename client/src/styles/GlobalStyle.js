@@ -128,10 +128,6 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 
-  span {
-    display: inline-block;
-  }
-
   a {
     display: inline-block;
     text-decoration: none;
@@ -156,6 +152,7 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 0;
     outline: 0;
     &::placeholder {
+      opacity: 0.7;
     }
     &:focus,
     &:active {
@@ -173,7 +170,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 700;
     border-radius: 50px;
     border: 0;
-    padding: 11px 24px;
+    padding: 10px 20px;
     cursor: pointer;
     transition: ${theme.transition};
 

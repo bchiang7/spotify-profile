@@ -6,29 +6,35 @@ import Loader from './Loader';
 import FeatureChart from './FeatureChart';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../styles';
+import { theme, mixins, media, Section } from '../styles';
 const { colors, fontSizes } = theme;
 
 const TrackContainer = styled.div`
   display: flex;
   margin-bottom: 70px;
-
-  a {
-    border-bottom: 1px solid transparent;
-    &:hover,
-    &:focus {
-      color: ${colors.white};
-      border-bottom: 1px solid ${colors.white};
-    }
-  }
+  ${media.phablet`
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  `};
 `;
 const Artwork = styled.div`
   ${mixins.coverShadow};
   max-width: 250px;
   margin-right: 40px;
+  ${media.tablet`
+    max-width: 200px;
+  `};
+  ${media.phablet`
+    margin: 0 auto;
+  `};
 `;
 const Info = styled.div`
   flex-grow: 1;
+  ${media.phablet`
+    text-align: center;
+    margin-top: 30px;
+  `};
 `;
 const PlayTrackButton = styled.a`
   ${mixins.greenButton};
@@ -36,11 +42,20 @@ const PlayTrackButton = styled.a`
 const Title = styled.h1`
   font-size: 42px;
   margin: 0 0 5px;
+  ${media.tablet`
+    font-size: 30px;
+  `};
 `;
 const ArtistName = styled.h2`
   color: ${colors.lightestGrey};
   font-weight: 700;
   text-align: left !important;
+  ${media.tablet`
+    font-size: 20px;
+  `};
+  ${media.phablet`
+    text-align: center !important;
+  `};
 `;
 const Album = styled.h3`
   color: ${colors.lightGrey};
@@ -52,21 +67,22 @@ const AudioFeatures = styled.div`
   flex-direction: column;
 `;
 const Features = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   width: 100%;
   margin-bottom: 50px;
   text-align: center;
 `;
-const Feature = styled.div`
-  margin: 20px;
-`;
+const Feature = styled.div``;
 const FeatureText = styled.h4`
   color: ${colors.lightestGrey};
   font-size: 36px;
   font-weight: 700;
   margin-bottom: 0;
+  ${media.phablet`
+    font-size: 28px;
+  `};
 `;
 const FeatureLabel = styled.p`
   color: ${colors.lightestGrey};
@@ -75,7 +91,7 @@ const FeatureLabel = styled.p`
 `;
 const DescriptionLink = styled.a`
   color: ${colors.lightestGrey};
-  margin: 30px auto 0;
+  margin: 20px auto 0;
   border-bottom: 1px solid transparent;
   &:hover,
   &:focus {
@@ -108,7 +124,7 @@ class Track extends Component {
 
   render() {
     const { track, audioAnalysis, audioFeatures } = this.state;
-    console.log(track, audioAnalysis);
+    // console.log(track, audioAnalysis);
 
     return (
       <React.Fragment>

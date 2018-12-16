@@ -5,7 +5,7 @@ import { getArtist, followArtist, doesUserFollowArtist } from '../spotify';
 import Loader from './Loader';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../styles';
+import { theme, mixins, media, Section } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
 const ArtistContainer = styled(Section)`
@@ -18,29 +18,38 @@ const Artwork = styled.div`
   ${mixins.coverShadow};
   img {
     object-fit: cover;
+    border-radius: 100%;
     width: 300px;
     height: 300px;
-    border-radius: 100%;
+    ${media.tablet`
+      width: 200px;
+      height: 200px;
+    `};
   }
 `;
 const ArtistName = styled.h1`
   font-size: 70px;
   margin-top: ${spacing.md};
+  ${media.tablet`
+    font-size: 7vw;
+  `};
 `;
 const Stats = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
   margin-top: ${spacing.md};
   text-align: center;
 `;
-const Stat = styled.div`
-  margin: 0 ${spacing.base};
-`;
+const Stat = styled.div``;
 const Number = styled.div`
   color: ${colors.blue};
   font-weight: 700;
   font-size: ${fontSizes.lg};
   text-transform: capitalize;
+  ${media.tablet`
+    font-size: ${fontSizes.md};
+  `};
 `;
 const Genre = styled.div`
   font-size: ${fontSizes.md};

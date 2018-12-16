@@ -29,7 +29,7 @@ const Right = styled.div`
   flex-grow: 1;
   margin-left: 50px;
   ${media.tablet`
-    margin: 0;
+    margin: 50px 0 0;
   `};
 `;
 const PlaylistCover = styled.div`

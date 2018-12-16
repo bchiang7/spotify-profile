@@ -18,10 +18,10 @@ import { media } from '../styles';
 const Container = styled.div`
   padding: 0 100px 0 200px;
   ${media.tablet`
-    padding: 50px;
+    padding: 50px 50px 90px;
   `};
   ${media.phablet`
-    padding: 20px;
+    padding: 40px 20px 90px;
   `};
 `;
 
