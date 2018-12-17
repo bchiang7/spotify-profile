@@ -68,20 +68,28 @@ const AudioFeatures = styled.div`
 `;
 const Features = styled.div`
   display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
   width: 100%;
   margin-bottom: 50px;
   text-align: center;
+  ${media.thone`
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+  `};
+  ${media.phablet`
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  `};
 `;
-const Feature = styled.div``;
+const Feature = styled.div`
+  border: 1px solid ${colors.grey};
+  padding: 15px 10px;
+`;
 const FeatureText = styled.h4`
   color: ${colors.lightestGrey};
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 700;
   margin-bottom: 0;
-  ${media.phablet`
-    font-size: 28px;
+  ${media.tablet`
+    font-size: 24px;
   `};
 `;
 const FeatureLabel = styled.p`
@@ -124,7 +132,6 @@ class Track extends Component {
 
   render() {
     const { track, audioAnalysis, audioFeatures } = this.state;
-    console.log(audioAnalysis);
 
     return (
       <React.Fragment>
@@ -166,7 +173,7 @@ class Track extends Component {
               </Info>
             </TrackContainer>
 
-            {audioFeatures && (
+            {audioFeatures && audioAnalysis && (
               <AudioFeatures>
                 <Features>
                   <Feature>
@@ -192,6 +199,22 @@ class Track extends Component {
                   <Feature>
                     <FeatureText>{track.popularity}%</FeatureText>
                     <FeatureLabel>Popularity</FeatureLabel>
+                  </Feature>
+                  <Feature>
+                    <FeatureText>{audioAnalysis.bars.length}</FeatureText>
+                    <FeatureLabel>Bars</FeatureLabel>
+                  </Feature>
+                  <Feature>
+                    <FeatureText>{audioAnalysis.beats.length}</FeatureText>
+                    <FeatureLabel>Beats</FeatureLabel>
+                  </Feature>
+                  <Feature>
+                    <FeatureText>{audioAnalysis.sections.length}</FeatureText>
+                    <FeatureLabel>Sections</FeatureLabel>
+                  </Feature>
+                  <Feature>
+                    <FeatureText>{audioAnalysis.segments.length}</FeatureText>
+                    <FeatureLabel>Segments</FeatureLabel>
                   </Feature>
                 </Features>
 

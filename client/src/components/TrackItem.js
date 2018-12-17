@@ -13,7 +13,7 @@ const TrackLeft = styled.span`
   ${mixins.overflowEllipsis};
 `;
 const TrackRight = styled.span``;
-const TrackArtwork = styled(Link)`
+const TrackArtwork = styled.div`
   display: inline-block;
   position: relative;
   width: 50px;
@@ -41,6 +41,7 @@ const Mask = styled.div`
 const TrackContainer = styled(Link)`
   display: grid;
   grid-template-columns: auto 1fr;
+  align-items: center;
   margin-bottom: ${spacing.md};
   &:hover,
   &:focus {
@@ -54,7 +55,7 @@ const TrackMeta = styled.div`
   grid-template-columns: 1fr max-content;
   grid-gap: 10px;
 `;
-const TrackName = styled.a`
+const TrackName = styled.span`
   margin-bottom: 5px;
   border-bottom: 1px solid transparent;
   &:hover,
@@ -66,6 +67,7 @@ const TrackAlbum = styled.div`
   ${mixins.overflowEllipsis};
   color: ${colors.lightGrey};
   font-size: ${fontSizes.sm};
+  margin-top: 3px;
 `;
 const TrackDuration = styled.span`
   color: ${colors.lightGrey};
@@ -76,7 +78,7 @@ const TrackItem = ({ track }) => (
   <li>
     <TrackContainer to={`/track/${track.id}`}>
       <div>
-        <TrackArtwork to={`/track/${track.id}`}>
+        <TrackArtwork>
           {track.album.images.length && <img src={track.album.images[2].url} alt="Album Artwork" />}
           <Mask>
             <IconInfo />
@@ -85,18 +87,16 @@ const TrackItem = ({ track }) => (
       </div>
       <TrackMeta>
         <TrackLeft>
-          {track.name && track.external_urls && <TrackName>{track.name}</TrackName>}
+          {track.name && <TrackName>{track.name}</TrackName>}
           {track.artists && track.album && (
             <TrackAlbum>
               {track.artists &&
-                track.artists.map(({ name }, i) => {
-                  return (
-                    <span key={i}>
-                      {name}
-                      {track.artists.length > 0 && i === track.artists.length - 1 ? '' : ','}&nbsp;
-                    </span>
-                  );
-                })}
+                track.artists.map(({ name }, i) => (
+                  <span key={i}>
+                    {name}
+                    {track.artists.length > 0 && i === track.artists.length - 1 ? '' : ','}&nbsp;
+                  </span>
+                ))}
               &nbsp;&middot;&nbsp;&nbsp;
               {track.album.name}
             </TrackAlbum>
