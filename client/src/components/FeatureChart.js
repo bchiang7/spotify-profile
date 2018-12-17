@@ -147,7 +147,7 @@ class FeatureChart extends Component {
   render() {
     return (
       <Container>
-        <canvas id="chart" />
+        <canvas id="chart" width="400" height="300" />
       </Container>
     );
   }

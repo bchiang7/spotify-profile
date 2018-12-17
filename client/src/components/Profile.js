@@ -19,6 +19,7 @@ const SiteWrapper = styled.div`
   padding-left: ${theme.navWidth};
   ${media.tablet`
     padding-left: 0;
+    padding-bottom: 50px;
   `};
 `;
 

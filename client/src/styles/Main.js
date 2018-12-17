@@ -7,12 +7,20 @@ const Main = styled.main`
   max-width: 1400px;
   min-height: 100vh;
   padding: 100px 80px;
+  ${media.desktop`
+    padding: 90px 50px;
+  `};
   ${media.tablet`
     padding: 70px 50px;
   `};
   ${media.phablet`
     padding: 40px 20px;
   `};
+  h2 {
+    ${media.tablet`
+      text-align: center;
+    `};
+  }
 `;
 
 export default Main;

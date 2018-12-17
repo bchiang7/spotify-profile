@@ -23,7 +23,7 @@ const Container = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  width: ${theme.NavWidth};
+  width: ${theme.navWidth};
   background-color: ${colors.navBlack};
   text-align: center;
   z-index: 99;

@@ -72,6 +72,8 @@ const Features = styled.div`
   width: 100%;
   margin-bottom: 50px;
   text-align: center;
+  border-top: 1px solid ${colors.grey};
+  border-left: 1px solid ${colors.grey};
   ${media.thone`
     grid-template-columns: repeat(2, minmax(100px, 1fr));
   `};
@@ -80,8 +82,9 @@ const Features = styled.div`
   `};
 `;
 const Feature = styled.div`
-  border: 1px solid ${colors.grey};
   padding: 15px 10px;
+  border-bottom: 1px solid ${colors.grey};
+  border-right: 1px solid ${colors.grey};
 `;
 const FeatureText = styled.h4`
   color: ${colors.lightestGrey};
@@ -210,7 +213,7 @@ class Track extends Component {
                   </Feature>
                   <Feature>
                     <FeatureText>{audioAnalysis.sections.length}</FeatureText>
-                    <FeatureLabel>Mains</FeatureLabel>
+                    <FeatureLabel>Sections</FeatureLabel>
                   </Feature>
                   <Feature>
                     <FeatureText>{audioAnalysis.segments.length}</FeatureText>

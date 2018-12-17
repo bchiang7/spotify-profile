@@ -16,8 +16,8 @@ const Header = styled.header`
   position: relative;
 `;
 const Avatar = styled.div`
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   img {
     border-radius: 100%;
   }
@@ -112,6 +112,11 @@ const TracklistHeading = styled.div`
 const MoreButton = styled(Link)`
   ${mixins.button};
   text-align: center;
+  white-space: nowrap;
+  ${media.phablet`
+    padding: 11px 20px;
+    font-sizes: ${fontSizes.xs};
+  `};
 `;
 const Mask = styled.div`
   ${mixins.flexCenter};
@@ -123,7 +128,6 @@ const Mask = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  font-size: 20px;
   color: ${colors.white};
   opacity: 0;
   transition: ${theme.transition};
@@ -135,6 +139,9 @@ const Artist = styled.li`
   display: flex;
   align-items: center;
   margin-bottom: ${spacing.md};
+  ${media.tablet`
+    margin-bottom: ${spacing.base};
+  `};
   &:hover,
   &:focus {
     ${Mask} {

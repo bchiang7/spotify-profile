@@ -6,7 +6,7 @@ import { formatDuration } from '../utils';
 import { IconInfo } from './icons';
 
 import styled from 'styled-components/macro';
-import { theme, mixins } from '../styles';
+import { theme, mixins, media } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
 const TrackLeft = styled.span`
@@ -30,7 +30,6 @@ const Mask = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  font-size: 20px;
   color: ${colors.white};
   opacity: 0;
   transition: ${theme.transition};
@@ -43,6 +42,9 @@ const TrackContainer = styled(Link)`
   grid-template-columns: auto 1fr;
   align-items: center;
   margin-bottom: ${spacing.md};
+  ${media.tablet`
+    margin-bottom: ${spacing.base};
+  `};
   &:hover,
   &:focus {
     ${Mask} {
