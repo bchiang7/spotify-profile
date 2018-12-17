@@ -38,7 +38,7 @@ const Mask = styled.div`
     width: 25px;
   }
 `;
-const TrackContainer = styled.li`
+const TrackContainer = styled(Link)`
   display: grid;
   grid-template-columns: auto 1fr;
   margin-bottom: ${spacing.md};
@@ -73,43 +73,41 @@ const TrackDuration = styled.span`
 `;
 
 const TrackItem = ({ track }) => (
-  <TrackContainer>
-    <div>
-      <TrackArtwork to={`/track/${track.id}`}>
-        {track.album.images.length && <img src={track.album.images[2].url} alt="Album Artwork" />}
-        <Mask>
-          <IconInfo />
-        </Mask>
-      </TrackArtwork>
-    </div>
-    <TrackMeta>
-      <TrackLeft>
-        {track.name && track.external_urls && (
-          <TrackName href={track.external_urls.spotify} target="_blank">
-            {track.name}
-          </TrackName>
-        )}
-        {track.artists && track.album && (
-          <TrackAlbum>
-            {track.artists &&
-              track.artists.map(({ name }, i) => {
-                return (
-                  <span key={i}>
-                    {name}
-                    {track.artists.length > 0 && i === track.artists.length - 1 ? '' : ','}&nbsp;
-                  </span>
-                );
-              })}
-            &nbsp;&middot;&nbsp;&nbsp;
-            {track.album.name}
-          </TrackAlbum>
-        )}
-      </TrackLeft>
-      <TrackRight>
-        {track.duration_ms && <TrackDuration>{formatDuration(track.duration_ms)}</TrackDuration>}
-      </TrackRight>
-    </TrackMeta>
-  </TrackContainer>
+  <li>
+    <TrackContainer to={`/track/${track.id}`}>
+      <div>
+        <TrackArtwork to={`/track/${track.id}`}>
+          {track.album.images.length && <img src={track.album.images[2].url} alt="Album Artwork" />}
+          <Mask>
+            <IconInfo />
+          </Mask>
+        </TrackArtwork>
+      </div>
+      <TrackMeta>
+        <TrackLeft>
+          {track.name && track.external_urls && <TrackName>{track.name}</TrackName>}
+          {track.artists && track.album && (
+            <TrackAlbum>
+              {track.artists &&
+                track.artists.map(({ name }, i) => {
+                  return (
+                    <span key={i}>
+                      {name}
+                      {track.artists.length > 0 && i === track.artists.length - 1 ? '' : ','}&nbsp;
+                    </span>
+                  );
+                })}
+              &nbsp;&middot;&nbsp;&nbsp;
+              {track.album.name}
+            </TrackAlbum>
+          )}
+        </TrackLeft>
+        <TrackRight>
+          {track.duration_ms && <TrackDuration>{formatDuration(track.duration_ms)}</TrackDuration>}
+        </TrackRight>
+      </TrackMeta>
+    </TrackContainer>
+  </li>
 );
 
 TrackItem.propTypes = {

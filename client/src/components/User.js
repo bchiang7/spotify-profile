@@ -154,9 +154,9 @@ const ArtistArtwork = styled(Link)`
   }
 `;
 
-const ArtistName = styled.span`
+const ArtistName = styled(Link)`
   flex-grow: 1;
-  a {
+  span {
     border-bottom: 1px solid transparent;
     &:hover,
     &:focus {
@@ -250,13 +250,8 @@ class User extends Component {
                               <IconInfo />
                             </Mask>
                           </ArtistArtwork>
-                          <ArtistName>
-                            <a
-                              href={artist.external_urls.spotify}
-                              target="_blank"
-                              rel="noopener noreferrer">
-                              {artist.name}
-                            </a>
+                          <ArtistName to={`/artist/${artist.id}`}>
+                            <span>{artist.name}</span>
                           </ArtistName>
                         </Artist>
                       ))}

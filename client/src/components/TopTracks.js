@@ -21,7 +21,7 @@ const Ranges = styled.div`
   display: flex;
   margin-right: -11px;
   ${media.tablet`
-    justify-content: center;
+    justify-content: space-around;
     margin: 30px 0 0;
   `};
 `;

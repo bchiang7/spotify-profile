@@ -124,7 +124,7 @@ class Track extends Component {
 
   render() {
     const { track, audioAnalysis, audioFeatures } = this.state;
-    // console.log(track, audioAnalysis);
+    console.log(audioAnalysis);
 
     return (
       <React.Fragment>

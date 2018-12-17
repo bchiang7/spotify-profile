@@ -13,7 +13,7 @@ import {
 
 import styled from 'styled-components/macro';
 import { theme, mixins, media } from '../styles';
-const { colors, spacing } = theme;
+const { colors } = theme;
 
 const Container = styled.nav`
   ${mixins.coverShadow};
