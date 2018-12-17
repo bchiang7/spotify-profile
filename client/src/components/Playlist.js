@@ -7,7 +7,7 @@ import TrackItem from './TrackItem';
 import FeatureChart from './FeatureChart';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, media, Section } from '../styles';
+import { theme, mixins, media, Main } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
 const PlaylistContainer = styled.div`
@@ -107,7 +107,7 @@ class Playlist extends Component {
     return (
       <React.Fragment>
         {playlist ? (
-          <Section>
+          <Main>
             <PlaylistContainer>
               <Left>
                 {playlist.images.length && (
@@ -143,7 +143,7 @@ class Playlist extends Component {
                 </ul>
               </Right>
             </PlaylistContainer>
-          </Section>
+          </Main>
         ) : (
           <Loader />
         )}

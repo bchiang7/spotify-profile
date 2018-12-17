@@ -21,8 +21,6 @@ const Container = styled.div`
   width: 100%;
 
   #chart {
-    max-width: 500px;
-    max-height: 500px;
     margin: 0 auto;
     margin-top: -30px;
   }
@@ -149,7 +147,7 @@ class FeatureChart extends Component {
   render() {
     return (
       <Container>
-        <canvas id="chart" width="400" height="400" />
+        <canvas id="chart" />
       </Container>
     );
   }

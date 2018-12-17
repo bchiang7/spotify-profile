@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { theme, mixins, Section } from '../styles';
+import { theme, mixins, Main } from '../styles';
 const { colors, fontSizes } = theme;
 
 const LOGIN_URI =
@@ -8,7 +8,7 @@ const LOGIN_URI =
     ? 'http://localhost:8888/login'
     : 'https://spotify-profile.herokuapp.com/login';
 
-const Login = styled(Section)`
+const Login = styled(Main)`
   ${mixins.flexCenter};
   flex-direction: column;
   min-height: 100vh;

@@ -6,7 +6,7 @@ import { IconInfo } from './icons';
 import Loader from './Loader';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, media, Section } from '../styles';
+import { theme, mixins, media, Main } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
 const Header = styled.header`
@@ -162,7 +162,7 @@ class TopArtists extends Component {
     const { topArtists, activeRange } = this.state;
 
     return (
-      <Section>
+      <Main>
         <Header>
           <h2>Top Artists</h2>
           <Ranges>
@@ -202,7 +202,7 @@ class TopArtists extends Component {
             <Loader />
           )}
         </ArtistsContainer>
-      </Section>
+      </Main>
     );
   }
 }

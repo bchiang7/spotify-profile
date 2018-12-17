@@ -7,7 +7,7 @@ import Loader from './Loader';
 import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, media, Section } from '../styles';
+import { theme, mixins, media, Main } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
 const Header = styled.header`
@@ -18,7 +18,9 @@ const Header = styled.header`
 const Avatar = styled.div`
   width: 120px;
   height: 120px;
-  border-radius: 100%;
+  img {
+    border-radius: 100%;
+  }
 `;
 const NoAvatar = styled.div`
   border: 2px solid currentColor;
@@ -44,12 +46,13 @@ const Name = styled.h1`
 `;
 const Stats = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
   margin-top: ${spacing.base};
+`;
+const Stat = styled.div`
   text-align: center;
 `;
-const Stat = styled.div``;
 const Number = styled.div`
   color: ${colors.green};
   font-weight: 700;
@@ -80,7 +83,7 @@ const LogoutButton = styled.a`
     color: ${colors.black};
   }
 `;
-const Preview = styled.div`
+const Preview = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 70px;
@@ -194,7 +197,7 @@ class User extends Component {
     return (
       <React.Fragment>
         {user ? (
-          <Section>
+          <Main>
             <Header>
               <Avatar>
                 {user.images.length > 0 ? (
@@ -278,7 +281,7 @@ class User extends Component {
                 </ul>
               </Tracklist>
             </Preview>
-          </Section>
+          </Main>
         ) : (
           <Loader />
         )}

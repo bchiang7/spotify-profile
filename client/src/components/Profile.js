@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router } from '@reach/router';
 
-import Sidebar from './Sidebar';
+import Nav from './Nav';
 import User from './User';
 import RecentlyPlayed from './RecentlyPlayed';
 import TopArtists from './TopArtists';
@@ -13,38 +13,30 @@ import Track from './Track';
 import Artist from './Artist';
 
 import styled from 'styled-components/macro';
-import { media } from '../styles';
+import { theme, media } from '../styles';
 
-const Container = styled.div`
-  padding: 0 100px 0 200px;
+const SiteWrapper = styled.div`
+  padding-left: ${theme.navWidth};
   ${media.tablet`
-    padding: 50px 50px 90px;
-  `};
-  ${media.phablet`
-    padding: 40px 20px 90px;
+    padding-left: 0;
   `};
 `;
 
 const Profile = () => (
-  <Container>
-    <Sidebar />
-
-    <main>
-      <Router>
-        <User path="/" />
-        <RecentlyPlayed path="recent" />
-        <TopArtists path="artists" />
-        <TopTracks path="tracks" />
-        <Playlists path="playlists" />
-        <Playlist path="playlists/:playlistId" />
-        <Recommendations path="recommendations/:playlistId" />
-        <Track path="track/:trackId" />
-        <Artist path="artist/:artistId" />
-      </Router>
-    </main>
-
-    {/* <Player /> */}
-  </Container>
+  <SiteWrapper>
+    <Nav />
+    <Router>
+      <User path="/" />
+      <RecentlyPlayed path="recent" />
+      <TopArtists path="artists" />
+      <TopTracks path="tracks" />
+      <Playlists path="playlists" />
+      <Playlist path="playlists/:playlistId" />
+      <Recommendations path="recommendations/:playlistId" />
+      <Track path="track/:trackId" />
+      <Artist path="artist/:artistId" />
+    </Router>
+  </SiteWrapper>
 );
 
 export default Profile;

@@ -23,8 +23,8 @@ const Container = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  width: ${theme.sidebarWidth};
-  background-color: ${colors.sidebarBlack};
+  width: ${theme.NavWidth};
+  background-color: ${colors.navBlack};
   text-align: center;
   z-index: 99;
   ${media.tablet`
@@ -32,8 +32,8 @@ const Container = styled.nav`
     bottom: 0;
     right: 0;
     width: 100%;
-    min-height: 70px;
-    height: 70px;
+    min-height: ${theme.navHeight};
+    height: ${theme.navHeight};
     flex-direction: row;
   `};
   & > * {
@@ -92,8 +92,8 @@ const MenuItem = styled.li`
   color: ${colors.lightGrey};
   font-size: 11px;
   ${media.tablet`
-    height: 100%;
     flex-grow: 1;
+    height: 100%;
   `};
   a {
     display: block;
@@ -106,7 +106,7 @@ const MenuItem = styled.li`
       flex-direction: column;
       padding: 0;
       border-left: 0;
-      border-bottom: 3px solid transparent;
+      border-top: 3px solid transparent;
     `};
     &:hover,
     &:focus,
@@ -116,14 +116,14 @@ const MenuItem = styled.li`
       border-left: 5px solid ${colors.offGreen};
       ${media.tablet`
         border-left: 0;
-        border-bottom: 3px solid ${colors.offGreen};
+        border-top: 3px solid ${colors.offGreen};
       `};
     }
   }
   svg {
     width: 20px;
     height: 20px;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
 `;
 
@@ -131,7 +131,7 @@ const isActive = ({ isCurrent }) => (isCurrent ? { className: 'active' } : null)
 
 const NavLink = props => <Link getProps={isActive} {...props} />;
 
-const Sidebar = () => (
+const Nav = () => (
   <Container>
     <Logo>
       <Link to="/">
@@ -181,4 +181,4 @@ const Sidebar = () => (
   </Container>
 );
 
-export default Sidebar;
+export default Nav;

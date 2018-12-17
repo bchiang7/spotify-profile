@@ -13,7 +13,7 @@ import {
 import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, media, Section } from '../styles';
+import { theme, mixins, media, Main } from '../styles';
 const { colors } = theme;
 
 const PlaylistHeading = styled.div`
@@ -127,7 +127,7 @@ class Recommendations extends Component {
     const { playlist, recommendations, isFollowing, recPlaylistId } = this.state;
 
     return (
-      <Section>
+      <Main>
         {playlist && (
           <PlaylistHeading>
             <h2>
@@ -150,7 +150,7 @@ class Recommendations extends Component {
           {recommendations &&
             recommendations.tracks.map((track, i) => <TrackItem track={track} key={i} />)}
         </TracksContainer>
-      </Section>
+      </Main>
     );
   }
 }

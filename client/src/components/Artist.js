@@ -5,10 +5,10 @@ import { getArtist, followArtist, doesUserFollowArtist } from '../spotify';
 import Loader from './Loader';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, media, Section } from '../styles';
+import { theme, mixins, media, Main } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
-const ArtistContainer = styled(Section)`
+const ArtistContainer = styled(Main)`
   ${mixins.flexCenter};
   flex-direction: column;
   height: 100%;

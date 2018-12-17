@@ -3,7 +3,7 @@ const theme = {
     green: '#1DB954',
     offGreen: '#1ed760',
     blue: '#509bf5',
-    sidebarBlack: '#040306',
+    navBlack: '#040306',
     black: '#181818',
     white: '#FFFFFF',
     lightestGrey: '#b3b3b3',
@@ -49,14 +49,8 @@ const theme = {
 
   transition: `all 0.15s cubic-bezier(0.3, 0, 0.4, 1);`,
 
-  sidebarWidth: '100px',
-
-  playerHeight: '90px',
-  playerAlbumWidth: '56px',
-  playerControlsWidth: '480px',
-  playerVolumeButtonWidth: '32px',
-  playerVolumeBarWidth: '84px',
-  playerVolumeBarHeight: '4px',
+  navWidth: '100px',
+  navHeight: '70px',
 };
 
 export default theme;

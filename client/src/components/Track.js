@@ -6,7 +6,7 @@ import Loader from './Loader';
 import FeatureChart from './FeatureChart';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, media, Section } from '../styles';
+import { theme, mixins, media, Main } from '../styles';
 const { colors, fontSizes } = theme;
 
 const TrackContainer = styled.div`
@@ -136,7 +136,7 @@ class Track extends Component {
     return (
       <React.Fragment>
         {track ? (
-          <Section>
+          <Main>
             <TrackContainer>
               <Artwork>
                 <img src={track.album.images[0].url} alt="Album Artwork" />
@@ -210,7 +210,7 @@ class Track extends Component {
                   </Feature>
                   <Feature>
                     <FeatureText>{audioAnalysis.sections.length}</FeatureText>
-                    <FeatureLabel>Sections</FeatureLabel>
+                    <FeatureLabel>Mains</FeatureLabel>
                   </Feature>
                   <Feature>
                     <FeatureText>{audioAnalysis.segments.length}</FeatureText>
@@ -228,7 +228,7 @@ class Track extends Component {
                 </DescriptionLink>
               </AudioFeatures>
             )}
-          </Section>
+          </Main>
         ) : (
           <Loader />
         )}

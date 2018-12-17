@@ -5,7 +5,7 @@ import Loader from './Loader';
 import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, media, Section } from '../styles';
+import { theme, mixins, media, Main } from '../styles';
 const { colors, fontSizes } = theme;
 
 const Header = styled.header`
@@ -85,7 +85,7 @@ class TopTracks extends Component {
     const { topTracks, activeRange } = this.state;
 
     return (
-      <Section>
+      <Main>
         <Header>
           <h2>Top Tracks</h2>
           <Ranges>
@@ -113,7 +113,7 @@ class TopTracks extends Component {
             <Loader />
           )}
         </TracksContainer>
-      </Section>
+      </Main>
     );
   }
 }

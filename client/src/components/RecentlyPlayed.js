@@ -5,7 +5,7 @@ import Loader from './Loader';
 import TrackItem from './TrackItem';
 
 import styled from 'styled-components/macro';
-import { Section } from '../styles';
+import { Main } from '../styles';
 
 const TracksContainer = styled.ul`
   margin-top: 50px;
@@ -33,7 +33,7 @@ class RecentlyPlayed extends Component {
     const { recentlyPlayed } = this.state;
 
     return (
-      <Section>
+      <Main>
         <h2>Recently Played Tracks</h2>
         <TracksContainer>
           {recentlyPlayed ? (
@@ -42,7 +42,7 @@ class RecentlyPlayed extends Component {
             <Loader />
           )}
         </TracksContainer>
-      </Section>
+      </Main>
     );
   }
 }

@@ -6,7 +6,7 @@ import Loader from './Loader';
 import { IconMusic } from './icons';
 
 import styled from 'styled-components/macro';
-import { theme, mixins, media, Section } from '../styles';
+import { theme, mixins, media, Main } from '../styles';
 const { colors, fontSizes, spacing } = theme;
 
 const Wrapper = styled.div`
@@ -118,7 +118,7 @@ class Playlists extends Component {
     const { playlists } = this.state;
 
     return (
-      <Section>
+      <Main>
         <h2>Your Playlists</h2>
         <Wrapper>
           <PlaylistsContainer>
@@ -151,7 +151,7 @@ class Playlists extends Component {
             )}
           </PlaylistsContainer>
         </Wrapper>
-      </Section>
+      </Main>
     );
   }
 }
