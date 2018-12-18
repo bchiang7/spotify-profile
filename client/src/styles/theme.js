@@ -47,7 +47,7 @@ const theme = {
     easeInOutBack: `cubic-bezier(0.68, -0.55, 0.265, 1.55)`,
   },
 
-  transition: `all 0.15s cubic-bezier(0.3, 0, 0.4, 1);`,
+  transition: `all 0.25s cubic-bezier(0.3, 0, 0.4, 1);`,
 
   navWidth: '100px',
   navHeight: '70px',

@@ -129,7 +129,6 @@ class Playlists extends Component {
                     {images.length ? (
                       <PlaylistImage src={images[0].url} alt="Album Art" />
                     ) : (
-                      // <img src="./icons" alt=""/>
                       <PlaceholderArtwork>
                         <PlaceholderContent>
                           <IconMusic />

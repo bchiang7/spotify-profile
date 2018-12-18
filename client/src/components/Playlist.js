@@ -102,7 +102,6 @@ class Playlist extends Component {
 
   render() {
     const { playlist, audioFeatures } = this.state;
-    // console.log(audioFeatures);
 
     return (
       <React.Fragment>

@@ -14,7 +14,7 @@ const Main = styled.main`
     padding: 70px 50px;
   `};
   ${media.phablet`
-    padding: 40px 20px;
+    padding: 40px 25px;
   `};
   h2 {
     ${media.tablet`
