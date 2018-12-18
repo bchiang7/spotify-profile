@@ -22,8 +22,8 @@ const metadata = {
   url: 'https://spotify-profile.herokuapp.com/',
   title: 'Spotify Profile',
   description: 'A web app for visualizing personalized Spotify data',
-  siteLanguage: 'en',
-  themeColor: '#1DB954',
+  siteLanguage: 'en_US',
+  themeColor: '#181818',
   siteUrl: 'https://spotify-profile.herokuapp.com',
   twitterHandle: '@bchiang7',
 };

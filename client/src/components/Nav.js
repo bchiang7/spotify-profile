@@ -93,6 +93,7 @@ const MenuItem = styled.li`
   font-size: 11px;
   ${media.tablet`
     flex-grow: 1;
+    flex-basis: 100%;
     height: 100%;
   `};
   a {
