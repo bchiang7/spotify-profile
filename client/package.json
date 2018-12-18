@@ -11,6 +11,9 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "engines": {
+    "node": "10.5.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
