@@ -37,6 +37,7 @@
   "dependencies": {
     "@reach/router": "^1.2.1",
     "axios": "^0.18.0",
+    "babel-plugin-macros": "^2.4.3",
     "chart.js": "^2.7.3",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
@@ -47,8 +48,7 @@
   },
   "devDependencies": {
     "@upstatement/eslint-config": "^0.3.1",
-    "babel-plugin-macros": "^2.4.2",
-    "babel-plugin-styled-components": "^1.9.2",
+    "babel-plugin-styled-components": "^1.10.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
