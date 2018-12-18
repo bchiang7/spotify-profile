@@ -1,6 +1,6 @@
 # Spotify Profile
 
-> A web app for visualizing personalized Spotify information
+> A web app for visualizing personalized Spotify data
 
 Built with a bunch of things, but to name a few:
 

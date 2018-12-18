@@ -8,10 +8,10 @@ const Main = styled.main`
   min-height: 100vh;
   padding: 100px 80px;
   ${media.desktop`
-    padding: 90px 50px;
+    padding: 70px 50px;
   `};
   ${media.tablet`
-    padding: 70px 50px;
+    padding: 70px 40px;
   `};
   ${media.phablet`
     padding: 40px 25px;
