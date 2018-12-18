@@ -2,15 +2,15 @@
 
 A web app for visualizing personalized Spotify information
 
-Built with:
+Built with a lot of things, but to name a few:
 
+- [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
 - [Create React App](https://github.com/facebook/create-react-app)
 - [Express](https://expressjs.com/)
-- [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
 - [Reach Router](https://reach.tech/router)
 - [Styled Components](https://www.styled-components.com/)
 
-## 🚀 Getting Started
+## Getting Started
 
 1. [Register a Spotify Application](https://developer.spotify.com/dashboard/applications) and add `http://localhost:8888/callback` as a Redirect URI in the app settings
 2. Create an `.env` file in the root of the project based on `.env.example`
