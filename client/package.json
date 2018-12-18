@@ -47,8 +47,8 @@
   },
   "devDependencies": {
     "@upstatement/eslint-config": "^0.3.1",
-    "babel-plugin-macros": "^2.4.3",
-    "babel-plugin-styled-components": "^1.10.0",
+    "babel-plugin-macros": "^2.4.2",
+    "babel-plugin-styled-components": "^1.9.2",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
