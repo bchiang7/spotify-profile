@@ -20,6 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "https://spotify-profile.herokuapp.com/",
   "proxy": "http://localhost:8888",
   "lint-staged": {
     "linters": {
