@@ -19,21 +19,17 @@ import favicon16x16 from '../images/favicons/favicon-16x16.png';
 import msIcon144x144 from '../images/favicons/ms-icon-144x144.png';
 
 const metadata = {
-  url: 'https://spotify-profile.herokuapp.com/',
   title: 'Spotify Profile',
   description: 'A web app for visualizing personalized Spotify data',
+  siteUrl: 'https://spotify-profile.herokuapp.com',
   siteLanguage: 'en_US',
   themeColor: '#181818',
-  siteUrl: 'https://spotify-profile.herokuapp.com',
   twitterHandle: '@bchiang7',
 };
 
 const Head = () => (
   <Helmet>
-    <html lang="en" prefix="og: http://ogp.me/ns#" />
-    <title itemProp="name" lang="en">
-      {metadata.title}
-    </title>
+    <title>{metadata.title}</title>
     <link rel="shortcut icon" href={favicon} />
     <meta name="description" content={metadata.description} />
     <meta property="og:title" content={metadata.title} />
@@ -59,7 +55,7 @@ const Head = () => (
     <meta name="twitter:image" content={`${metadata.siteUrl}${ogImage}`} />
     <meta name="twitter:image:alt" content={metadata.title} />
 
-    <link rel="apple-touch-icon" sizes="57x57" href={appleIcon57x57} />
+    {/* <link rel="apple-touch-icon" sizes="57x57" href={appleIcon57x57} />
     <link rel="apple-touch-icon" sizes="60x60" href={appleIcon60x60} />
     <link rel="apple-touch-icon" sizes="72x72" href={appleIcon72x72} />
     <link rel="apple-touch-icon" sizes="76x76" href={appleIcon76x76} />
@@ -71,7 +67,7 @@ const Head = () => (
     <link rel="icon" type="image/png" sizes="192x192" href={androidIcon192x192} />
     <link rel="icon" type="image/png" sizes="32x32" href={favicon32x32} />
     <link rel="icon" type="image/png" sizes="96x96" href={favicon96x96} />
-    <link rel="icon" type="image/png" sizes="16x16" href={favicon16x16} />
+    <link rel="icon" type="image/png" sizes="16x16" href={favicon16x16} /> */}
     <meta name="msapplication-TileColor" content={metadata.themeColor} />
     <meta name="msapplication-TileImage" content={msIcon144x144} />
     <meta name="theme-color" content={metadata.themeColor} />
