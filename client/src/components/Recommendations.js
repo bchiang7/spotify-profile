@@ -9,6 +9,7 @@ import {
   followPlaylist,
   doesUserFollowPlaylist,
 } from '../spotify';
+import { catchErrors } from '../utils';
 
 import TrackItem from './TrackItem';
 
@@ -51,23 +52,18 @@ class Recommendations extends Component {
   };
 
   componentDidMount() {
-    this.getData();
+    catchErrors(this.getData());
   }
 
   async getData() {
     const { playlistId } = this.props;
+    const { data } = await getPlaylist(playlistId);
+    this.setState({ playlist: data });
 
-    try {
-      const { data } = await getPlaylist(playlistId);
-      this.setState({ playlist: data });
-
-      if (data) {
-        const { playlist } = this.state;
-        const { data } = await getRecommendationsForTracks(playlist.tracks.items);
-        this.setState({ recommendations: data });
-      }
-    } catch (e) {
-      console.error(e);
+    if (data) {
+      const { playlist } = this.state;
+      const { data } = await getRecommendationsForTracks(playlist.tracks.items);
+      this.setState({ recommendations: data });
     }
   }
 
@@ -76,51 +72,36 @@ class Recommendations extends Component {
   createPlaylist = async () => {
     const { playlist } = this.state;
     const name = `Recommended Tracks Based on ${playlist.name}`;
+    const { data } = await getUser();
+    const userId = data.id;
+    this.setState({ userId });
 
-    try {
-      const { data } = await getUser();
-      const userId = data.id;
-      this.setState({ userId });
+    if (data) {
+      const { data } = await createPlaylist(userId, name);
+      const recPlaylistId = data.id;
+      this.setState({ recPlaylistId });
 
       if (data) {
-        const { data } = await createPlaylist(userId, name);
-        const recPlaylistId = data.id;
-        this.setState({ recPlaylistId });
-
-        if (data) {
-          this.addTracksAndFollow(recPlaylistId);
-        }
+        catchErrors(this.addTracksAndFollow(recPlaylistId));
       }
-    } catch (e) {
-      console.error(e);
     }
   };
 
   addTracksAndFollow = async playlistId => {
     const { recommendations } = this.state;
     const uris = this.getTrackUris(recommendations).join(',');
+    const { data } = await addTracksToPlaylist(playlistId, uris);
 
-    try {
-      const { data } = await addTracksToPlaylist(playlistId, uris);
-
-      if (data) {
-        await followPlaylist(playlistId);
-        this.isFollowing(playlistId);
-      }
-    } catch (e) {
-      console.error(e);
+    if (data) {
+      await followPlaylist(playlistId);
+      catchErrors(this.isFollowing(playlistId));
     }
   };
 
   isFollowing = async playlistId => {
     const { userId } = this.state;
-
-    try {
-      const { data } = await doesUserFollowPlaylist(playlistId, userId);
-      this.setState({ isFollowing: data[0] });
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await doesUserFollowPlaylist(playlistId, userId);
+    this.setState({ isFollowing: data[0] });
   };
 
   render() {
@@ -142,7 +123,7 @@ class Recommendations extends Component {
                 Open in Spotify
               </OpenButton>
             ) : (
-              <SaveButton onClick={this.createPlaylist}>Save to Spotify</SaveButton>
+              <SaveButton onClick={catchErrors(this.createPlaylist)}>Save to Spotify</SaveButton>
             )}
           </PlaylistHeading>
         )}

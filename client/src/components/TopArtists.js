@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../spotify';
+import { catchErrors } from '../utils';
 
 import { IconInfo } from './icons';
 import Loader from './Loader';
@@ -135,28 +136,20 @@ class TopArtists extends Component {
   };
 
   componentDidMount() {
-    this.getData();
+    catchErrors(this.getData());
   }
 
   async getData() {
-    try {
-      const { data } = await getTopArtistsLong();
-      this.setState({ topArtists: data });
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await getTopArtistsLong();
+    this.setState({ topArtists: data });
   }
 
   async changeRange(range) {
-    try {
-      const { data } = await this.apiCalls[range];
-      this.setState({ topArtists: data, activeRange: range });
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await this.apiCalls[range];
+    this.setState({ topArtists: data, activeRange: range });
   }
 
-  setActiveRange = range => this.changeRange(range);
+  setActiveRange = range => catchErrors(this.changeRange(range));
 
   render() {
     const { topArtists, activeRange } = this.state;

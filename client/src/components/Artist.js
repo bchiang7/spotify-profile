@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { formatWithCommas } from '../utils';
+import { formatWithCommas, catchErrors } from '../utils';
 import { getArtist, followArtist, doesUserFollowArtist } from '../spotify';
 
 import Loader from './Loader';
@@ -83,41 +83,26 @@ class Artist extends Component {
   };
 
   componentDidMount() {
-    this.getData();
-    this.isFollowing();
+    catchErrors(this.getData());
+    catchErrors(this.isFollowing());
   }
 
   async getData() {
     const { artistId } = this.props;
-
-    try {
-      const { data } = await getArtist(artistId);
-      this.setState({ artist: data });
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await getArtist(artistId);
+    this.setState({ artist: data });
   }
-
-  follow = async () => {
-    const { artistId } = this.props;
-
-    try {
-      await followArtist(artistId);
-      this.isFollowing();
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   isFollowing = async () => {
     const { artistId } = this.props;
+    const { data } = await doesUserFollowArtist(artistId);
+    this.setState({ isFollowing: data[0] });
+  };
 
-    try {
-      const { data } = await doesUserFollowArtist(artistId);
-      this.setState({ isFollowing: data[0] });
-    } catch (e) {
-      console.error(e);
-    }
+  follow = async () => {
+    const { artistId } = this.props;
+    await followArtist(artistId);
+    this.isFollowing();
   };
 
   render() {
@@ -155,7 +140,7 @@ class Artist extends Component {
                 )}
               </Stats>
             </div>
-            <FollowButton isFollowing={isFollowing} onClick={this.follow}>
+            <FollowButton isFollowing={isFollowing} onClick={catchErrors(this.follow)}>
               {isFollowing ? 'Following' : 'Follow'}
             </FollowButton>
           </ArtistContainer>

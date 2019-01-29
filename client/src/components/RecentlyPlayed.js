@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getRecentlyPlayed } from '../spotify';
+import { catchErrors } from '../utils';
 
 import Loader from './Loader';
 import TrackItem from './TrackItem';
@@ -17,16 +18,12 @@ class RecentlyPlayed extends Component {
   };
 
   componentDidMount() {
-    this.getData();
+    catchErrors(this.getData());
   }
 
   async getData() {
-    try {
-      const { data } = await getRecentlyPlayed();
-      this.setState({ recentlyPlayed: data });
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await getRecentlyPlayed();
+    this.setState({ recentlyPlayed: data });
   }
 
   render() {

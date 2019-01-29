@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { formatDuration, getYear, parsePitchClass } from '../utils';
+import { formatDuration, getYear, parsePitchClass, catchErrors } from '../utils';
 import { getTrackInfo } from '../spotify';
 
 import Loader from './Loader';
@@ -119,18 +119,13 @@ class Track extends Component {
   };
 
   componentDidMount() {
-    this.getData();
+    catchErrors(this.getData());
   }
 
   async getData() {
     const { trackId } = this.props;
-
-    try {
-      const { track, audioAnalysis, audioFeatures } = await getTrackInfo(trackId);
-      this.setState({ track, audioAnalysis, audioFeatures });
-    } catch (e) {
-      console.error(e);
-    }
+    const { track, audioAnalysis, audioFeatures } = await getTrackInfo(trackId);
+    this.setState({ track, audioAnalysis, audioFeatures });
   }
 
   render() {

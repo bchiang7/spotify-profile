@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import { getPlaylists } from '../spotify';
+import { catchErrors } from '../utils';
 
 import Loader from './Loader';
 import { IconMusic } from './icons';
@@ -102,16 +103,12 @@ class Playlists extends Component {
   };
 
   componentDidMount() {
-    this.getData();
+    catchErrors(this.getData());
   }
 
   async getData() {
-    try {
-      const { data } = await getPlaylists();
-      this.setState({ playlists: data });
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await getPlaylists();
+    this.setState({ playlists: data });
   }
 
   render() {

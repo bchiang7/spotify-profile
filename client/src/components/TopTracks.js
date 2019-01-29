@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getTopTracksShort, getTopTracksMedium, getTopTracksLong } from '../spotify';
+import { catchErrors } from '../utils';
 
 import Loader from './Loader';
 import TrackItem from './TrackItem';
@@ -58,28 +59,20 @@ class TopTracks extends Component {
   };
 
   componentDidMount() {
-    this.getData();
+    catchErrors(this.getData());
   }
 
   async getData() {
-    try {
-      const { data } = await getTopTracksLong();
-      this.setState({ topTracks: data });
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await getTopTracksLong();
+    this.setState({ topTracks: data });
   }
 
   async changeRange(range) {
-    try {
-      const { data } = await this.apiCalls[range];
-      this.setState({ topTracks: data, activeRange: range });
-    } catch (e) {
-      console.error(e);
-    }
+    const { data } = await this.apiCalls[range];
+    this.setState({ topTracks: data, activeRange: range });
   }
 
-  setActiveRange = range => this.changeRange(range);
+  setActiveRange = range => catchErrors(this.changeRange(range));
 
   render() {
     const { topTracks, activeRange } = this.state;

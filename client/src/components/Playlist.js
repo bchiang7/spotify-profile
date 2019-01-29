@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import { getPlaylist, getAudioFeaturesForTracks } from '../spotify';
+import { catchErrors } from '../utils';
 
 import Loader from './Loader';
 import TrackItem from './TrackItem';
@@ -80,23 +81,18 @@ class Playlist extends Component {
   };
 
   componentDidMount() {
-    this.getData();
+    catchErrors(this.getData());
   }
 
   async getData() {
     const { playlistId } = this.props;
+    const { data } = await getPlaylist(playlistId);
+    this.setState({ playlist: data });
 
-    try {
-      const { data } = await getPlaylist(playlistId);
-      this.setState({ playlist: data });
-
-      if (data) {
-        const { playlist } = this.state;
-        const { data } = await getAudioFeaturesForTracks(playlist.tracks.items);
-        this.setState({ audioFeatures: data });
-      }
-    } catch (e) {
-      console.error(e);
+    if (data) {
+      const { playlist } = this.state;
+      const { data } = await getAudioFeaturesForTracks(playlist.tracks.items);
+      this.setState({ audioFeatures: data });
     }
   }
 

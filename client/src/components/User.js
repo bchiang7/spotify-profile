@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import { getUserInfo, logout } from '../spotify';
+import { catchErrors } from '../utils';
 
 import { IconUser, IconInfo } from './icons';
 import Loader from './Loader';
@@ -185,16 +186,12 @@ class User extends Component {
   };
 
   componentDidMount() {
-    this.getData();
+    catchErrors(this.getData());
   }
 
   async getData() {
-    try {
-      const { user, followedArtists, playlists, topArtists, topTracks } = await getUserInfo();
-      this.setState({ user, followedArtists, playlists, topArtists, topTracks });
-    } catch (e) {
-      console.error(e);
-    }
+    const { user, followedArtists, playlists, topArtists, topTracks } = await getUserInfo();
+    this.setState({ user, followedArtists, playlists, topArtists, topTracks });
   }
 
   render() {
