@@ -31,6 +31,7 @@
     }
   },
   "dependencies": {
+    "connect-history-api-fallback": "^1.6.0",
     "cookie-parser": "1.4.3",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",

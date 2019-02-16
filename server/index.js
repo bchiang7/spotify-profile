@@ -23,6 +23,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
+const history = require('connect-history-api-fallback');
 
 /**
  * Generates a random string containing numbers and letters
@@ -62,9 +63,20 @@ if (cluster.isMaster) {
   app.use(express.static(path.resolve(__dirname, '../client/build')));
 
   app
-    .use(express.static(`${__dirname}/public`))
+    .use(express.static(path.resolve(__dirname, '../client/build')))
     .use(cors())
-    .use(cookieParser());
+    .use(cookieParser())
+    .use(
+      history({
+        disableDotRule: true,
+        verbose: true,
+      }),
+    )
+    .use(express.static(path.resolve(__dirname, '../client/build')));
+
+  app.get('/', function(req, res) {
+    res.render(path.resolve(__dirname, '../client/build/index.html'));
+  });
 
   app.get('/login', function(req, res) {
     const state = generateRandomString(16);
