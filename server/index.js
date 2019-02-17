@@ -68,8 +68,12 @@ if (cluster.isMaster) {
     .use(cookieParser())
     .use(
       history({
-        disableDotRule: true,
         verbose: true,
+        rewrites: [
+          { from: /\/login/, to: '/login' },
+          { from: /\/callback/, to: '/callback' },
+          { from: /\/refresh_token/, to: '/refresh_token' },
+        ],
       }),
     )
     .use(express.static(path.resolve(__dirname, '../client/build')));
