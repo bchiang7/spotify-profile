@@ -32,18 +32,18 @@
   },
   "dependencies": {
     "connect-history-api-fallback": "^1.6.0",
-    "cookie-parser": "1.4.3",
+    "cookie-parser": "1.4.4",
     "cors": "^2.8.5",
-    "dotenv": "^6.2.0",
-    "express": "~4.16.4",
+    "dotenv": "^8.0.0",
+    "express": "~4.17.1",
     "querystring": "~0.2.0",
     "request": "~2.88.0"
   },
   "devDependencies": {
     "@upstatement/prettier-config": "^0.3.0",
-    "concurrently": "^4.1.0",
-    "husky": "^1.2.1",
-    "prettier": "^1.15.3",
-    "pretty-quick": "^1.8.0"
+    "concurrently": "^4.1.1",
+    "husky": "^3.0.0",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1"
   }
 }
