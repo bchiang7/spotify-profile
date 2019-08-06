@@ -114,7 +114,7 @@ const DescriptionLink = styled.a`
 
 class Track extends Component {
   static propTypes = {
-    trackId: PropTypes.string.isRequired,
+    trackId: PropTypes.string,
   };
 
   state = {

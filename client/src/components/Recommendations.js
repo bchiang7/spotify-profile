@@ -46,7 +46,7 @@ const PlaylistLink = styled(Link)`
 
 class Recommendations extends Component {
   static propTypes = {
-    playlistId: PropTypes.string.isRequired,
+    playlistId: PropTypes.string,
   };
 
   state = {

@@ -79,7 +79,7 @@ const FollowButton = styled.button`
 
 class Artist extends Component {
   static propTypes = {
-    artistId: PropTypes.string.isRequired,
+    artistId: PropTypes.string,
   };
 
   state = {

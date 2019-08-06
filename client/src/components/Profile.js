@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router } from '@reach/router';
 
+import ScrollToTop from './ScrollToTop';
 import Nav from './Nav';
 import User from './User';
 import RecentlyPlayed from './RecentlyPlayed';
@@ -26,16 +27,18 @@ const SiteWrapper = styled.div`
 const Profile = () => (
   <SiteWrapper>
     <Nav />
-    <Router>
-      <User path="/" />
-      <RecentlyPlayed path="recent" />
-      <TopArtists path="artists" />
-      <TopTracks path="tracks" />
-      <Playlists path="playlists" />
-      <Playlist path="playlists/:playlistId" />
-      <Recommendations path="recommendations/:playlistId" />
-      <Track path="track/:trackId" />
-      <Artist path="artist/:artistId" />
+    <Router primary={false}>
+      <ScrollToTop path="/">
+        <User path="/" />
+        <RecentlyPlayed path="recent" />
+        <TopArtists path="artists" />
+        <TopTracks path="tracks" />
+        <Playlists path="playlists" />
+        <Playlist path="playlists/:playlistId" />
+        <Recommendations path="recommendations/:playlistId" />
+        <Track path="track/:trackId" />
+        <Artist path="artist/:artistId" />
+      </ScrollToTop>
     </Router>
   </SiteWrapper>
 );

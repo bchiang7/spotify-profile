@@ -76,7 +76,7 @@ const TotalTracks = styled.p`
 
 class Playlist extends Component {
   static propTypes = {
-    playlistId: PropTypes.string.isRequired,
+    playlistId: PropTypes.string,
   };
 
   state = {
