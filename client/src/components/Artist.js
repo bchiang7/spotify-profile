@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { formatWithCommas, catchErrors } from '../utils';
 import { getArtist, followArtist, doesUserFollowArtist } from '../spotify';
 
@@ -77,6 +78,10 @@ const FollowButton = styled.button`
 `;
 
 class Artist extends Component {
+  static propTypes = {
+    artistId: PropTypes.string.isRequired,
+  };
+
   state = {
     artist: null,
     isFollowing: null,

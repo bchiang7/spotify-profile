@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { formatDuration, getYear, parsePitchClass, catchErrors } from '../utils';
 import { getTrackInfo } from '../spotify';
 
@@ -112,6 +113,10 @@ const DescriptionLink = styled.a`
 `;
 
 class Track extends Component {
+  static propTypes = {
+    trackId: PropTypes.string.isRequired,
+  };
+
   state = {
     track: null,
     audioAnalysis: null,
@@ -143,15 +148,13 @@ class Track extends Component {
                 <Title>{track.name}</Title>
                 <ArtistName>
                   {track.artists &&
-                    track.artists.map(({ name }, i) => {
-                      return (
-                        <span key={i}>
-                          {name}
-                          {track.artists.length > 0 && i === track.artists.length - 1 ? '' : ','}
-                          &nbsp;
-                        </span>
-                      );
-                    })}
+                    track.artists.map(({ name }, i) => (
+                      <span key={i}>
+                        {name}
+                        {track.artists.length > 0 && i === track.artists.length - 1 ? '' : ','}
+                        &nbsp;
+                      </span>
+                    ))}
                 </ArtistName>
                 <Album>
                   <a

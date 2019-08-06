@@ -51,12 +51,11 @@ class FeatureChart extends Component {
 
   createDataset(features) {
     const dataset = {};
-    properties.forEach(
-      prop =>
-        (dataset[prop] = features.length
-          ? this.avg(features.map(feat => feat[prop]))
-          : features[prop]),
-    );
+    properties.forEach(prop => {
+      dataset[prop] = features.length
+        ? this.avg(features.map(feat => feat && feat[prop]))
+        : features[prop];
+    });
     return dataset;
   }
 
@@ -148,7 +147,7 @@ class FeatureChart extends Component {
   render() {
     return (
       <Container>
-        <canvas id="chart" width="400" height="300" />
+        <canvas id="chart" width="400" height="400" />
       </Container>
     );
   }
