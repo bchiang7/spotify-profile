@@ -30,7 +30,7 @@ const history = require('connect-history-api-fallback');
  * @param  {number} length The length of the string
  * @return {string} The generated string
  */
-const generateRandomString = function(length) {
+const generateRandomString = function (length) {
   let text = '';
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -78,11 +78,11 @@ if (cluster.isMaster) {
     )
     .use(express.static(path.resolve(__dirname, '../client/build')));
 
-  app.get('/', function(req, res) {
+  app.get('/', function (req, res) {
     res.render(path.resolve(__dirname, '../client/build/index.html'));
   });
 
-  app.get('/login', function(req, res) {
+  app.get('/login', function (req, res) {
     const state = generateRandomString(16);
     res.cookie(stateKey, state);
 
@@ -101,7 +101,7 @@ if (cluster.isMaster) {
     );
   });
 
-  app.get('/callback', function(req, res) {
+  app.get('/callback', function (req, res) {
     // your application requests refresh and access tokens
     // after checking the state parameter
 
@@ -121,12 +121,14 @@ if (cluster.isMaster) {
           grant_type: 'authorization_code',
         },
         headers: {
-          Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+          Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString(
+            'base64',
+          )}`,
         },
         json: true,
       };
 
-      request.post(authOptions, function(error, response, body) {
+      request.post(authOptions, function (error, response, body) {
         if (!error && response.statusCode === 200) {
           const access_token = body.access_token;
           const refresh_token = body.refresh_token;
@@ -145,13 +147,15 @@ if (cluster.isMaster) {
     }
   });
 
-  app.get('/refresh_token', function(req, res) {
+  app.get('/refresh_token', function (req, res) {
     // requesting access token from refresh token
     const refresh_token = req.query.refresh_token;
     const authOptions = {
       url: 'https://accounts.spotify.com/api/token',
       headers: {
-        Authorization: `Basic ${new Buffer(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+        Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString(
+          'base64',
+        )}`,
       },
       form: {
         grant_type: 'refresh_token',
@@ -160,7 +164,7 @@ if (cluster.isMaster) {
       json: true,
     };
 
-    request.post(authOptions, function(error, response, body) {
+    request.post(authOptions, function (error, response, body) {
       if (!error && response.statusCode === 200) {
         const access_token = body.access_token;
         res.send({ access_token });
@@ -169,11 +173,11 @@ if (cluster.isMaster) {
   });
 
   // All remaining requests return the React app, so it can handle routing.
-  app.get('*', function(request, response) {
+  app.get('*', function (request, response) {
     response.sendFile(path.resolve(__dirname, '../client/public', 'index.html'));
   });
 
-  app.listen(PORT, function() {
+  app.listen(PORT, function () {
     console.warn(`Node cluster worker ${process.pid}: listening on port ${PORT}`);
   });
 }

@@ -13,9 +13,10 @@ Built with a bunch of things, but to name a few:
 ## Setup
 
 1. [Register a Spotify App](https://developer.spotify.com/dashboard/applications) and add `http://localhost:8888/callback` as a Redirect URI in the app settings
-2. Create an `.env` file in the root of the project based on `.env.example`
-3. `yarn && yarn client:install`
-4. `yarn dev`
+1. Create an `.env` file in the root of the project based on `.env.example`
+1. `nvm use`
+1. `yarn && yarn client:install`
+1. `yarn dev`
 
 ## Deploying to Heroku
 
