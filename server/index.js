@@ -121,7 +121,7 @@ if (cluster.isMaster) {
           grant_type: 'authorization_code',
         },
         headers: {
-          Authorization: `Basic ${new Buffer(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+          Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
         },
         json: true,
       };
