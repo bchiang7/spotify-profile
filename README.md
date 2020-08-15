@@ -29,8 +29,8 @@ Built with a bunch of things, but to name a few:
 2. Set Heroku environment variables
 
    ```bash
-   heroku config:set SPOTIFY_CLIENT_ID=XXXXX
-   heroku config:set SPOTIFY_CLIENT_SECRET=XXXXX
+   heroku config:set CLIENT_ID=XXXXX
+   heroku config:set CLIENT_SECRET=XXXXX
    heroku config:set REDIRECT_URI=https://app-name.herokuapp.com/callback
    heroku config:set FRONTEND_URI=https://app-name.herokuapp.com
    ```
