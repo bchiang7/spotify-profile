@@ -28,14 +28,16 @@
   "homepage": "https://spotify-profile.herokuapp.com",
   "proxy": "http://localhost:8888",
   "lint-staged": {
+    "*.{js,css,json,md}": [
+      "prettier --write"
+    ],
     "*.{js}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && lint-staged"
+      "pre-commit": "lint-staged"
     }
   },
   "dependencies": {
