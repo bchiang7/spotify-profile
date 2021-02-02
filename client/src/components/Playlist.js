@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
 import { getPlaylist, getAudioFeaturesForTracks } from '../spotify';
@@ -74,82 +74,77 @@ const TotalTracks = styled.p`
   margin-top: 20px;
 `;
 
-class Playlist extends Component {
-  static propTypes = {
-    playlistId: PropTypes.string,
-  };
+const Playlist = props => {
+  const { playlistId } = props;
 
-  state = {
-    playlist: null,
-    tracks: null,
-    audioFeatures: null,
-  };
+  const [playlist, setPlaylist] = useState(null);
+  const [audioFeatures, setAudioFeatures] = useState(null);
 
-  componentDidMount() {
-    catchErrors(this.getData());
-  }
-
-  async getData() {
-    const { playlistId } = this.props;
-    const { data } = await getPlaylist(playlistId);
-    this.setState({ playlist: data });
-
-    if (data) {
-      const { playlist } = this.state;
-      const { data } = await getAudioFeaturesForTracks(playlist.tracks.items);
-      this.setState({ audioFeatures: data });
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await getPlaylist(playlistId);
+      setPlaylist(data);
     }
-  }
+    catchErrors(fetchData());
+  }, [playlistId]);
 
-  render() {
-    const { playlist, audioFeatures } = this.state;
+  useEffect(() => {
+    async function fetchData() {
+      if (playlist) {
+        const { data } = await getAudioFeaturesForTracks(playlist.tracks.items);
+        setAudioFeatures(data);
+      }
+    }
+    catchErrors(fetchData());
+  }, [playlist]);
 
-    return (
-      <React.Fragment>
-        {playlist ? (
-          <Main>
-            <PlaylistContainer>
-              <Left>
-                {playlist.images.length && (
-                  <PlaylistCover>
-                    <img src={playlist.images[0].url} alt="Album Art" />
-                  </PlaylistCover>
-                )}
+  return (
+    <React.Fragment>
+      {playlist ? (
+        <Main>
+          <PlaylistContainer>
+            <Left>
+              {playlist.images.length && (
+                <PlaylistCover>
+                  <img src={playlist.images[0].url} alt="Album Art" />
+                </PlaylistCover>
+              )}
 
-                <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                  <Name>{playlist.name}</Name>
-                </a>
+              <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                <Name>{playlist.name}</Name>
+              </a>
 
-                <Owner>By {playlist.owner.display_name}</Owner>
+              <Owner>By {playlist.owner.display_name}</Owner>
 
-                {playlist.description && (
-                  <Description dangerouslySetInnerHTML={{ __html: playlist.description }} />
-                )}
+              {playlist.description && (
+                <Description dangerouslySetInnerHTML={{ __html: playlist.description }} />
+              )}
 
-                <TotalTracks>{playlist.tracks.total} Tracks</TotalTracks>
+              <TotalTracks>{playlist.tracks.total} Tracks</TotalTracks>
 
-                <RecButton to={`/recommendations/${playlist.id}`}>Get Recommendations</RecButton>
+              <RecButton to={`/recommendations/${playlist.id}`}>Get Recommendations</RecButton>
 
-                {audioFeatures && (
-                  <FeatureChart features={audioFeatures.audio_features} type="horizontalBar" />
-                )}
-              </Left>
-              <Right>
-                <ul>
-                  {playlist.tracks &&
-                    playlist.tracks.items.map(({ track }, i) => (
-                      <TrackItem track={track} key={i} />
-                    ))}
-                </ul>
-              </Right>
-            </PlaylistContainer>
-          </Main>
-        ) : (
-          <Loader />
-        )}
-      </React.Fragment>
-    );
-  }
-}
+              {audioFeatures && (
+                <FeatureChart features={audioFeatures.audio_features} type="horizontalBar" />
+              )}
+            </Left>
+            <Right>
+              <ul>
+                {playlist.tracks &&
+                  playlist.tracks.items.map(({ track }, i) => <TrackItem track={track} key={i} />)}
+              </ul>
+            </Right>
+          </PlaylistContainer>
+        </Main>
+      ) : (
+        <Loader />
+      )}
+    </React.Fragment>
+  );
+};
+
+Playlist.propTypes = {
+  playlistId: PropTypes.string,
+};
 
 export default Playlist;
