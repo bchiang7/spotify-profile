@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { token } from '../spotify';
 
 import LoginScreen from './LoginScreen';
@@ -12,26 +12,20 @@ const AppContainer = styled.div`
   min-height: 100vh;
 `;
 
-class App extends Component {
-  state = {
-    token: '',
-  };
+const App = () => {
+  const [accessToken, setAccessToken] = useState('');
 
-  componentDidMount() {
-    this.setState({ token });
-  }
+  useEffect(() => {
+    setAccessToken(token);
+  }, []);
 
-  render() {
-    const { token } = this.state;
+  return (
+    <AppContainer>
+      <GlobalStyle />
 
-    return (
-      <AppContainer>
-        <GlobalStyle />
-
-        {token ? <Profile /> : <LoginScreen />}
-      </AppContainer>
-    );
-  }
-}
+      {accessToken ? <Profile /> : <LoginScreen />}
+    </AppContainer>
+  );
+};
 
 export default App;
