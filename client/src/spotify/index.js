@@ -258,32 +258,26 @@ export const getTrackAudioAnalysis = trackId =>
 export const getTrackAudioFeatures = trackId =>
   axios.get(`https://api.spotify.com/v1/audio-features/${trackId}`, { headers });
 
-export const getUserInfo = () => {
-  return axios
+export const getUserInfo = () =>
+  axios
     .all([getUser(), getFollowing(), getPlaylists(), getTopArtistsLong(), getTopTracksLong()])
     .then(
-      axios.spread((user, followedArtists, playlists, topArtists, topTracks) => {
-        return {
-          user: user.data,
-          followedArtists: followedArtists.data,
-          playlists: playlists.data,
-          topArtists: topArtists.data,
-          topTracks: topTracks.data,
-        };
-      }),
+      axios.spread((user, followedArtists, playlists, topArtists, topTracks) => ({
+        user: user.data,
+        followedArtists: followedArtists.data,
+        playlists: playlists.data,
+        topArtists: topArtists.data,
+        topTracks: topTracks.data,
+      })),
     );
-};
 
-export const getTrackInfo = trackId => {
-  return axios
+export const getTrackInfo = trackId =>
+  axios
     .all([getTrack(trackId), getTrackAudioAnalysis(trackId), getTrackAudioFeatures(trackId)])
     .then(
-      axios.spread((track, audioAnalysis, audioFeatures) => {
-        return {
-          track: track.data,
-          audioAnalysis: audioAnalysis.data,
-          audioFeatures: audioFeatures.data,
-        };
-      }),
+      axios.spread((track, audioAnalysis, audioFeatures) => ({
+        track: track.data,
+        audioAnalysis: audioAnalysis.data,
+        audioFeatures: audioFeatures.data,
+      })),
     );
-};
