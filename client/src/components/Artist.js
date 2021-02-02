@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { formatWithCommas, catchErrors } from '../utils';
-import { getArtist, followArtist, doesUserFollowArtist } from '../spotify';
+import { getArtist } from '../spotify';
 
 import Loader from './Loader';
 
@@ -63,98 +63,61 @@ const NumLabel = styled.p`
   letter-spacing: 1px;
   margin-top: ${spacing.xs};
 `;
-const FollowButton = styled.button`
-  ${mixins.greenButton};
-  margin-top: 50px;
-  padding: 12px 50px;
-  background-color: ${props => (props.isFollowing ? 'transparent' : colors.green)};
-  border: 1px solid ${props => (props.isFollowing ? 'white' : 'transparent')};
-  pointer-events: ${props => (props.isFollowing ? 'none' : 'auto')};
-  cursor: ${props => (props.isFollowing ? 'default' : 'pointer')};
-  &:hover,
-  &:focus {
-    background-color: ${props => (props.isFollowing ? 'transparent' : colors.offGreen)};
-  }
-`;
 
-class Artist extends Component {
-  static propTypes = {
-    artistId: PropTypes.string,
-  };
+const Artist = props => {
+  const { artistId } = props;
+  const [artist, setArtist] = useState(null);
 
-  state = {
-    artist: null,
-    isFollowing: null,
-  };
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await getArtist(artistId);
+      setArtist(data);
+    }
+    catchErrors(fetchData());
+  }, [artistId]);
 
-  componentDidMount() {
-    catchErrors(this.getData());
-    catchErrors(this.isFollowing());
-  }
-
-  async getData() {
-    const { artistId } = this.props;
-    const { data } = await getArtist(artistId);
-    this.setState({ artist: data });
-  }
-
-  isFollowing = async () => {
-    const { artistId } = this.props;
-    const { data } = await doesUserFollowArtist(artistId);
-    this.setState({ isFollowing: data[0] });
-  };
-
-  follow = async () => {
-    const { artistId } = this.props;
-    await followArtist(artistId);
-    this.isFollowing();
-  };
-
-  render() {
-    const { artist, isFollowing } = this.state;
-
-    return (
-      <React.Fragment>
-        {artist ? (
-          <ArtistContainer>
-            <Artwork>
-              <img src={artist.images[0].url} alt="Artist Artwork" />
-            </Artwork>
-            <div>
-              <ArtistName>{artist.name}</ArtistName>
-              <Stats>
+  return (
+    <React.Fragment>
+      {artist ? (
+        <ArtistContainer>
+          <Artwork>
+            <img src={artist.images[0].url} alt="Artist Artwork" />
+          </Artwork>
+          <div>
+            <ArtistName>{artist.name}</ArtistName>
+            <Stats>
+              <Stat>
+                <Number>{formatWithCommas(artist.followers.total)}</Number>
+                <NumLabel>Followers</NumLabel>
+              </Stat>
+              {artist.genres && (
                 <Stat>
-                  <Number>{formatWithCommas(artist.followers.total)}</Number>
-                  <NumLabel>Followers</NumLabel>
+                  <Number>
+                    {artist.genres.map(genre => (
+                      <Genre key={genre}>{genre}</Genre>
+                    ))}
+                  </Number>
+                  <NumLabel>Genres</NumLabel>
                 </Stat>
-                {artist.genres && (
-                  <Stat>
-                    <Number>
-                      {artist.genres.map(genre => (
-                        <Genre key={genre}>{genre}</Genre>
-                      ))}
-                    </Number>
-                    <NumLabel>Genres</NumLabel>
-                  </Stat>
-                )}
-                {artist.popularity && (
-                  <Stat>
-                    <Number>{artist.popularity}%</Number>
-                    <NumLabel>Popularity</NumLabel>
-                  </Stat>
-                )}
-              </Stats>
-            </div>
-            <FollowButton isFollowing={isFollowing} onClick={catchErrors(this.follow)}>
-              {isFollowing ? 'Following' : 'Follow'}
-            </FollowButton>
-          </ArtistContainer>
-        ) : (
-          <Loader />
-        )}
-      </React.Fragment>
-    );
-  }
-}
+              )}
+              {artist.popularity && (
+                <Stat>
+                  <Number>{artist.popularity}%</Number>
+                  <NumLabel>Popularity</NumLabel>
+                </Stat>
+              )}
+            </Stats>
+          </div>
+        </ArtistContainer>
+      ) : (
+        <Loader />
+      )}
+    </React.Fragment>
+  );
+};
+
+Artist.propTypes = {
+  artistId: PropTypes.string,
+};
 
 export default Artist;
