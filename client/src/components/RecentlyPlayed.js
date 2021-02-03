@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getRecentlyPlayed } from '../spotify';
 import { catchErrors } from '../utils';
 
@@ -12,36 +12,29 @@ const TracksContainer = styled.ul`
   margin-top: 50px;
 `;
 
-class RecentlyPlayed extends Component {
-  state = {
-    recentlyPlayed: null,
-  };
+const RecentlyPlayed = () => {
+  const [recentlyPlayed, setRecentlyPlayed] = useState(null);
 
-  componentDidMount() {
-    catchErrors(this.getData());
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await getRecentlyPlayed();
+      setRecentlyPlayed(data);
+    }
+    catchErrors(fetchData());
+  }, []);
 
-  async getData() {
-    const { data } = await getRecentlyPlayed();
-    this.setState({ recentlyPlayed: data });
-  }
-
-  render() {
-    const { recentlyPlayed } = this.state;
-
-    return (
-      <Main>
-        <h2>Recently Played Tracks</h2>
-        <TracksContainer>
-          {recentlyPlayed ? (
-            recentlyPlayed.items.map(({ track }, i) => <TrackItem track={track} key={i} />)
-          ) : (
-            <Loader />
-          )}
-        </TracksContainer>
-      </Main>
-    );
-  }
-}
+  return (
+    <Main>
+      <h2>Recently Played Tracks</h2>
+      <TracksContainer>
+        {recentlyPlayed ? (
+          recentlyPlayed.items.map(({ track }, i) => <TrackItem track={track} key={i} />)
+        ) : (
+          <Loader />
+        )}
+      </TracksContainer>
+    </Main>
+  );
+};
 
 export default RecentlyPlayed;
