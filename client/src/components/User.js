@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from '@reach/router';
 import { getUserInfo, logout } from '../spotify';
 import { catchErrors } from '../utils';
@@ -176,122 +176,118 @@ const ArtistName = styled(Link)`
   }
 `;
 
-class User extends Component {
-  state = {
-    user: null,
-    followedArtists: null,
-    playlists: null,
-    topArtists: null,
-    topTracks: null,
-  };
+const User = () => {
+  const [user, setUser] = useState(null);
+  const [followedArtists, setFollowedArtists] = useState(null);
+  const [playlists, setPlaylists] = useState(null);
+  const [topArtists, setTopArtists] = useState(null);
+  const [topTracks, setTopTracks] = useState(null);
 
-  componentDidMount() {
-    catchErrors(this.getData());
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const { user, followedArtists, playlists, topArtists, topTracks } = await getUserInfo();
+      setUser(user);
+      setFollowedArtists(followedArtists);
+      setPlaylists(playlists);
+      setTopArtists(topArtists);
+      setTopTracks(topTracks);
+    }
+    catchErrors(fetchData());
+  }, []);
 
-  async getData() {
-    const { user, followedArtists, playlists, topArtists, topTracks } = await getUserInfo();
-    this.setState({ user, followedArtists, playlists, topArtists, topTracks });
-  }
+  const totalPlaylists = playlists ? playlists.total : 0;
 
-  render() {
-    const { user, followedArtists, playlists, topArtists, topTracks } = this.state;
-    const totalPlaylists = playlists ? playlists.total : 0;
-
-    return (
-      <React.Fragment>
-        {user ? (
-          <Main>
-            <Header>
-              <Avatar>
-                {user.images.length > 0 ? (
-                  <img src={user.images[0].url} alt="avatar" />
-                ) : (
-                  <NoAvatar>
-                    <IconUser />
-                  </NoAvatar>
-                )}
-              </Avatar>
-              <UserName href={user.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                <Name>{user.display_name}</Name>
-              </UserName>
-              <Stats>
+  return (
+    <React.Fragment>
+      {user ? (
+        <Main>
+          <Header>
+            <Avatar>
+              {user.images.length > 0 ? (
+                <img src={user.images[0].url} alt="avatar" />
+              ) : (
+                <NoAvatar>
+                  <IconUser />
+                </NoAvatar>
+              )}
+            </Avatar>
+            <UserName href={user.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+              <Name>{user.display_name}</Name>
+            </UserName>
+            <Stats>
+              <Stat>
+                <Number>{user.followers.total}</Number>
+                <NumLabel>Followers</NumLabel>
+              </Stat>
+              {followedArtists && (
                 <Stat>
-                  <Number>{user.followers.total}</Number>
-                  <NumLabel>Followers</NumLabel>
+                  <Number>{followedArtists.artists.items.length}</Number>
+                  <NumLabel>Following</NumLabel>
                 </Stat>
-                {followedArtists && (
-                  <Stat>
-                    <Number>{followedArtists.artists.items.length}</Number>
-                    <NumLabel>Following</NumLabel>
-                  </Stat>
-                )}
-                {totalPlaylists && (
-                  <Stat>
-                    <Link to="playlists">
-                      <Number>{totalPlaylists}</Number>
-                      <NumLabel>Playlists</NumLabel>
-                    </Link>
-                  </Stat>
-                )}
-              </Stats>
-              <LogoutButton onClick={logout}>Logout</LogoutButton>
-            </Header>
+              )}
+              {totalPlaylists && (
+                <Stat>
+                  <Link to="playlists">
+                    <Number>{totalPlaylists}</Number>
+                    <NumLabel>Playlists</NumLabel>
+                  </Link>
+                </Stat>
+              )}
+            </Stats>
+            <LogoutButton onClick={logout}>Logout</LogoutButton>
+          </Header>
 
-            <Preview>
-              <Tracklist>
-                <TracklistHeading>
-                  <h3>Top Artists of All Time</h3>
-                  <MoreButton to="/artists">See More</MoreButton>
-                </TracklistHeading>
-                <div>
-                  {topArtists ? (
-                    <ul>
-                      {topArtists.items.slice(0, 10).map((artist, i) => (
-                        <Artist key={i}>
-                          <ArtistArtwork to={`/artist/${artist.id}`}>
-                            {artist.images.length && (
-                              <img src={artist.images[2].url} alt="Artist" />
-                            )}
-                            <Mask>
-                              <IconInfo />
-                            </Mask>
-                          </ArtistArtwork>
-                          <ArtistName to={`/artist/${artist.id}`}>
-                            <span>{artist.name}</span>
-                          </ArtistName>
-                        </Artist>
-                      ))}
-                    </ul>
-                  ) : (
-                    <Loader />
-                  )}
-                </div>
-              </Tracklist>
+          <Preview>
+            <Tracklist>
+              <TracklistHeading>
+                <h3>Top Artists of All Time</h3>
+                <MoreButton to="/artists">See More</MoreButton>
+              </TracklistHeading>
+              <div>
+                {topArtists ? (
+                  <ul>
+                    {topArtists.items.slice(0, 10).map((artist, i) => (
+                      <Artist key={i}>
+                        <ArtistArtwork to={`/artist/${artist.id}`}>
+                          {artist.images.length && <img src={artist.images[2].url} alt="Artist" />}
+                          <Mask>
+                            <IconInfo />
+                          </Mask>
+                        </ArtistArtwork>
+                        <ArtistName to={`/artist/${artist.id}`}>
+                          <span>{artist.name}</span>
+                        </ArtistName>
+                      </Artist>
+                    ))}
+                  </ul>
+                ) : (
+                  <Loader />
+                )}
+              </div>
+            </Tracklist>
 
-              <Tracklist>
-                <TracklistHeading>
-                  <h3>Top Tracks of All Time</h3>
-                  <MoreButton to="/tracks">See More</MoreButton>
-                </TracklistHeading>
-                <ul>
-                  {topTracks ? (
-                    topTracks.items
-                      .slice(0, 10)
-                      .map((track, i) => <TrackItem track={track} key={i} />)
-                  ) : (
-                    <Loader />
-                  )}
-                </ul>
-              </Tracklist>
-            </Preview>
-          </Main>
-        ) : (
-          <Loader />
-        )}
-      </React.Fragment>
-    );
-  }
-}
+            <Tracklist>
+              <TracklistHeading>
+                <h3>Top Tracks of All Time</h3>
+                <MoreButton to="/tracks">See More</MoreButton>
+              </TracklistHeading>
+              <ul>
+                {topTracks ? (
+                  topTracks.items
+                    .slice(0, 10)
+                    .map((track, i) => <TrackItem track={track} key={i} />)
+                ) : (
+                  <Loader />
+                )}
+              </ul>
+            </Tracklist>
+          </Preview>
+        </Main>
+      ) : (
+        <Loader />
+      )}
+    </React.Fragment>
+  );
+};
 
 export default User;
