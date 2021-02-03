@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
 import {
@@ -44,101 +44,103 @@ const PlaylistLink = styled(Link)`
   }
 `;
 
-class Recommendations extends Component {
-  static propTypes = {
-    playlistId: PropTypes.string,
-  };
+const Recommendations = props => {
+  const { playlistId } = props;
 
-  state = {
-    playlist: null,
-    recommendations: null,
-    userId: null,
-    isFollowing: false,
-  };
+  const [playlist, setPlaylist] = useState(null);
+  const [recommendations, setRecommmendations] = useState(null);
+  const [recPlaylistId, setRecPlaylistId] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [isFollowing, setIsFollowing] = useState(false);
 
-  componentDidMount() {
-    catchErrors(this.getData());
-  }
-
-  async getData() {
-    const { playlistId } = this.props;
-    const { data } = await getPlaylist(playlistId);
-    this.setState({ playlist: data });
-
-    if (data) {
-      const { playlist } = this.state;
-      const { data } = await getRecommendationsForTracks(playlist.tracks.items);
-      this.setState({ recommendations: data });
+  useEffect(() => {
+    async function fetchPlaylistData() {
+      const { data } = await getPlaylist(playlistId);
+      setPlaylist(data);
     }
-  }
+    catchErrors(fetchPlaylistData());
 
-  getTrackUris = recommendations => recommendations.tracks.map(({ uri }) => uri);
+    async function fetchUserData() {
+      const { data } = await getUser();
+      setUserId(data.id);
+    }
+    catchErrors(fetchUserData());
+  }, [playlistId]);
 
-  createPlaylist = async () => {
-    const { playlist } = this.state;
-    const name = `Recommended Tracks Based on ${playlist.name}`;
-    const { data } = await getUser();
-    const userId = data.id;
-    this.setState({ userId });
-
-    if (data) {
-      const { data } = await createPlaylist(userId, name);
-      const recPlaylistId = data.id;
-      this.setState({ recPlaylistId });
-
-      if (data) {
-        catchErrors(this.addTracksAndFollow(recPlaylistId));
+  useEffect(() => {
+    async function fetchData() {
+      if (playlist) {
+        const { data } = await getRecommendationsForTracks(playlist.tracks.items);
+        setRecommmendations(data);
       }
     }
-  };
+    catchErrors(fetchData());
+  }, [playlist]);
 
-  addTracksAndFollow = async playlistId => {
-    const { recommendations } = this.state;
-    const uris = this.getTrackUris(recommendations).join(',');
-    const { data } = await addTracksToPlaylist(playlistId, uris);
+  // If recPlaylistId has been set, add tracks to playlist and follow
+  useEffect(() => {
+    const isUserFollowingPlaylist = async plistId => {
+      const { data } = await doesUserFollowPlaylist(plistId, userId);
+      setIsFollowing(data[0]);
+    };
 
-    if (data) {
-      await followPlaylist(playlistId);
-      catchErrors(this.isFollowing(playlistId));
+    async function addTracksAndFollow() {
+      const uris = recommendations.tracks.map(({ uri }) => uri).join(',');
+      const { data } = await addTracksToPlaylist(recPlaylistId, uris);
+
+      // Then follow playlist
+      if (data) {
+        await followPlaylist(recPlaylistId);
+        // Check if user is following so we can change the save to spotify button to open on spotify
+        catchErrors(isUserFollowingPlaylist(recPlaylistId));
+      }
     }
+
+    if (recPlaylistId && recommendations && userId) {
+      catchErrors(addTracksAndFollow(recPlaylistId));
+    }
+  }, [recPlaylistId, recommendations, userId]);
+
+  const createPlaylistOnSave = async () => {
+    if (!userId) {
+      return;
+    }
+
+    const name = `Recommended Tracks Based on ${playlist.name}`;
+    const { data } = await createPlaylist(userId, name);
+    setRecPlaylistId(data.id);
   };
 
-  isFollowing = async playlistId => {
-    const { userId } = this.state;
-    const { data } = await doesUserFollowPlaylist(playlistId, userId);
-    this.setState({ isFollowing: data[0] });
-  };
+  return (
+    <Main>
+      {playlist && (
+        <PlaylistHeading>
+          <h2>
+            Recommended Tracks Based On{' '}
+            <PlaylistLink to={`/playlists/${playlist.id}`}>{playlist.name}</PlaylistLink>
+          </h2>
+          {isFollowing && recPlaylistId ? (
+            <OpenButton
+              href={`https://open.spotify.com/playlist/${recPlaylistId}`}
+              target="_blank"
+              rel="noopener noreferrer">
+              Open in Spotify
+            </OpenButton>
+          ) : (
+            <SaveButton onClick={catchErrors(createPlaylistOnSave)}>Save to Spotify</SaveButton>
+          )}
+        </PlaylistHeading>
+      )}
+      <TracksContainer>
+        {recommendations &&
+          recommendations.tracks.map((track, i) => <TrackItem track={track} key={i} />)}
+      </TracksContainer>
+    </Main>
+  );
+};
 
-  render() {
-    const { playlist, recommendations, isFollowing, recPlaylistId } = this.state;
-
-    return (
-      <Main>
-        {playlist && (
-          <PlaylistHeading>
-            <h2>
-              Recommended Tracks Based On{' '}
-              <PlaylistLink to={`/playlist/${playlist.id}`}>{playlist.name}</PlaylistLink>
-            </h2>
-            {isFollowing && recPlaylistId ? (
-              <OpenButton
-                href={`https://open.spotify.com/playlist/${recPlaylistId}`}
-                target="_blank"
-                rel="noopener noreferrer">
-                Open in Spotify
-              </OpenButton>
-            ) : (
-              <SaveButton onClick={catchErrors(this.createPlaylist)}>Save to Spotify</SaveButton>
-            )}
-          </PlaylistHeading>
-        )}
-        <TracksContainer>
-          {recommendations &&
-            recommendations.tracks.map((track, i) => <TrackItem track={track} key={i} />)}
-        </TracksContainer>
-      </Main>
-    );
-  }
-}
+Recommendations.propTypes = {
+  playlistId: PropTypes.string,
+};
 
 export default Recommendations;

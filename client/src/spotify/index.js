@@ -164,7 +164,7 @@ export const doesUserFollowPlaylist = (playlistId, userId) =>
   });
 
 /**
- * Create a Playlist
+ * Create a Playlist (The playlist will be empty until you add tracks)
  * https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/
  */
 export const createPlaylist = (userId, name) => {
