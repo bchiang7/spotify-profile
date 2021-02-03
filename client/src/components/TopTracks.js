@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getTopTracksShort, getTopTracksMedium, getTopTracksLong } from '../spotify';
 import { catchErrors } from '../utils';
 
@@ -46,69 +46,57 @@ const TracksContainer = styled.ul`
   margin-top: 50px;
 `;
 
-class TopTracks extends Component {
-  state = {
-    topTracks: null,
-    activeRange: 'long',
-  };
+const TopTracks = () => {
+  const [topTracks, setTopTracks] = useState(null);
+  const [activeRange, setActiveRange] = useState('long');
 
-  apiCalls = {
+  const apiCalls = {
     long: getTopTracksLong(),
     medium: getTopTracksMedium(),
     short: getTopTracksShort(),
   };
 
-  componentDidMount() {
-    catchErrors(this.getData());
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await getTopTracksLong();
+      setTopTracks(data);
+    }
+    catchErrors(fetchData());
+  }, []);
 
-  async getData() {
-    const { data } = await getTopTracksLong();
-    this.setState({ topTracks: data });
-  }
+  const changeRange = async range => {
+    const { data } = await apiCalls[range];
+    setTopTracks(data);
+    setActiveRange(range);
+  };
 
-  async changeRange(range) {
-    const { data } = await this.apiCalls[range];
-    this.setState({ topTracks: data, activeRange: range });
-  }
+  const setRangeData = range => catchErrors(changeRange(range));
 
-  setActiveRange = range => catchErrors(this.changeRange(range));
-
-  render() {
-    const { topTracks, activeRange } = this.state;
-
-    return (
-      <Main>
-        <Header>
-          <h2>Top Tracks</h2>
-          <Ranges>
-            <RangeButton
-              isActive={activeRange === 'long'}
-              onClick={() => this.setActiveRange('long')}>
-              <span>All Time</span>
-            </RangeButton>
-            <RangeButton
-              isActive={activeRange === 'medium'}
-              onClick={() => this.setActiveRange('medium')}>
-              <span>Last 6 Months</span>
-            </RangeButton>
-            <RangeButton
-              isActive={activeRange === 'short'}
-              onClick={() => this.setActiveRange('short')}>
-              <span>Last 4 Weeks</span>
-            </RangeButton>
-          </Ranges>
-        </Header>
-        <TracksContainer>
-          {topTracks ? (
-            topTracks.items.map((track, i) => <TrackItem track={track} key={i} />)
-          ) : (
-            <Loader />
-          )}
-        </TracksContainer>
-      </Main>
-    );
-  }
-}
+  return (
+    <Main>
+      <Header>
+        <h2>Top Tracks</h2>
+        <Ranges>
+          <RangeButton isActive={activeRange === 'long'} onClick={() => setRangeData('long')}>
+            <span>All Time</span>
+          </RangeButton>
+          <RangeButton isActive={activeRange === 'medium'} onClick={() => setRangeData('medium')}>
+            <span>Last 6 Months</span>
+          </RangeButton>
+          <RangeButton isActive={activeRange === 'short'} onClick={() => setRangeData('short')}>
+            <span>Last 4 Weeks</span>
+          </RangeButton>
+        </Ranges>
+      </Header>
+      <TracksContainer>
+        {topTracks ? (
+          topTracks.items.map((track, i) => <TrackItem track={track} key={i} />)
+        ) : (
+          <Loader />
+        )}
+      </TracksContainer>
+    </Main>
+  );
+};
 
 export default TopTracks;
