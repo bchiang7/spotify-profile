@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from '@reach/router';
 import { getPlaylists } from '../spotify';
 import { catchErrors } from '../utils';
@@ -97,59 +97,52 @@ const TotalTracks = styled.div`
   letter-spacing: 1px;
 `;
 
-class Playlists extends Component {
-  state = {
-    playlists: null,
-  };
+const Playlists = () => {
+  const [playlists, setPlaylists] = useState(null);
 
-  componentDidMount() {
-    catchErrors(this.getData());
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await getPlaylists();
+      setPlaylists(data);
+    }
+    catchErrors(fetchData());
+  }, []);
 
-  async getData() {
-    const { data } = await getPlaylists();
-    this.setState({ playlists: data });
-  }
-
-  render() {
-    const { playlists } = this.state;
-
-    return (
-      <Main>
-        <h2>Your Playlists</h2>
-        <Wrapper>
-          <PlaylistsContainer>
-            {playlists ? (
-              playlists.items.map(({ id, images, name, tracks }, i) => (
-                <Playlist key={i}>
-                  <PlaylistCover to={id}>
-                    {images.length ? (
-                      <PlaylistImage src={images[0].url} alt="Album Art" />
-                    ) : (
-                      <PlaceholderArtwork>
-                        <PlaceholderContent>
-                          <IconMusic />
-                        </PlaceholderContent>
-                      </PlaceholderArtwork>
-                    )}
-                    <PlaylistMask>
-                      <i className="fas fa-info-circle" />
-                    </PlaylistMask>
-                  </PlaylistCover>
-                  <div>
-                    <PlaylistName to={id}>{name}</PlaylistName>
-                    <TotalTracks>{tracks.total} Tracks</TotalTracks>
-                  </div>
-                </Playlist>
-              ))
-            ) : (
-              <Loader />
-            )}
-          </PlaylistsContainer>
-        </Wrapper>
-      </Main>
-    );
-  }
-}
+  return (
+    <Main>
+      <h2>Your Playlists</h2>
+      <Wrapper>
+        <PlaylistsContainer>
+          {playlists ? (
+            playlists.items.map(({ id, images, name, tracks }, i) => (
+              <Playlist key={i}>
+                <PlaylistCover to={id}>
+                  {images.length ? (
+                    <PlaylistImage src={images[0].url} alt="Album Art" />
+                  ) : (
+                    <PlaceholderArtwork>
+                      <PlaceholderContent>
+                        <IconMusic />
+                      </PlaceholderContent>
+                    </PlaceholderArtwork>
+                  )}
+                  <PlaylistMask>
+                    <i className="fas fa-info-circle" />
+                  </PlaylistMask>
+                </PlaylistCover>
+                <div>
+                  <PlaylistName to={id}>{name}</PlaylistName>
+                  <TotalTracks>{tracks.total} Tracks</TotalTracks>
+                </div>
+              </Playlist>
+            ))
+          ) : (
+            <Loader />
+          )}
+        </PlaylistsContainer>
+      </Wrapper>
+    </Main>
+  );
+};
 
 export default Playlists;
