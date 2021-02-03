@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { formatDuration, getYear, parsePitchClass, catchErrors } from '../utils';
 import { getTrackInfo } from '../spotify';
@@ -112,130 +112,126 @@ const DescriptionLink = styled.a`
   }
 `;
 
-class Track extends Component {
-  static propTypes = {
-    trackId: PropTypes.string,
-  };
+const Track = props => {
+  const { trackId } = props;
 
-  state = {
-    track: null,
-    audioAnalysis: null,
-    audioFeatures: null,
-  };
+  const [track, setTrack] = useState(null);
+  const [audioAnalysis, setAudioAnalysis] = useState(null);
+  const [audioFeatures, setAudioFeatures] = useState(null);
 
-  componentDidMount() {
-    catchErrors(this.getData());
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getTrackInfo(trackId);
+      setTrack(data.track);
+      setAudioAnalysis(data.audioAnalysis);
+      setAudioFeatures(data.audioFeatures);
+    }
+    catchErrors(fetchData());
+  }, [trackId]);
 
-  async getData() {
-    const { trackId } = this.props;
-    const { track, audioAnalysis, audioFeatures } = await getTrackInfo(trackId);
-    this.setState({ track, audioAnalysis, audioFeatures });
-  }
-
-  render() {
-    const { track, audioAnalysis, audioFeatures } = this.state;
-
-    return (
-      <React.Fragment>
-        {track ? (
-          <Main>
-            <TrackContainer>
-              <Artwork>
-                <img src={track.album.images[0].url} alt="Album Artwork" />
-              </Artwork>
-              <Info>
-                <Title>{track.name}</Title>
-                <ArtistName>
-                  {track.artists &&
-                    track.artists.map(({ name }, i) => (
-                      <span key={i}>
-                        {name}
-                        {track.artists.length > 0 && i === track.artists.length - 1 ? '' : ','}
-                        &nbsp;
-                      </span>
-                    ))}
-                </ArtistName>
-                <Album>
-                  <a
-                    href={track.album.external_urls.spotify}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    {track.album.name}
-                  </a>{' '}
-                  &middot; {getYear(track.album.release_date)}
-                </Album>
-                <PlayTrackButton
-                  href={track.external_urls.spotify}
+  return (
+    <React.Fragment>
+      {track ? (
+        <Main>
+          <TrackContainer>
+            <Artwork>
+              <img src={track.album.images[0].url} alt="Album Artwork" />
+            </Artwork>
+            <Info>
+              <Title>{track.name}</Title>
+              <ArtistName>
+                {track.artists &&
+                  track.artists.map(({ name }, i) => (
+                    <span key={i}>
+                      {name}
+                      {track.artists.length > 0 && i === track.artists.length - 1 ? '' : ','}
+                      &nbsp;
+                    </span>
+                  ))}
+              </ArtistName>
+              <Album>
+                <a
+                  href={track.album.external_urls.spotify}
                   target="_blank"
                   rel="noopener noreferrer">
-                  Play on Spotify
-                </PlayTrackButton>
-              </Info>
-            </TrackContainer>
+                  {track.album.name}
+                </a>{' '}
+                &middot; {getYear(track.album.release_date)}
+              </Album>
+              <PlayTrackButton
+                href={track.external_urls.spotify}
+                target="_blank"
+                rel="noopener noreferrer">
+                Play on Spotify
+              </PlayTrackButton>
+            </Info>
+          </TrackContainer>
 
-            {audioFeatures && audioAnalysis && (
-              <AudioFeatures>
-                <Features>
-                  <Feature>
-                    <FeatureText>{formatDuration(audioFeatures.duration_ms)}</FeatureText>
-                    <FeatureLabel>Duration</FeatureLabel>
-                  </Feature>
-                  <Feature>
-                    <FeatureText>{parsePitchClass(audioFeatures.key)}</FeatureText>
-                    <FeatureLabel>Key</FeatureLabel>
-                  </Feature>
-                  <Feature>
-                    <FeatureText>{audioFeatures.mode === 1 ? 'Major' : 'Minor'}</FeatureText>
-                    <FeatureLabel>Modality</FeatureLabel>
-                  </Feature>
-                  <Feature>
-                    <FeatureText>{audioFeatures.time_signature}</FeatureText>
-                    <FeatureLabel>Time Signature</FeatureLabel>
-                  </Feature>
-                  <Feature>
-                    <FeatureText>{Math.round(audioFeatures.tempo)}</FeatureText>
-                    <FeatureLabel>Tempo (BPM)</FeatureLabel>
-                  </Feature>
-                  <Feature>
-                    <FeatureText>{track.popularity}%</FeatureText>
-                    <FeatureLabel>Popularity</FeatureLabel>
-                  </Feature>
-                  <Feature>
-                    <FeatureText>{audioAnalysis.bars.length}</FeatureText>
-                    <FeatureLabel>Bars</FeatureLabel>
-                  </Feature>
-                  <Feature>
-                    <FeatureText>{audioAnalysis.beats.length}</FeatureText>
-                    <FeatureLabel>Beats</FeatureLabel>
-                  </Feature>
-                  <Feature>
-                    <FeatureText>{audioAnalysis.sections.length}</FeatureText>
-                    <FeatureLabel>Sections</FeatureLabel>
-                  </Feature>
-                  <Feature>
-                    <FeatureText>{audioAnalysis.segments.length}</FeatureText>
-                    <FeatureLabel>Segments</FeatureLabel>
-                  </Feature>
-                </Features>
+          {audioFeatures && audioAnalysis && (
+            <AudioFeatures>
+              <Features>
+                <Feature>
+                  <FeatureText>{formatDuration(audioFeatures.duration_ms)}</FeatureText>
+                  <FeatureLabel>Duration</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{parsePitchClass(audioFeatures.key)}</FeatureText>
+                  <FeatureLabel>Key</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioFeatures.mode === 1 ? 'Major' : 'Minor'}</FeatureText>
+                  <FeatureLabel>Modality</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioFeatures.time_signature}</FeatureText>
+                  <FeatureLabel>Time Signature</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{Math.round(audioFeatures.tempo)}</FeatureText>
+                  <FeatureLabel>Tempo (BPM)</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{track.popularity}%</FeatureText>
+                  <FeatureLabel>Popularity</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioAnalysis.bars.length}</FeatureText>
+                  <FeatureLabel>Bars</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioAnalysis.beats.length}</FeatureText>
+                  <FeatureLabel>Beats</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioAnalysis.sections.length}</FeatureText>
+                  <FeatureLabel>Sections</FeatureLabel>
+                </Feature>
+                <Feature>
+                  <FeatureText>{audioAnalysis.segments.length}</FeatureText>
+                  <FeatureLabel>Segments</FeatureLabel>
+                </Feature>
+              </Features>
 
-                <FeatureChart features={audioFeatures} type="" />
+              <FeatureChart features={audioFeatures} type="" />
 
-                <DescriptionLink
-                  href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  Full Description of Audio Features
-                </DescriptionLink>
-              </AudioFeatures>
-            )}
-          </Main>
-        ) : (
-          <Loader />
-        )}
-      </React.Fragment>
-    );
-  }
-}
+              <DescriptionLink
+                href="https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/"
+                target="_blank"
+                rel="noopener noreferrer">
+                Full Description of Audio Features
+              </DescriptionLink>
+            </AudioFeatures>
+          )}
+        </Main>
+      ) : (
+        <Loader />
+      )}
+    </React.Fragment>
+  );
+};
+
+Track.propTypes = {
+  trackId: PropTypes.string,
+};
 
 export default Track;
