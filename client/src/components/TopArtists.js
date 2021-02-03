@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from '@reach/router';
 import { getTopArtistsShort, getTopArtistsMedium, getTopArtistsLong } from '../spotify';
 import { catchErrors } from '../utils';
@@ -123,81 +123,69 @@ const ArtistName = styled.a`
   }
 `;
 
-class TopArtists extends Component {
-  state = {
-    topArtists: null,
-    activeRange: 'long',
-  };
+const TopArtists = () => {
+  const [topArtists, setTopArtists] = useState(null);
+  const [activeRange, setActiveRange] = useState('long');
 
-  apiCalls = {
+  const apiCalls = {
     long: getTopArtistsLong(),
     medium: getTopArtistsMedium(),
     short: getTopArtistsShort(),
   };
 
-  componentDidMount() {
-    catchErrors(this.getData());
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await getTopArtistsLong();
+      setTopArtists(data);
+    }
+    catchErrors(fetchData());
+  }, []);
 
-  async getData() {
-    const { data } = await getTopArtistsLong();
-    this.setState({ topArtists: data });
-  }
+  const changeRange = async range => {
+    const { data } = await apiCalls[range];
+    setTopArtists(data);
+    setActiveRange(range);
+  };
 
-  async changeRange(range) {
-    const { data } = await this.apiCalls[range];
-    this.setState({ topArtists: data, activeRange: range });
-  }
+  const setRangeData = range => catchErrors(changeRange(range));
 
-  setActiveRange = range => catchErrors(this.changeRange(range));
-
-  render() {
-    const { topArtists, activeRange } = this.state;
-
-    return (
-      <Main>
-        <Header>
-          <h2>Top Artists</h2>
-          <Ranges>
-            <RangeButton
-              isActive={activeRange === 'long'}
-              onClick={() => this.setActiveRange('long')}>
-              <span>All Time</span>
-            </RangeButton>
-            <RangeButton
-              isActive={activeRange === 'medium'}
-              onClick={() => this.setActiveRange('medium')}>
-              <span>Last 6 Months</span>
-            </RangeButton>
-            <RangeButton
-              isActive={activeRange === 'short'}
-              onClick={() => this.setActiveRange('short')}>
-              <span>Last 4 Weeks</span>
-            </RangeButton>
-          </Ranges>
-        </Header>
-        <ArtistsContainer>
-          {topArtists ? (
-            topArtists.items.map(({ id, external_urls, images, name }, i) => (
-              <Artist key={i}>
-                <ArtistArtwork to={`/artist/${id}`}>
-                  {images.length && <img src={images[1].url} alt="Artist" />}
-                  <Mask>
-                    <IconInfo />
-                  </Mask>
-                </ArtistArtwork>
-                <ArtistName href={external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                  {name}
-                </ArtistName>
-              </Artist>
-            ))
-          ) : (
-            <Loader />
-          )}
-        </ArtistsContainer>
-      </Main>
-    );
-  }
-}
+  return (
+    <Main>
+      <Header>
+        <h2>Top Artists</h2>
+        <Ranges>
+          <RangeButton isActive={activeRange === 'long'} onClick={() => setRangeData('long')}>
+            <span>All Time</span>
+          </RangeButton>
+          <RangeButton isActive={activeRange === 'medium'} onClick={() => setRangeData('medium')}>
+            <span>Last 6 Months</span>
+          </RangeButton>
+          <RangeButton isActive={activeRange === 'short'} onClick={() => setRangeData('short')}>
+            <span>Last 4 Weeks</span>
+          </RangeButton>
+        </Ranges>
+      </Header>
+      <ArtistsContainer>
+        {topArtists ? (
+          topArtists.items.map(({ id, external_urls, images, name }, i) => (
+            <Artist key={i}>
+              <ArtistArtwork to={`/artist/${id}`}>
+                {images.length && <img src={images[1].url} alt="Artist" />}
+                <Mask>
+                  <IconInfo />
+                </Mask>
+              </ArtistArtwork>
+              <ArtistName href={external_urls.spotify} target="_blank" rel="noopener noreferrer">
+                {name}
+              </ArtistName>
+            </Artist>
+          ))
+        ) : (
+          <Loader />
+        )}
+      </ArtistsContainer>
+    </Main>
+  );
+};
 
 export default TopArtists;
