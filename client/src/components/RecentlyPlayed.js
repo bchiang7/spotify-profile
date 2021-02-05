@@ -16,10 +16,10 @@ const RecentlyPlayed = () => {
   const [recentlyPlayed, setRecentlyPlayed] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const { data } = await getRecentlyPlayed();
       setRecentlyPlayed(data);
-    }
+    };
     catchErrors(fetchData());
   }, []);
 

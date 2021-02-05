@@ -134,10 +134,10 @@ const TopArtists = () => {
   };
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const { data } = await getTopArtistsLong();
       setTopArtists(data);
-    }
+    };
     catchErrors(fetchData());
   }, []);
 

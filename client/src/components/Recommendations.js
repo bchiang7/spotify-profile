@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
 import {
@@ -54,37 +54,37 @@ const Recommendations = props => {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    async function fetchPlaylistData() {
+    const fetchPlaylistData = async () => {
       const { data } = await getPlaylist(playlistId);
       setPlaylist(data);
-    }
+    };
     catchErrors(fetchPlaylistData());
 
-    async function fetchUserData() {
+    const fetchUserData = async () => {
       const { data } = await getUser();
       setUserId(data.id);
-    }
+    };
     catchErrors(fetchUserData());
   }, [playlistId]);
 
-  useEffect(() => {
-    async function fetchData() {
+  useMemo(() => {
+    const fetchData = async () => {
       if (playlist) {
         const { data } = await getRecommendationsForTracks(playlist.tracks.items);
         setRecommmendations(data);
       }
-    }
+    };
     catchErrors(fetchData());
   }, [playlist]);
 
   // If recPlaylistId has been set, add tracks to playlist and follow
-  useEffect(() => {
+  useMemo(() => {
     const isUserFollowingPlaylist = async plistId => {
       const { data } = await doesUserFollowPlaylist(plistId, userId);
       setIsFollowing(data[0]);
     };
 
-    async function addTracksAndFollow() {
+    const addTracksAndFollow = async () => {
       const uris = recommendations.tracks.map(({ uri }) => uri).join(',');
       const { data } = await addTracksToPlaylist(recPlaylistId, uris);
 
@@ -94,7 +94,7 @@ const Recommendations = props => {
         // Check if user is following so we can change the save to spotify button to open on spotify
         catchErrors(isUserFollowingPlaylist(recPlaylistId));
       }
-    }
+    };
 
     if (recPlaylistId && recommendations && userId) {
       catchErrors(addTracksAndFollow(recPlaylistId));

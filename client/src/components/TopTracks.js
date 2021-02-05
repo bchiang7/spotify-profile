@@ -57,10 +57,10 @@ const TopTracks = () => {
   };
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const { data } = await getTopTracksLong();
       setTopTracks(data);
-    }
+    };
     catchErrors(fetchData());
   }, []);
 

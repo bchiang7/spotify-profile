@@ -120,12 +120,12 @@ const Track = props => {
   const [audioFeatures, setAudioFeatures] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const data = await getTrackInfo(trackId);
       setTrack(data.track);
       setAudioAnalysis(data.audioAnalysis);
       setAudioFeatures(data.audioFeatures);
-    }
+    };
     catchErrors(fetchData());
   }, [trackId]);
 

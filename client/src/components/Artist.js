@@ -69,10 +69,10 @@ const Artist = props => {
   const [artist, setArtist] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const { data } = await getArtist(artistId);
       setArtist(data);
-    }
+    };
     catchErrors(fetchData());
   }, [artistId]);
 

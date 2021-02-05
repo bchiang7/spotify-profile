@@ -81,20 +81,20 @@ const Playlist = props => {
   const [audioFeatures, setAudioFeatures] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const { data } = await getPlaylist(playlistId);
       setPlaylist(data);
-    }
+    };
     catchErrors(fetchData());
   }, [playlistId]);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       if (playlist) {
         const { data } = await getAudioFeaturesForTracks(playlist.tracks.items);
         setAudioFeatures(data);
       }
-    }
+    };
     catchErrors(fetchData());
   }, [playlist]);
 

@@ -101,10 +101,10 @@ const Playlists = () => {
   const [playlists, setPlaylists] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const { data } = await getPlaylists();
       setPlaylists(data);
-    }
+    };
     catchErrors(fetchData());
   }, []);
 

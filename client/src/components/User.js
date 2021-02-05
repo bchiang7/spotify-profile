@@ -184,14 +184,14 @@ const User = () => {
   const [topTracks, setTopTracks] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const { user, followedArtists, playlists, topArtists, topTracks } = await getUserInfo();
       setUser(user);
       setFollowedArtists(followedArtists);
       setPlaylists(playlists);
       setTopArtists(topArtists);
       setTopTracks(topTracks);
-    }
+    };
     catchErrors(fetchData());
   }, []);
 
