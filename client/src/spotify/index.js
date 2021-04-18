@@ -43,16 +43,11 @@ export const getAccessToken = () => {
   }
 
   const localAccessToken = getLocalAccessToken();
-  const localRefreshToken = getLocalRefreshToken();
-
-  // If there is no REFRESH token in local storage, set it as `refresh_token` from params
-  if (!localRefreshToken || localRefreshToken === 'undefined') {
-    setLocalRefreshToken(refresh_token);
-  }
 
   // If there is no ACCESS token in local storage, set it and return `access_token` from params
-  if (!localAccessToken || localAccessToken === 'undefined') {
+  if (!localAccessToken && access_token) {
     setLocalAccessToken(access_token);
+    setLocalRefreshToken(refresh_token);
     return access_token;
   }
 

@@ -2,7 +2,7 @@
   "name": "spotify-profile",
   "version": "0.1.0",
   "description": "Spotify Profile",
-  "main": "index.js",
+  "main": "server/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/bchiang7/spotify-profile.git"
