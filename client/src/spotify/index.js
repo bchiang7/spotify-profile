@@ -45,7 +45,7 @@ export const getAccessToken = () => {
   const localAccessToken = getLocalAccessToken();
 
   // If there is no ACCESS token in local storage, set it and return `access_token` from params
-  if (!localAccessToken && access_token) {
+  if ((!localAccessToken || localAccessToken === 'undefined') && access_token) {
     setLocalAccessToken(access_token);
     setLocalRefreshToken(refresh_token);
     return access_token;
