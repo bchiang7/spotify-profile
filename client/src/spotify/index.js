@@ -84,7 +84,7 @@ export const getFollowing = () =>
   axios.get('https://api.spotify.com/v1/me/following?type=artist', { headers });
 
 /**
- * Get Current User's Recently Played Tracks
+ * Get Current User's Currently Playing Track
  * https://developer.spotify.com/documentation/web-api/reference/#endpoint-get-the-users-currently-playing-track/
  */
 export const getNowPlaying = () =>
@@ -262,7 +262,14 @@ export const getTrackAudioFeatures = trackId =>
 
 export const getUserInfo = () =>
   axios
-    .all([getUser(), getFollowing(), getNowPlaying(), getPlaylists(), getTopArtistsLong(), getTopTracksLong()])
+    .all([
+      getUser(),
+      getFollowing(),
+      getNowPlaying(),
+      getPlaylists(),
+      getTopArtistsLong(),
+      getTopTracksLong(),
+    ])
     .then(
       axios.spread((user, followedArtists, nowPlaying, playlists, topArtists, topTracks) => ({
         user: user.data,
