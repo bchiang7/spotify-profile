@@ -71,7 +71,7 @@ const LogoutButton = styled.a`
   color: ${colors.white};
   border: 1px solid ${colors.white};
   border-radius: 30px;
-  margin-top: 30px;
+  margin: 30px 10px 0px 10px;
   padding: 12px 30px;
   font-size: ${fontSizes.xs};
   font-weight: 700;
@@ -82,6 +82,22 @@ const LogoutButton = styled.a`
   &:focus {
     background-color: ${colors.white};
     color: ${colors.black};
+  }
+`;
+const NowPlayingButton = styled(Link)`
+  background-color: ${colors.green};
+  color: ${colors.white};
+  border-radius: 30px;
+  margin: 30px 10px 0px 10px;
+  padding: 12px 30px;
+  font-size: ${fontSizes.xs};
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  &:hover,
+  &:focus {
+    background-color: ${colors.offGreen};
   }
 `;
 const Preview = styled.section`
@@ -179,15 +195,17 @@ const ArtistName = styled(Link)`
 const User = () => {
   const [user, setUser] = useState(null);
   const [followedArtists, setFollowedArtists] = useState(null);
+  const [nowPlaying, setNowPlaying] = useState(null);
   const [playlists, setPlaylists] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
   const [topTracks, setTopTracks] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { user, followedArtists, playlists, topArtists, topTracks } = await getUserInfo();
+      const { user, followedArtists, nowPlaying, playlists, topArtists, topTracks } = await getUserInfo();
       setUser(user);
       setFollowedArtists(followedArtists);
+      setNowPlaying(nowPlaying);
       setPlaylists(playlists);
       setTopArtists(topArtists);
       setTopTracks(topTracks);
@@ -234,7 +252,14 @@ const User = () => {
                 </Stat>
               )}
             </Stats>
-            <LogoutButton onClick={logout}>Logout</LogoutButton>
+            <div>
+              {nowPlaying && nowPlaying.is_playing ? (
+                <NowPlayingButton to={`/track/${nowPlaying.item.id}`}>Now Playing</NowPlayingButton>
+              ) : (
+                null
+              )}
+              <LogoutButton onClick={logout}>Logout</LogoutButton>
+            </div>
           </Header>
 
           <Preview>
