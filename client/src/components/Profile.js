@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Router } from '@reach/router';
 
 import ScrollToTop from './ScrollToTop';
@@ -24,7 +24,11 @@ const SiteWrapper = styled.div`
   `};
 `;
 
-const Profile = () => (
+const Profile = () => {
+  
+  useEffect(() => window.location.hash = '', []);
+  
+  return(
   <SiteWrapper>
     <Nav />
     <Router primary={false}>
@@ -41,6 +45,6 @@ const Profile = () => (
       </ScrollToTop>
     </Router>
   </SiteWrapper>
-);
+)};
 
 export default Profile;
