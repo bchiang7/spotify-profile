@@ -215,16 +215,20 @@ const User = () => {
               <Name>{user.display_name}</Name>
             </UserName>
             <Stats>
-              <Stat>
-                <Number>{user.followers.total}</Number>
-                <NumLabel>Followers</NumLabel>
-              </Stat>
-              {followedArtists && (
+              <a href={user.external_urls.following} target="_blank" rel="noopener noreferrer">
                 <Stat>
-                  <Number>{followedArtists.artists.items.length}</Number>
-                  <NumLabel>Following</NumLabel>
+                  <Number>{user.followers.total}</Number>
+                  <NumLabel>Followers</NumLabel>
                 </Stat>
-              )}
+              </a>
+              <a href={user.external_urls.following} target="_blank" rel="noopener noreferrer">
+                {followedArtists && (
+                  <Stat>
+                    <Number>{followedArtists.artists.items.length}</Number>
+                    <NumLabel>Following</NumLabel>
+                  </Stat>
+                )}
+              </a>
               {totalPlaylists && (
                 <Stat>
                   <Link to="playlists">
