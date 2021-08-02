@@ -29,7 +29,6 @@ const Container = styled.div`
 
 const FeatureChart = props => {
   const avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
-
   useEffect(() => {
     const createDataset = features => {
       const dataset = {};
@@ -56,28 +55,21 @@ const FeatureChart = props => {
               label: '',
               data,
               backgroundColor: [
-                'rgba(255, 99, 132, 0.3)',
-                'rgba(255, 159, 64, 0.3)',
-                'rgba(255, 206, 86, 0.3)',
-                'rgba(75, 192, 192, 0.3)',
-                'rgba(54, 162, 235, 0.3)',
-                'rgba(104, 132, 245, 0.3)',
-                'rgba(153, 102, 255, 0.3)',
+                '#1db954',
+                '#1db954',
+                '#1db954',
+                '#1db954',
+                '#1db954',
+                '#1db954',
+                '#1db954',
               ],
-              borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(104, 132, 245, 1)',
-                'rgba(153, 102, 255, 1)',
-              ],
-              borderWidth: 1,
+              borderRadius: 20,
             },
           ],
         },
         options: {
+          borderRadius: 20,
+          responsive: true,
           layout: {
             padding: {
               left: 0,
@@ -89,7 +81,7 @@ const FeatureChart = props => {
           title: {
             display: true,
             text: `Audio Features`,
-            fontSize: 18,
+            fontSize: 30,
             fontFamily: `${fonts.primary}`,
             fontColor: '#ffffff',
             padding: 30,
@@ -101,23 +93,23 @@ const FeatureChart = props => {
             xAxes: [
               {
                 gridLines: {
-                  color: 'rgba(255, 255, 255, 0.3)',
+                  display: false,
                 },
                 ticks: {
                   fontFamily: `${fonts.primary}`,
-                  fontSize: 12,
+                  fontSize: 20,
                 },
               },
             ],
             yAxes: [
               {
                 gridLines: {
-                  color: 'rgba(255, 255, 255, 0.3)',
+                  display: false,
                 },
                 ticks: {
                   beginAtZero: true,
                   fontFamily: `${fonts.primary}`,
-                  fontSize: 12,
+                  fontSize: 20,
                 },
               },
             ],
