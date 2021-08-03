@@ -75,8 +75,10 @@ const headers = {
  * https://developer.spotify.com/documentation/web-api/reference/users-profile/get-current-users-profile/
  */
 export const getUser = () =>
-  axios.get('https://api.spotify.com/v1/me', { headers }).then(function (response) {
-    response['data']['external_urls']['following'] = `${response['data']['external_urls']['spotify']  }/following`;
+  axios.get('https://api.spotify.com/v1/me', { headers }).then(function(response) {
+    response['data']['external_urls'][
+      'following'
+    ] = `${response['data']['external_urls']['spotify']}/following`;
     return response;
   });
 
