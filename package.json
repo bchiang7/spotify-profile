@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/bchiang7/spotify-profile#readme",
   "engines": {
-    "node": "10.13.0"
+    "node": ">=10.13.0"
   },
   "scripts": {
     "client:install": "cd client && yarn",
