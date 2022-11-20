@@ -19,9 +19,10 @@ const Header = styled.header`
 const Avatar = styled.div`
   width: 150px;
   height: 150px;
-  img {
-    border-radius: 100%;
-  }
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 50%;
 `;
 const NoAvatar = styled.div`
   border: 2px solid currentColor;
